@@ -32,7 +32,7 @@ class Category extends AdminController {
                     'id'			=> $result->id,
                     'name'		    => $result->name,
                     'slug' 		    => $result->slug,
-                    'sortOrder'     => $result->sort_order,
+                    'sort_order'    => $result->sort_order,
                     'status' 		=> ($result->status && $result->status == 1) ? 1 : 0,
                     'created_at'    => Carbon::createFromTimeStamp(strtotime($result->created_at))->diffForHumans(),
                     'updated_at'    => ($result->updated_at) ? Carbon::createFromTimeStamp(strtotime($result->updated_at))->diffForHumans() : ''
@@ -43,13 +43,12 @@ class Category extends AdminController {
                 $this->selected = ($row['status'] == 1) ? 'selected' : '';
                 $this->data[$i][] = '<td class="text-center">
 											<label class="css-control css-control-primary css-checkbox">
-												<input data-id="'.$row['id'].'" type="checkbox" class="css-control-input selectCheckbox" id="row_'.$row['id'].'" name="row_'.$row['id'].'">
-												<span class="css-control-indicator"></span>
+                                                <input type="checkbox" class="css-control-input selectCheckbox" value="'.$row['id'].'" name="selected[]">
+                                                <span class="css-control-indicator"></span>
 											</label>
 										</td>';
                 $this->data[$i][] = '<td>'.$row['name'].'</td>';
-                $this->data[$i][] = '<td>'.$row['slug'].'</td>';
-                $this->data[$i][] = '<td>'.$row['sortOrder'].'</td>';
+                $this->data[$i][] = '<td>'.$row['sort_order'].'</td>';
 //					$this->data[$i][] = '<td>
 //											<div class="material-switch pull-right">
 //											<input data-id="'.$row['id'].'" class="checkboxStatus" name="switch_checkbox" id="chat_module" type="checkbox" value="'.$row['status'].'" '.$checked.'/>
@@ -68,7 +67,7 @@ class Category extends AdminController {
 	                            <div class="dropdown">
 	                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 	                                <ul class="dropdown-menu pull-right">
-	                                    <li><a class="edit" href="javascript:void(0);" data-id="'.$row['id'].'" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+	                                    <li><a class="edit" href="'.url('shop/category/edit/'.$row['id']).'" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 	                                </ul>
 	                            </div>
 	                        </td>
@@ -114,50 +113,49 @@ class Category extends AdminController {
         $this->data['title']     = 'Shop Category';
         $this->data['columns'][] = 'Name';
         $this->data['columns'][] = 'Sort Order';
+        $this->data['columns'][] = 'Status';
         $this->data['columns'][] = 'Created At';
         $this->data['columns'][] = 'Updated At';
-
         $this->data['add'] = url('shop/category/create');
-
-        $this->template->stylesheet->add('assets/theme/light/js/datatables/dataTables.bootstrap4.css');
-        $this->template->javascript->add('assets/theme/light/js/datatables/jquery.dataTables.min.js');
-        $this->template->javascript->add('assets/theme/light/js/datatables/dataTables.bootstrap4.min.js');
-        $this->template->javascript->add('assets/js/admin/category/Category.js');
-
+        attach('assets/theme/light/js/datatables/dataTables.bootstrap4.css', 'css');
+        attach('assets/theme/light/js/datatables/jquery.dataTables.min.js', 'js');
+        attach('assets/theme/light/js/datatables/dataTables.bootstrap4.min.js', 'js');
+        attach('assets/js/shop/Category.js', 'js');
         render('category/index', $this->data);
     }
-    public function setData() {
-        if (!empty($this->category)) {
-            $this->data['title'] = 'Edit Shop Category';
-            $this->data['route'] = url('shop/category/update/'.$this->category->id);
-        } else {
-            $this->data['title'] = 'Add Shop Category';
-            $this->data['route'] = url('shop/category/store');
-        }
-        $this->data['form'] = 'CategoryForm';
+    public function init() {
+        
+        $this->data['heading']                  = 'Project Management';
+        $this->data['entryName']                = 'Name';
+        $this->data['entrySlug']                = 'Slug';
+        $this->data['entryStatus']              = 'Status';
+        $this->data['form']             = array(
+            'id'    => 'CategoryForm',
+            'name'  => 'CategoryForm',
+        );
         // Category ID
-        if (!empty($this->input->post('categoryId'))) {
-            $this->data['categoryId'] = $this->input->post('categoryId');
+        if (!empty($this->input->post('id'))) {
+            $this->data['id'] = $this->input->post('id');
         } elseif (!empty($this->category)) {
-            $this->data['categoryId'] = $this->category->id;
+            $this->data['id'] = $this->category->id;
         } else {
-            $this->data['categoryId'] = '';
+            $this->data['id'] = '';
         }
         // Name
-        if (!empty($this->input->post('name'))) {
+        if (!empty($this->input->post('name'))) { //add
             $this->data['name'] = $this->input->post('name');
-        } elseif (!empty($this->category)) {
+        } elseif (!empty($this->category)) {//edit
             $this->data['name'] = $this->category->name;
         } else {
             $this->data['name'] = '';
         }
         // Sort Order
-        if (!empty($this->input->post('sortOrder'))) {
-            $this->data['sortOrder'] = $this->input->post('sortOrder');
+        if (!empty($this->input->post('sort_order'))) {
+            $this->data['sort_order'] = $this->input->post('sort_order');
         } elseif (!empty($this->category)) {
-            $this->data['sortOrder'] = $this->category->sort_order;
+            $this->data['sort_order'] = $this->category->sort_order;
         } else {
-            $this->data['sortOrder'] = '';
+            $this->data['sort_order'] = '';
         }
         // Slug
         if (!empty($this->input->post('slug'))) {
@@ -170,34 +168,34 @@ class Category extends AdminController {
         // Description
         if (!empty($this->input->post('description'))) {
             $this->data['description'] = $this->input->post('description');
-        } elseif (!empty($this->categoryDescription)) {
-            $this->data['description'] = $this->categoryDescription->description;
+        } elseif (!empty($this->category)) {
+            $this->data['description'] = $this->category->description->description;
         } else {
             $this->data['description'] = '';
         }
         // Meta Title
         if (!empty($this->input->post('meta_title'))) {
             $this->data['meta_title'] = $this->input->post('meta_title');
-        } elseif (!empty($this->categoryDescription)) {
-            $this->data['meta_title'] = $this->categoryDescription->meta_title;
+        } elseif (!empty($this->category)) {
+            $this->data['meta_title'] = $this->category->description->meta_title;
         } else {
             $this->data['meta_title'] = '';
         }
         // Meta Description
         if (!empty($this->input->post('meta_description'))) {
             $this->data['meta_description'] = $this->input->post('meta_description');
-        } elseif (!empty($this->categoryDescription)) {
-            $this->data['meta_description'] = $this->categoryDescription->meta_description;
+        } elseif (!empty($this->category)) {
+            $this->data['meta_description'] = $this->category->description->meta_description;
         } else {
             $this->data['meta_description'] = '';
         }
         // Meta keyword
-        if (!empty($this->input->post('meta_keyword'))) {
-            $this->data['meta_keyword'] = $this->input->post('meta_keyword');
-        } elseif (!empty($this->categoryDescription)) {
-            $this->data['meta_keyword'] = $this->categoryDescription->meta_keyword;
+        if (!empty($this->input->post('meta_keywords'))) {
+            $this->data['meta_keywords'] = $this->input->post('meta_keywords');
+        } elseif (!empty($this->category)) {
+            $this->data['meta_keywords'] = $this->category->description->meta_keywords;
         } else {
-            $this->data['meta_keyword'] = '';
+            $this->data['meta_keywords'] = '';
         }
         //dd($this->data);
         // Status
@@ -206,29 +204,38 @@ class Category extends AdminController {
         } elseif (!empty($this->category)) {
             $this->data['status'] = $this->category->status;
         } else {
-            $this->data['status'] = 0;
+            $this->data['status'] = 1;
         }
+        //parent
+        if (!empty($this->input->post('parent_id'))) {
+            $this->data['parent_id'] = $this->input->post('parent_id');
+        } elseif (!empty($this->category)) {
+            $this->data['parent_id'] = $this->category->parent_id;
+        } else {
+            $this->data['parent_id'] = '';
+        }
+        
         // Image
 
         if (!empty($this->input->post('image'))) {
             $this->data['image'] = $this->input->post('image');
-        } elseif (!empty($this->categoryDescription)) {
-            $this->data['image'] = $this->categoryDescription->image;
+        } elseif (!empty($this->category)) {
+            $this->data['image'] = $this->category->image;
         } else {
             $this->data['image'] = '';
         }
 
         if (!empty($this->input->post('image')) && is_file(DIR_IMAGE . $this->input->post('image'))) {
             $this->data['thumb'] = $this->resize($this->input->post('image'), 100, 100);
-        } elseif (!empty($this->categoryDescription) && is_file(DIR_IMAGE . $this->categoryDescription->image)) {
-            $this->data['thumb'] = $this->resize($this->categoryDescription->image, 100, 100);
+        } elseif (!empty($this->category) && is_file(DIR_IMAGE . $this->category->image)) {
+            $this->data['thumb'] = $this->resize($this->category->image, 100, 100);
         } else {
             $this->data['thumb'] = $this->resize('no_image.png', 100, 100);
         }
 
         $this->data['placeholder'] = $this->resize('no_image.png', 100, 100);
 
-        $this->data['back'] = admin_url('category');
+        $this->data['back'] = url('shop/category');
         $this->data['category'] = ShopCategory_model::factory()->findAll([],null,'name', 'ASC');
         //$this->dd($this->data);
     }
@@ -238,8 +245,8 @@ class Category extends AdminController {
             $this->error['name'] = $this->lang->line('error_name');
         }
 
-        if ((strlen($this->input->post('sortOrder')) < 1)) {
-            $this->error['sortOrder'] = $this->lang->line('error_sortOrder');
+        if ((strlen($this->input->post('sort_order')) < 1)) {
+            $this->error['sort_order'] = $this->lang->line('error_sort_order');
         }
         //dd($this->input->post('status'));
         if ($this->input->post('status') == '') {
@@ -263,64 +270,103 @@ class Category extends AdminController {
         return !$this->error;
     }
     public function create() {
-        $this->template->javascript->add('assets/js/jquery.validate.js');
-        $this->template->javascript->add('assets/js/additional-methods.js');
-        $this->template->javascript->add('assets/js/admin/category/Category.js');
-        $this->template->set_template('layout/admin');
-        $this->setData();
-        $this->template->content->view('category/create', $this->data);
-        $this->template->publish();
+        $this->init();
+        $this->data['title'] = 'Add Shop Category Form';
+        $this->data['route'] = url('shop/category/store');
+        attach('assets/js/jquery.validate.js', 'js');
+        attach('assets/js/additional-methods.js', 'js');
+        attach('assets/theme/light/js/datatables/dataTables.bootstrap4.css', 'css');
+        attach('assets/js/shop/Category.js', 'js');
+        render('category/create', $this->data); 
     }
+    
     public function store() {
-        if ($this->isPost() && $this->validateForm()) {
-            $this->load->model('ShopCategory_model');
-            $this->setData();
-            ShopCategory_model::factory()->addCategory($this->data);
-            $this->setMessage('message', $this->lang->line('text_success'));
-            $this->redirect(admin_url('category/create/'));
-        }
-        $this->create();
-    }
-    public function edit($categoryId) {
-        if(!$this->isPost()) {
-            $this->load->model('ShopCategory_model');
-            $this->category = ShopCategory_model::factory()->findOne($categoryId);
-        }
-        if($this->category) {
-            $this->categoryDescription = $this->category->categoryDescription();
-        }
-        if(!$this->category) {
-            $this->redirect(admin_url('category'));
-        }
-        $this->setData();
-        //$this->dd($this->data);
-        $this->template->javascript->add('assets/js/jquery.validate.js');
-        $this->template->javascript->add('assets/js/additional-methods.js');
-        $this->template->javascript->add('assets/js/admin/category/Category.js');
-
-        $this->template->set_template('layout/admin');
-        $this->template->content->view('category/edit', $this->data);
-        $this->template->publish();
-    }
-    public function update() {
         try {
-            $this->lang->load('admin/category');
-            if ($this->isPost() && $this->validateForm()) {
-                $this->load->model('ShopCategory_model');
-                $this->categoryId = ($this->input->post('categoryId')) ? $this->input->post('categoryId') : '';
-
-                $this->setData();
-                $this->ShopCategory_model->editCategory($this->categoryId, $this->data);
-                $this->setMessage('message', $this->lang->line('text_success'));
-                //$this->redirect(admin_url('category'));
-                $this->redirect(admin_url('category/edit/'.$this->categoryId));
-            }
-            $this->setData();
-            $this->create();
+            $this->init();
+            ShopCategory_model::factory()->insert([
+                'name'          => $this->data['name'],
+                'slug'          => $this->data['slug'],
+                'image'         => $this->data['image'],
+                'parent_id'     => $this->data['parent_id'],
+                'sort_order'    => $this->data['sort_order'],
+                'status'        => $this->data['status'],
+            ]);
+            ShopCategoryDescription_model::factory()->insert([
+                'category_id'       => ShopCategory_model::factory()->getLastInsertID(),
+                'description'       => $this->data['description'],
+                'meta_title'        => $this->data['meta_title'],
+                'meta_description'  => $this->data['meta_description'],
+                'meta_keywords'     => $this->data['meta_keywords'],
+            ]);
+            setMessage('message', 'Success: You have modified features product!');
+            redirect(url('shop/category/create/'));
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-
+    }
+    public function edit($id) {
+       
+        $this->category = ShopCategory_model::factory()->findOne($id);
+        
+        if(!$this->category) {
+            setMessage('message', 'Record not found');
+            redirect(url('shop/category/'));
+        }
+       
+        $this->init();
+        $this->data['title'] = 'Edit Shop Category Form';
+        $this->data['route'] = url('shop/category/update/'.$id);
+        //$this->dd($this->data);
+        attach('assets/js/jquery.validate.js', 'js');
+        attach('assets/js/additional-methods.js', 'js');
+        attach('assets/js/shop/Category.js', 'js');
+        render('category/edit', $this->data);
+    }
+    public function update($id) {
+        try {
+            $this->category = ShopCategory_model::factory()->findOne($id);
+            if(!$this->category) {
+                setMessage('message', 'Info: Category does not exists!');
+                redirect(url('shop/category'));
+            }
+            $this->init();
+            // Category Model
+            ShopCategory_model::factory()->update([
+                'name'          => $this->data['name'],
+                'slug'          => $this->data['slug'],
+                'image'         => $this->data['image'],
+                'parent_id'     => $this->data['parent_id'],
+                'sort_order'    => $this->data['sort_order'],
+                'status'        => $this->data['status'],
+            ],[
+                'id' => $id
+            ]);
+            ShopCategoryDescription_model::factory()->update([
+                'description'       => $this->data['description'],
+                'meta_title'        => $this->data['meta_title'],
+                'meta_description'  => $this->data['meta_description'],
+                'meta_keywords'     => $this->data['meta_keywords'],
+            ],[
+                'category_id' => $id
+            ]);
+            // Category Image Model
+            if(isset($this->data['image'])) {
+                ShopCategory_model::factory()->delete([
+                    'id' => $categoryId
+                ], true);
+                foreach ($this->data['image'] as $image) {
+                    ShopCategory_model::factory()->insert([
+                        'id'            => $categoryId,
+                        'image'         => $image['image'],
+                    ]);
+                }
+            }
+            //dd($this->data);
+            setMessage('message', "Success: You have modified category! ");
+            redirect(url('shop/category/edit/'. $id));
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
     }
 
     public function delete() {

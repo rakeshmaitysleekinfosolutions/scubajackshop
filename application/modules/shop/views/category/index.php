@@ -22,20 +22,13 @@
             <table class="table table-striped custom-table datatable">
                 <thead>
                     <tr>
-                        <th class="text-center" style="width: 2%;">
-                            <label class="css-control css-control-primary css-checkbox py-0">
-                                <input type="checkbox" class="css-control-input" id="checkAll" name="checkAll">
-                                <span class="css-control-indicator"></span>
-                            </label>
-                        </th>
-                        <th>Name</th>
-                        <th>Slug</th>
-                        <th>Sort Order</th>
-                        <th>Status</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                        
-                        <th class="text-right">Action</th>
+                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+                    <?php if(count($columns)) {
+                        foreach ($columns as $column) {?>
+                            <th class="text-left"><?php echo $column;?></th>
+                        <?php } ?>
+                    <?php } ?>
+                    <td class="text-right">Action</td>
                     </tr>
                 </thead>
                 
@@ -48,8 +41,7 @@
 <script>
     var myLabel             = myLabel || {};
     myLabel.baseUrl         = '<?php echo base_url();?>';
-    myLabel.category        = '<?php echo admin_url('category/onLoadDatatableEventHandler');?>';
-    myLabel.updateStatus    = '<?php echo admin_url('category/onClickStatusEventHandler');?>';
-    myLabel.delete          = '<?php echo admin_url('category/delete');?>';
-    myLabel.edit            = '<?php echo admin_url('category/edit/');?>';
+    myLabel.fetch        = '<?php echo url('shop/category/onLoadDatatableEventHandler');?>';
+    myLabel.status    = '<?php echo url('shop/category/onClickStatusEventHandler');?>';
+    myLabel.delete          = '<?php echo url('shop/category/delete');?>';
 </script>

@@ -1,5 +1,5 @@
 <div class="content container-fluid">
-    <form id="<?php echo $form;?>" action="<?php echo $route;?>" method="post">
+    <form id="<?php echo $form['id'];?>" action="<?php echo $route;?>" method="post">
         <div class="row">
             <?php if(hasMessage('message')) { ?>
                 <div class="alert alert-info alert-dismissible"><i class="fa fa-exclamation-circle"></i>&nbsp;<?php echo getMessage('message');?>
@@ -7,7 +7,7 @@
                 </div>
             <?php } ?>
             <div class="col-sm-4 col-xs-3">
-                <h4 class="page-title"><?php echo $title;?></h4>
+                <h4 class="page-title"><?php echo $heading;?></h4>
             </div>
             <div class="col-sm-8 text-right m-b-30">
                 <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="card-box">
-            <h3 class="card-title">Category Details</h3>
+            <h3 class="card-title"><?php echo $title;?></h3>
             <div class="row">
                 <div class="col-md-12">
                     <div class="profile-view">
@@ -30,20 +30,20 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Name <span class="text-danger">*</span></label>
-                                        <input value="<?php echo $name;?>" class="form-control" type="text" name="name" id="input-payment-firstname" autocomplete="off" required>
+                                        <label class="control-label"><?php echo $entryName;?> <span class="text-danger">*</span></label>
+                                        <input value="<?php echo $name;?>" placeholder="<?php echo $entryName;?>" class="form-control" type="text" name="name" id="input-payment-firstname" autocomplete="off" required>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Slug <span class="text-danger"></span></label>
-                                        <input value="<?php echo $slug;?>" class="form-control" type="text" name="slug" id="input-payment-lastname" autocomplete="off" >
+                                        <label class="control-label"><?php echo $entrySlug; ?> <span class="text-danger"></span></label>
+                                        <input value="<?php echo $slug;?>" placeholder="<?php echo $entrySlug; ?>" class="form-control" type="text" name="slug" id="input-payment-lastname" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Status <span class="text-danger">*</span></label>
+                                        <label class="control-label"><?php echo $entryStatus; ?> <span class="text-danger">*</span></label>
                                         <select name="status" class="select floating" id="input-payment-status" >
                                             <option value="0" <?php echo ($status == 0) ? 'selected' : '';?>>Inactive</option>
                                             <option value="1" <?php echo ($status == 1) ? 'selected' : '';?>>Active</option>
@@ -52,14 +52,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Sort Order <span class="text-danger"></span></label>
-                                        <input value="<?php echo $sortOrder;?>" class="form-control" type="text" name="sortOrder" id="input-ortOrder" autocomplete="off" required>
+                                        <label class="control-label">Sort Order <span class="text-danger">*</span></label>
+                                        <input value="<?php echo $sort_order;?>" class="form-control" type="text" name="sort_order" id="input-ortOrder" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Parent Category <span class="text-danger">*</span></label>
+                                        <label class="control-label">Parent Category <span class="text-danger"></span></label>
                                         <select name="parent_id" class="select floating" id="input-payment-status">
+                                            <option value=""></option>
                                             <?php if(count($category) > 0) {?>
                                                 <?php foreach ($category as $cat) {?>
                                                     <option value="<?php echo $cat->id;?>"><?php echo $cat->name;?></option>
@@ -85,7 +86,7 @@
                     </div>
                     <div class="form-group">
                         <label>Meta keyword</label>
-                        <textarea name="meta_keyword" rows="2" cols="5" class="form-control " placeholder="Enter your message here"><?php echo $meta_keyword;?></textarea>
+                        <textarea name="meta_keywords" rows="2" cols="5" class="form-control " placeholder="Enter your message here"><?php echo $meta_keywords;?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Meta Description</label>

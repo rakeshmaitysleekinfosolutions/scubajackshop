@@ -128,8 +128,8 @@
                             <li class="submenu">
                                 <a href="#" ><i class="fa fa-luggage-cart fw"></i> <span>Shop</span><span class="menu-arrow"></span></a>
                                 <ul class="list-unstyled" style="display: none;">
-                                    <li class="categoryplus"><a href="<?php echo admin_url('shop/category');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Category</span></a></li>
-                                    <li class="categoryplus"><a href="<?php echo admin_url('shop/product');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Products</span></a></li>
+                                    <li class="categoryplus"><a href="<?php echo url('shop/category');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Category</span></a></li>
+                                    <li class="categoryplus"><a href="<?php echo url('shop/product');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Products</span></a></li>
                                     <!--                                    <li class="categoryplus"><a href="--><?php //echo admin_url('country');?><!--"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Manage Continents</span></a></li>-->
                                 </ul>
                             </li>
