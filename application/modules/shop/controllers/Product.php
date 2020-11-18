@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use Carbon\Carbon;
 
 
-class Category extends AdminController {
+class Product extends AdminController {
 
     public function __construct() {
         parent::__construct();
@@ -32,7 +32,7 @@ class Category extends AdminController {
                     'id'			=> $result->id,
                     'name'		    => $result->name,
                     'slug' 		    => $result->slug,
-                    'sort_order'    => $result->sort_order,
+                    'sort_order'     => $result->sort_order,
                     'status' 		=> ($result->status && $result->status == 1) ? 1 : 0,
                     'created_at'    => Carbon::createFromTimeStamp(strtotime($result->created_at))->diffForHumans(),
                     'updated_at'    => ($result->updated_at) ? Carbon::createFromTimeStamp(strtotime($result->updated_at))->diffForHumans() : ''
@@ -93,11 +93,11 @@ class Category extends AdminController {
     public function onClickStatusEventHandler() {
         if($this->isAjaxRequest()) {
             $this->request = $this->input->post();
-            $this->categoryId   = (isset($this->request['id'])) ? $this->request['id'] : '';
+            $this->productId   = (isset($this->request['id'])) ? $this->request['id'] : '';
             $this->status       = (isset($this->request['status'])) ? $this->request['status'] : '';
 
             $this->load->model('ShopCategory_model');
-            $this->ShopCategory_model->updateStatus($this->categoryId, $this->status);
+            $this->ShopCategory_model->updateStatus($this->productId, $this->status);
             $this->json['message'] = 'Data has been successfully updated';
             $this->json['status'] = true;
 
@@ -116,7 +116,7 @@ class Category extends AdminController {
         $this->data['columns'][] = 'Status';
         $this->data['columns'][] = 'Created At';
         $this->data['columns'][] = 'Updated At';
-        $this->data['add'] = url('shop/category/create');
+        $this->data['add'] = url('shop/product/create');
         attach('assets/theme/light/js/datatables/dataTables.bootstrap4.css', 'css');
         attach('assets/theme/light/js/datatables/jquery.dataTables.min.js', 'js');
         attach('assets/theme/light/js/datatables/dataTables.bootstrap4.min.js', 'js');
@@ -125,110 +125,206 @@ class Category extends AdminController {
     }
     public function init() {
         
-        $this->data['heading']                  = 'Project Management';
-        $this->data['entryName']                = 'Name';
-        $this->data['entrySlug']                = 'Slug';
-        $this->data['entryStatus']              = 'Status';
+        $this->data['heading']                  = 'Product Management';
+        $this->data['entryName']                = 'Model';
         $this->data['form']             = array(
-            'id'    => 'CategoryForm',
-            'name'  => 'CategoryForm',
+            'id'    => 'ProductForm',
+            'name'  => 'ProductForm',
         );
         // Category ID
         if (!empty($this->input->post('id'))) {
             $this->data['id'] = $this->input->post('id');
-        } elseif (!empty($this->category)) {
-            $this->data['id'] = $this->category->id;
+        } elseif (!empty($this->product)) {
+            $this->data['id'] = $this->product->id;
         } else {
             $this->data['id'] = '';
         }
-        // Name
-        if (!empty($this->input->post('name'))) { //add
-            $this->data['name'] = $this->input->post('name');
-        } elseif (!empty($this->category)) {//edit
-            $this->data['name'] = $this->category->name;
+        // model
+        if (!empty($this->input->post('model'))) { //add
+            $this->data['model'] = $this->input->post('model');
+        } elseif (!empty($this->product)) {//edit
+            $this->data['model'] = $this->product->model;
         } else {
-            $this->data['name'] = '';
+            $this->data['model'] = '';
         }
-        // Sort Order
+        // sku
+        if (!empty($this->input->post('sku'))) {
+            $this->data['sku'] = $this->input->post('sku');
+        } elseif (!empty($this->product)) {
+            $this->data['sku'] = $this->product->sku;
+        } else {
+            $this->data['sku'] = '';
+        }
+        // upc
+        if (!empty($this->input->post('upc'))) {
+            $this->data['upc'] = $this->input->post('upc');
+        } elseif (!empty($this->product)) {
+            $this->data['upc'] = $this->product->upc;
+        } else {
+            $this->data['upc'] = '';
+        }
+        
+        // ean
+        if (!empty($this->input->post('ean'))) {
+            $this->data['ean'] = $this->input->post('ean');
+        } elseif (!empty($this->product)) {
+            $this->data['ean'] = $this->product->description->description;
+        } else {
+            $this->data['ean'] = '';
+        }
+        // jan
+        if (!empty($this->input->post('jan'))) {
+            $this->data['jan'] = $this->input->post('jan');
+        } elseif (!empty($this->product)) {
+            $this->data['jan'] = $this->product->jan;
+        } else {
+            $this->data['jan'] = '';
+        }
+        // isbn
+        if (!empty($this->input->post('isbn'))) {
+            $this->data['isbn'] = $this->input->post('isbn');
+        } elseif (!empty($this->product)) {
+            $this->data['isbn'] = $this->product->isbn;
+        } else {
+            $this->data['isbn'] = '';
+        }
+        // mpn
+        if (!empty($this->input->post('mpn'))) {
+            $this->data['mpn'] = $this->input->post('mpn');
+        } elseif (!empty($this->product)) {
+            $this->data['mpn'] = $this->product->mpn;
+        } else {
+            $this->data['mpn'] = '';
+        }
+        
+        // quantity
+        if (!empty($this->input->post('quantity'))) {
+            $this->data['quantity'] = $this->input->post('quantity');
+        } elseif (!empty($this->product)) {
+            $this->data['quantity'] = $this->product->quantity;
+        } else {
+            $this->data['quantity'] = '';
+        }
+        // mpn
+        if (!empty($this->input->post('price'))) {
+            $this->data['price'] = $this->input->post('price');
+        } elseif (!empty($this->product)) {
+            $this->data['price'] = $this->product->price;
+        } else {
+            $this->data['price'] = '';
+        }
+        // stock_status_id
+        if (!empty($this->input->post('stock_status_id'))) {
+            $this->data['stock_status_id'] = $this->input->post('stock_status_id');
+        } elseif (!empty($this->product)) {
+            $this->data['stock_status_id'] = $this->product->stock_status_id;
+        } else {
+            $this->data['stock_status_id'] = 0;
+        }
+        //dd($this->data);
+        // Status
+        if (!empty($this->input->post('tax_class_id'))) {
+            $this->data['tax_class_id'] = $this->input->post('tax_class_id');
+        } elseif (!empty($this->product)) {
+            $this->data['tax_class_id'] = $this->product->tax_class_id;
+        } else {
+            $this->data['tax_class_id'] = 0;
+        }
+        //parent
+        if (!empty($this->input->post('shipping'))) {
+            $this->data['shipping'] = $this->input->post('shipping');
+        } elseif (!empty($this->product)) {
+            $this->data['shipping'] = $this->product->shipping;
+        } else {
+            $this->data['shipping'] = '';
+        }
+        //parent
+        if (!empty($this->input->post('date_available'))) {
+            $this->data['date_available'] = $this->input->post('date_available');
+        } elseif (!empty($this->product)) {
+            $this->data['date_available'] = $this->product->date_available;
+        } else {
+            $this->data['date_available'] = date('mm-dd-yyyy');
+        }
+        //parent
+        if (!empty($this->input->post('subtract'))) {
+            $this->data['subtract'] = $this->input->post('subtract');
+        } elseif (!empty($this->product)) {
+            $this->data['subtract'] = $this->product->subtract;
+        } else {
+            $this->data['subtract'] = '';
+        }
+        //parent
         if (!empty($this->input->post('sort_order'))) {
             $this->data['sort_order'] = $this->input->post('sort_order');
-        } elseif (!empty($this->category)) {
-            $this->data['sort_order'] = $this->category->sort_order;
+        } elseif (!empty($this->product)) {
+            $this->data['sort_order'] = $this->product->sort_order;
         } else {
             $this->data['sort_order'] = '';
         }
-        // Slug
-        if (!empty($this->input->post('slug'))) {
-            $this->data['slug'] = url_title($this->input->post('slug'),'dash', true);
-        } elseif (!empty($this->category)) {
-            $this->data['slug'] = ($this->category->slug) ? $this->category->slug : url_title($this->input->post('name'),'dash', true);
+        //parent
+        if (!empty($this->input->post('status'))) {
+            $this->data['status'] = $this->input->post('status');
+        } elseif (!empty($this->product)) {
+            $this->data['status'] = $this->product->status;
         } else {
-            $this->data['slug'] = url_title($this->input->post('name'),'dash', true);
+            $this->data['status'] = 1;
+        }
+        //parent
+        if (!empty($this->input->post('viewed'))) {
+            $this->data['viewed'] = $this->input->post('viewed');
+        } elseif (!empty($this->product)) {
+            $this->data['viewed'] = $this->product->status;
+        } else {
+            $this->data['viewed'] = '';
         }
         // Description
         if (!empty($this->input->post('description'))) {
             $this->data['description'] = $this->input->post('description');
-        } elseif (!empty($this->category)) {
-            $this->data['description'] = $this->category->description->description;
+        } elseif (!empty($this->product)) {
+            $this->data['description'] = $this->product->description->description;
         } else {
             $this->data['description'] = '';
         }
         // Meta Title
         if (!empty($this->input->post('meta_title'))) {
             $this->data['meta_title'] = $this->input->post('meta_title');
-        } elseif (!empty($this->category)) {
-            $this->data['meta_title'] = $this->category->description->meta_title;
+        } elseif (!empty($this->product)) {
+            $this->data['meta_title'] = $this->product->description->meta_title;
         } else {
             $this->data['meta_title'] = '';
         }
         // Meta Description
         if (!empty($this->input->post('meta_description'))) {
             $this->data['meta_description'] = $this->input->post('meta_description');
-        } elseif (!empty($this->category)) {
-            $this->data['meta_description'] = $this->category->description->meta_description;
+        } elseif (!empty($this->product)) {
+            $this->data['meta_description'] = $this->product->description->meta_description;
         } else {
             $this->data['meta_description'] = '';
         }
         // Meta keyword
         if (!empty($this->input->post('meta_keywords'))) {
             $this->data['meta_keywords'] = $this->input->post('meta_keywords');
-        } elseif (!empty($this->category)) {
-            $this->data['meta_keywords'] = $this->category->description->meta_keywords;
+        } elseif (!empty($this->product)) {
+            $this->data['meta_keywords'] = $this->product->description->meta_keywords;
         } else {
             $this->data['meta_keywords'] = '';
-        }
-        //dd($this->data);
-        // Status
-        if (!empty($this->input->post('status'))) {
-            $this->data['status'] = $this->input->post('status');
-        } elseif (!empty($this->category)) {
-            $this->data['status'] = $this->category->status;
-        } else {
-            $this->data['status'] = 1;
-        }
-        //parent
-        if (!empty($this->input->post('parent_id'))) {
-            $this->data['parent_id'] = $this->input->post('parent_id');
-        } elseif (!empty($this->category)) {
-            $this->data['parent_id'] = $this->category->parent_id;
-        } else {
-            $this->data['parent_id'] = '';
         }
         
         // Image
 
         if (!empty($this->input->post('image'))) {
             $this->data['image'] = $this->input->post('image');
-        } elseif (!empty($this->category)) {
-            $this->data['image'] = $this->category->image;
+        } elseif (!empty($this->product)) {
+            $this->data['image'] = $this->product->image;
         } else {
             $this->data['image'] = '';
         }
 
         if (!empty($this->input->post('image')) && is_file(DIR_IMAGE . $this->input->post('image'))) {
             $this->data['thumb'] = $this->resize($this->input->post('image'), 100, 100);
-        } elseif (!empty($this->category) && is_file(DIR_IMAGE . $this->category->image)) {
-            $this->data['thumb'] = $this->resize($this->category->image, 100, 100);
+        } elseif (!empty($this->product) && is_file(DIR_IMAGE . $this->product->image)) {
+            $this->data['thumb'] = $this->resize($this->product->image, 100, 100);
         } else {
             $this->data['thumb'] = $this->resize('no_image.png', 100, 100);
         }
@@ -236,7 +332,7 @@ class Category extends AdminController {
         $this->data['placeholder'] = $this->resize('no_image.png', 100, 100);
 
         $this->data['back'] = url('shop/category');
-        $this->data['category'] = ShopCategory_model::factory()->findAll([],null,'name', 'ASC');
+        $this->data['product'] = Shop_model::factory()->findAll([],null,'model', 'ASC');
         //$this->dd($this->data);
     }
     public function validateForm() {
@@ -271,28 +367,40 @@ class Category extends AdminController {
     }
     public function create() {
         $this->init();
-        $this->data['title'] = 'Add Shop Category Form';
-        $this->data['route'] = url('shop/category/store');
+        $this->data['title'] = 'Add Product Form';
+        $this->data['route'] = url('shop/product/store');
         attach('assets/js/jquery.validate.js', 'js');
         attach('assets/js/additional-methods.js', 'js');
         attach('assets/theme/light/js/datatables/dataTables.bootstrap4.css', 'css');
         attach('assets/js/shop/Category.js', 'js');
-        render('category/create', $this->data); 
+        render('product/create', $this->data); 
     }
     
     public function store() {
         try {
             $this->init();
-            ShopCategory_model::factory()->insert([
-                'name'          => $this->data['name'],
-                'slug'          => $this->data['slug'],
-                'image'         => $this->data['image'],
-                'parent_id'     => $this->data['parent_id'],
-                'sort_order'    => $this->data['sort_order'],
-                'status'        => $this->data['status'],
+            Shop_model::factory()->insert([
+                'model'             => $this->data['name'],
+                'sku'               => $this->data['slug'],
+                'upc'               => $this->data['image'],
+                'ean'               => $this->data['parent_id'],
+                'jan'               => $this->data['sort_order'],
+                'isbn'              => $this->data['status'],
+                'mpn'               => $this->data['status'],
+                'quantity'          => $this->data['status'],
+                'stock_status_id'   => $this->data['status'],
+                'image'             => $this->data['status'],
+                'shipping'          => $this->data['status'],
+                'price'             => $this->data['status'],
+                'tax_class_id'      => $this->data['status'],
+                'date_available'    => $this->data['status'],
+                'subtract'          => $this->data['status'],
+                'sort_order'        => $this->data['status'],
+                'status'            => $this->data['status'],
+                'viewed'            => $this->data['status'],
             ]);
-            ShopCategoryDescription_model::factory()->insert([
-                'category_id'       => ShopCategory_model::factory()->getLastInsertID(),
+            ShopDescription_model::factory()->insert([
+                'shop_id'           => Shop_model::factory()->getLastInsertID(),
                 'description'       => $this->data['description'],
                 'meta_title'        => $this->data['meta_title'],
                 'meta_description'  => $this->data['meta_description'],
@@ -306,9 +414,9 @@ class Category extends AdminController {
     }
     public function edit($id) {
        
-        $this->category = ShopCategory_model::factory()->findOne($id);
+        $this->product = ShopCategory_model::factory()->findOne($id);
         
-        if(!$this->category) {
+        if(!$this->product) {
             setMessage('message', 'Record not found');
             redirect(url('shop/category/'));
         }
@@ -324,8 +432,8 @@ class Category extends AdminController {
     }
     public function update($id) {
         try {
-            $this->category = ShopCategory_model::factory()->findOne($id);
-            if(!$this->category) {
+            $this->product = ShopCategory_model::factory()->findOne($id);
+            if(!$this->product) {
                 setMessage('message', 'Info: Category does not exists!');
                 redirect(url('shop/category'));
             }

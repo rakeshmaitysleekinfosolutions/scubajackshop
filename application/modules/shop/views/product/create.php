@@ -31,19 +31,63 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label"><?php echo $entryName;?> <span class="text-danger">*</span></label>
-                                        <input value="<?php echo $name;?>" placeholder="<?php echo $entryName;?>" class="form-control" type="text" name="name" id="input-payment-firstname" autocomplete="off" required>
+                                        <input value="<?php echo $model;?>" placeholder="<?php echo $entryName;?>" class="form-control" type="text" name="model" id="input-payment-firstname" autocomplete="off" required>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label"><?php echo $entrySlug; ?> <span class="text-danger"></span></label>
-                                        <input value="<?php echo $slug;?>" placeholder="<?php echo $entrySlug; ?>" class="form-control" type="text" name="slug" id="input-payment-lastname" autocomplete="off" >
+                                        <label class="control-label">SKU <span class="text-danger"></span></label>
+                                        <input value="<?php echo $sku;?>" placeholder="SKU" class="form-control" type="text" name="sku" id="input-payment-lastname" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label"><?php echo $entryStatus; ?> <span class="text-danger">*</span></label>
+                                        <label class="control-label">UPC <span class="text-danger"></span></label>
+                                        <input value="<?php echo $upc;?>" placeholder="UPC" class="form-control" type="text" name="upc" id="input-payment-lastname" autocomplete="off" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">EAN <span class="text-danger"></span></label>
+                                        <input value="<?php echo $ean;?>" placeholder="EAN" class="form-control" type="text" name="ean" id="input-payment-lastname" autocomplete="off" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">JAN <span class="text-danger"></span></label>
+                                        <input value="<?php echo $jan;?>" placeholder="JAN" class="form-control" type="text" name="jan" id="input-payment-lastname" autocomplete="off" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">ISBN <span class="text-danger"></span></label>
+                                        <input value="<?php echo $isbn;?>" placeholder="ISBN" class="form-control" type="text" name="isbn" id="input-payment-lastname" autocomplete="off" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">MPN <span class="text-danger"></span></label>
+                                        <input value="<?php echo $mpn;?>" placeholder="MPN" class="form-control" type="text" name="mpn" id="input-payment-lastname" autocomplete="off" >
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Quantity <span class="text-danger"></span></label>
+                                        <input value="<?php echo $quantity;?>" placeholder="QTY" class="form-control" type="text" name="quantity" id="input-payment-lastname" autocomplete="off" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Price <span class="text-danger"></span></label>
+                                        <input value="<?php echo $price;?>" placeholder="Price" class="form-control" type="text" name="price" id="input-payment-lastname" autocomplete="off" >
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Status <span class="text-danger">*</span></label>
                                         <select name="status" class="select floating" id="input-payment-status" >
                                             <option value="0" <?php echo ($status == 0) ? 'selected' : '';?>>Inactive</option>
                                             <option value="1" <?php echo ($status == 1) ? 'selected' : '';?>>Active</option>
@@ -56,19 +100,7 @@
                                         <input value="<?php echo $sort_order;?>" class="form-control" type="text" name="sort_order" id="input-ortOrder" autocomplete="off" required>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Parent Category <span class="text-danger"></span></label>
-                                        <select name="parent_id" class="select floating" id="input-payment-status">
-                                            <option value=""></option>
-                                            <?php if(count($category) > 0) {?>
-                                                <?php foreach ($category as $cat) {?>
-                                                    <option value="<?php echo $cat->id;?>"><?php echo $cat->name;?></option>
-                                                <?php } ?>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -97,7 +129,7 @@
         </div>
         <div class="col-md-9">
             <div class="card-box">
-                <h3 class="card-title">Category Description</h3>
+                <h3 class="card-title">Product Description</h3>
                 <div class="experience-box">
                     <div class="form-group">
                         <label>Description</label>
