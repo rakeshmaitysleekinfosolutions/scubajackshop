@@ -14,4 +14,7 @@ class ShopCategory_model extends BaseModel {
         return new ShopCategory_model($attr);
     }
 
+    public function description() {
+        return $this->hasOne(ShopCategoryDescription_model::class, 'category_id', 'id');
+    }
 }

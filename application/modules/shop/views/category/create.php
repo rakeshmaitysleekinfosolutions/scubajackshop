@@ -21,7 +21,7 @@
                     <div class="profile-view">
                         <div class="profile-img-wrap">
                             <div class="profile-img">
-                                <a href="javascript:void(0);" type="image" href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb;?>" alt="" title="" data-placeholder="<?php echo $placeholder;?>"/></a>
+                                <a href="javascript:void(0);" type="image" href="" id="thumb-image" data-toggle="image"><img src="<?php echo $thumb;?>" alt="" title="" data-placeholder="<?php echo $placeholder;?>"/></a>
                                 <input type="hidden" name="image" value="<?php echo $image;?>" id="input-image"/>
                             </div>
                         </div>
@@ -31,20 +31,20 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label"><?php echo $entryName;?> <span class="text-danger">*</span></label>
-                                        <input value="<?php echo $name;?>" placeholder="<?php echo $entryName;?>" class="form-control" type="text" name="name" id="input-payment-firstname" autocomplete="off" required>
+                                        <input value="<?php echo $name;?>" placeholder="<?php echo $entryName;?>" class="form-control" type="text" name="name" id="input-name" autocomplete="off" required>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label"><?php echo $entrySlug; ?> <span class="text-danger"></span></label>
-                                        <input value="<?php echo $slug;?>" placeholder="<?php echo $entrySlug; ?>" class="form-control" type="text" name="slug" id="input-payment-lastname" autocomplete="off" >
+                                        <input value="<?php echo $slug;?>" placeholder="<?php echo $entrySlug; ?>" class="form-control" type="text" name="slug" id="input-slug" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label"><?php echo $entryStatus; ?> <span class="text-danger">*</span></label>
-                                        <select name="status" class="select floating" id="input-payment-status" >
+                                        <label class="control-label">Status <span class="text-danger">*</span></label>
+                                        <select name="status" class="form-control floating" id="input-payment-status" >
                                             <option value="0" <?php echo ($status == 0) ? 'selected' : '';?>>Inactive</option>
                                             <option value="1" <?php echo ($status == 1) ? 'selected' : '';?>>Active</option>
                                         </select>
@@ -59,11 +59,14 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label">Parent Category <span class="text-danger"></span></label>
-                                        <select name="parent_id" class="select floating" id="input-payment-status">
+                                        <select name="parent_id" class="select floating" id="input-parent_id">
                                             <option value=""></option>
                                             <?php if(count($category) > 0) {?>
-                                                <?php foreach ($category as $cat) {?>
+                                                <?php foreach ($category as $cat) {
+                                                    if($cat->id != $id) {
+                                                    ?>
                                                     <option value="<?php echo $cat->id;?>"><?php echo $cat->name;?></option>
+                                                <?php } ?>
                                                 <?php } ?>
                                             <?php } ?>
                                         </select>

@@ -21,7 +21,7 @@
                     <div class="profile-view">
                         <div class="profile-img-wrap">
                             <div class="profile-img">
-                                <a href="javascript:void(0);" type="image" href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb;?>" alt="" title="" data-placeholder="<?php echo $placeholder;?>"/></a>
+                                <a href="javascript:void(0);" type="image" href="" id="thumb-image" data-toggle="image"><img src="<?php echo $thumb;?>" alt="" title="" data-placeholder="<?php echo $placeholder;?>"/></a>
                                 <input type="hidden" name="image" value="<?php echo $image;?>" id="input-image"/>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label"><?php echo $entryStatus; ?> <span class="text-danger">*</span></label>
-                                        <select name="status" class="select floating" id="input-payment-status" >
+                                        <select name="status" class="form-control floating" id="input-payment-status" >
                                             <option value="0" <?php echo ($status == 0) ? 'selected' : '';?>>Inactive</option>
                                             <option value="1" <?php echo ($status == 1) ? 'selected' : '';?>>Active</option>
                                         </select>
@@ -62,8 +62,11 @@
                                         <select name="parent_id" class="select floating" id="input-payment-status">
                                             <option value=""></option>
                                             <?php if(count($category) > 0) {?>
-                                                <?php foreach ($category as $cat) {?>
-                                                    <option value="<?php echo $cat->id;?>"><?php echo $cat->name;?></option>
+                                                <?php foreach ($category as $cat) {
+                                                    if($cat->id != $id) {
+                                                        ?>
+                                                        <option value="<?php echo $cat->id;?>"><?php echo $cat->name;?></option>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             <?php } ?>
                                         </select>
@@ -76,39 +79,39 @@
             </div>
         </div>
         <div class="row">
-        <div class="col-md-3">
-            <div class="card-box m-b-0">
-                <h3 class="card-title">Meta Data</h3>
-                <div class="skills">
-                    <div class="form-group">
-                        <label class="control-label">Meta Title <span class="text-danger">*</span></label>
-                        <input value="<?php echo $meta_title;?>" name="meta_title" type="text" class="form-control" placeholder="Enter your message here">
-                    </div>
-                    <div class="form-group">
-                        <label>Meta keyword</label>
-                        <textarea name="meta_keywords" rows="2" cols="5" class="form-control " placeholder="Enter your message here"><?php echo $meta_keywords;?></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Meta Description</label>
-                        <textarea name="meta_description" rows="2" cols="5" class="form-control " placeholder="Enter your message here"><?php echo $meta_description;?></textarea>
+            <div class="col-md-3">
+                <div class="card-box m-b-0">
+                    <h3 class="card-title">Meta Data</h3>
+                    <div class="skills">
+                        <div class="form-group">
+                            <label class="control-label">Meta Title <span class="text-danger">*</span></label>
+                            <input value="<?php echo $meta_title;?>" name="meta_title" type="text" class="form-control" placeholder="Enter your message here">
+                        </div>
+                        <div class="form-group">
+                            <label>Meta keyword</label>
+                            <textarea name="meta_keywords" rows="2" cols="5" class="form-control " placeholder="Enter your message here"><?php echo $meta_keywords;?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Meta Description</label>
+                            <textarea name="meta_description" rows="2" cols="5" class="form-control " placeholder="Enter your message here"><?php echo $meta_description;?></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-9">
-            <div class="card-box">
-                <h3 class="card-title">Category Description</h3>
-                <div class="experience-box">
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="description" rows="4" cols="5" class="form-control summernote" placeholder="Enter your message here"><?php echo $description;?></textarea>
+            <div class="col-md-9">
+                <div class="card-box">
+                    <h3 class="card-title">Category Description</h3>
+                    <div class="experience-box">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" rows="4" cols="5" class="form-control summernote" placeholder="Enter your message here"><?php echo $description;?></textarea>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
     </form>
 </div>
 

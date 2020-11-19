@@ -75,7 +75,7 @@
             focus: false                 // set focus to editable area after initializing summernote
         });
     });
-    addImage
+
     //Delete Records
     $(document).on('click', '#delete', function (e) {
         var selected = [];

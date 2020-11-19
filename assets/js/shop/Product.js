@@ -1,23 +1,29 @@
 !function ($) {
 		"use strict";
-    var $frmShopCategory      = $("#frmShopCategory"),
+    var $frmShopProduct      = $("#frmShopProduct"),
         validate = ($.fn.validate !== undefined),
         dataTable = ($.fn.dataTable !== undefined);
-        if ($frmShopCategory.length > 0 && validate) {
-            $frmShopCategory.validate({
-                rules:{
-                    name: {
-                        required: true,
-                    },
-                    sort_order: {
-                        required: true,
-                    },
-                    meta_title: {
-                        required: true,
-                    },
-                }
-            });
-        }
+        if ($frmShopProduct.length > 0 && validate) {
+        $frmShopProduct.validate({
+            rules:{
+                name: {
+                    required: true,
+                },
+                status: {
+                    required: true,
+                },
+                quantity: {
+                    required: true,
+                },
+                price: {
+                    required: true,
+                },
+                meta_title: {
+                    required: true,
+                },
+            },
+        });
+    }
         if ($(".datatable").length > 0 && dataTable) {
             var dataTable = $('.datatable').DataTable( {
                 "processing": true,

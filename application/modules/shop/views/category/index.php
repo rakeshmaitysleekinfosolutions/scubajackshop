@@ -26,7 +26,7 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="datatable">
+                    <table class="table table-bordered table-hover datatable" id="datatable">
                         <thead>
                         <tr>
                             <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>

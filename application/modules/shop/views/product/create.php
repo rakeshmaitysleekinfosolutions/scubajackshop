@@ -28,19 +28,19 @@
                         <div class="profile-basic">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group floating">
+                                    <div class="form-group form-focus">
                                         <label class="control-label"><?php echo $entryName;?> <span class="text-danger"></span></label>
                                         <input value="<?php echo $name;?>" class="form-control floating" type="text" name="name" id="input-payment-lastname" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group floating">
+                                    <div class="form-group form-focus">
                                         <label class="control-label"><?php echo $entrySlug;?> <span class="text-danger"></span></label>
                                         <input value="<?php echo $slug;?>" class="form-control floating" type="text" name="slug" id="input-payment-lastname" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="form-group form-focus">
                                         <label class="control-label">Status <span class="text-danger">*</span></label>
                                         <select name="status" class="select floating" id="input-payment-status" >
                                             <option value="0" <?php echo ($status == 0) ? 'selected' : '';?>>Inactive</option>
@@ -49,21 +49,21 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="form-group form-focus">
                                         <label class="control-label">Sort Order <span class="text-danger">*</span></label>
-                                        <input value="<?php echo $sort_order;?>" class="form-control" type="text" name="sort_order" id="input-ortOrder" autocomplete="off" required>
+                                        <input value="<?php echo $sort_order;?>" class="form-control floating" type="text" name="sort_order" id="input-ortOrder" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="form-group form-focus">
                                         <label class="control-label">Quantity <span class="text-danger"></span></label>
-                                        <input value="<?php echo $quantity;?>" placeholder="QTY" class="form-control" type="text" name="quantity" id="input-payment-lastname" autocomplete="off" >
+                                        <input value="<?php echo $quantity;?>" placeholder="QTY" class="form-control floating" type="text" name="quantity" id="input-payment-lastname" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="form-group form-focus">
                                         <label class="control-label">Price <span class="text-danger"></span></label>
-                                        <input value="<?php echo $price;?>"  class="form-control" type="text" name="price" id="input-payment-lastname" autocomplete="off" >
+                                        <input value="<?php echo $price;?>"  class="form-control floating" type="text" name="price" id="input-payment-lastname" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -95,7 +95,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label"><?php echo $entryDescription;?></label>
-                            <textarea name="description" rows="5" class="form-control floating summernote" type="text" autocomplete="off"><?php echo $description;?></textarea>
+                            <textarea name="description" rows="5" class="form-control summernote" type="text" autocomplete="off"><?php echo $description;?></textarea>
                         </div>
                     </div>
                     <?php
@@ -150,7 +150,7 @@
             <div class="card-box">
                 <h3 class="card-title">Meta Data</h3>
                 <div class="row">
-                    <div class="col-md-12">
+
                         <div class="col-md-12">
                             <div class="form-group form-focus">
                                 <label class="control-label"><?php echo $entryMetaTitle;?><span class="text-danger">*</span></label>
@@ -158,18 +158,18 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="form-group">
+                            <div class="form-group form-focus">
                                 <label class="control-label"><?php echo $entryMetaDescription;?><span class="text-danger"></span></label>
                                 <textarea name="meta_description" rows="5" class="form-control floating" type="text" autocomplete="off"><?php echo $meta_description;?></textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="form-group">
+                            <div class="form-group form-focus">
                                 <label class="control-label"><?php echo $entryMetaKeywords;?><span class="text-danger"></span></label>
                                 <textarea name="meta_keywords" rows="5" class="form-control floating" type="text" autocomplete="off"><?php echo $meta_keywords;?></textarea>
                             </div>
                         </div>
-                    </div>
+
                 </div>
             </div>
             <div class="card-box">

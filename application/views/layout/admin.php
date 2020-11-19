@@ -9,7 +9,7 @@
         <link rel="shortcut icon" href="<?php echo base_url();?>assets/images/favicon.ico">
         <title>Dashboard - SCUBA JACK Admin</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700">
-        <link rel="stylesheet" href="<?php echo base_url();?>dist/app.css">
+<!--        <link rel="stylesheet" href="--><?php //echo base_url();?><!--dist/app.css">-->
 		<link rel="stylesheet" href="<?php echo base_url();?>assets/theme/light/css/bootstrap.min.css">
 		<link rel="stylesheet" href="<?php echo base_url();?>assets/theme/light/css/font-awesome.min.css">
 		<link rel="stylesheet" href="<?php echo base_url();?>assets/theme/light/plugins/morris/morris.css">
@@ -119,7 +119,7 @@
                                 </ul>
                             </li>
                             <li class="submenu">
-                                <a href="#" ><i class="fa fa-luggage-cart fw"></i> <span>Shop</span><span class="menu-arrow"></span></a>
+                                <a href="#" ><i class="fa fa-tags fw"></i> <span>Shop</span><span class="menu-arrow"></span></a>
                                 <ul class="list-unstyled" style="display: none;">
                                     <li class="categoryplus"><a href="<?php echo url('shop/category');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Category</span></a></li>
                                     <li class="categoryplus"><a href="<?php echo url('shop/product');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Products</span></a></li>
@@ -140,7 +140,22 @@
 			</div>
         </div>
 		<div class="sidebar-overlay" data-reff="#sidebar"></div>
-        <script type="text/javascript" src="<?php echo base_url();?>dist/app.js" ></script>
+<!--        <script type="text/javascript" src="--><?php //echo base_url();?><!--dist/app.js" ></script>-->
+        <script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/jquery.slimscroll.js" ></script>
+<!--		<script type="text/javascript" src="--><?php //echo base_url();?><!--assets/theme/light/plugins/morris/morris.min.js" ></script>-->
+		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/plugins/raphael/raphael-min.js" ></script>
+		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/app.js" ></script>
+
+		<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/dataTables.bootstrap.min.js"></script>
+	 -->
+		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/select2.min.js"></script>
+
+		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/sweetalert/sweetalert.js" ></script>
+		 <script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/summernote/summernote.js" ></script>
+		<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/App.js" ></script> -->
 		<?php echo $this->template->javascript; ?>
     </body>
 </html>

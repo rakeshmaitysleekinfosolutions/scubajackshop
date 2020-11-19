@@ -18,7 +18,7 @@ class Shop_model extends BaseModel {
         return $this->hasOne(ShopDescription_model::class, 'shop_id', 'id');
     }
     public function categories($itemId) {
-        $items = ShopToCategory_model::factory()->findAll(['shop_category_id' => $itemId]);
+        $items = ShopToCategory_model::factory()->findAll(['shop_id' => $itemId]);
         $ids = array();
         if(count($items) > 0) {
             foreach ($items as $item) {

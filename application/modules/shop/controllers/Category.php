@@ -23,106 +23,23 @@ class Category extends AdminController {
      */
     private $status;
 
-    public function onLoadDatatableEventHandler() {
 
-        $this->results = ShopCategory_model::factory()->findAll();
-        if($this->results) {
-            foreach($this->results as $result) {
-                $this->rows[] = array(
-                    'id'			=> $result->id,
-                    'name'		    => $result->name,
-                    'slug' 		    => $result->slug,
-                    'sort_order'    => $result->sort_order,
-                    'status' 		=> ($result->status && $result->status == 1) ? 1 : 0,
-                    'created_at'    => Carbon::createFromTimeStamp(strtotime($result->created_at))->diffForHumans(),
-                    'updated_at'    => ($result->updated_at) ? Carbon::createFromTimeStamp(strtotime($result->updated_at))->diffForHumans() : ''
-                );
-            }
-            $i = 0;
-            foreach($this->rows as $row) {
-                $this->selected = ($row['status'] == 1) ? 'selected' : '';
-                $this->data[$i][] = '<td class="text-center">
-											<label class="css-control css-control-primary css-checkbox">
-                                                <input type="checkbox" class="css-control-input selectCheckbox" value="'.$row['id'].'" name="selected[]">
-                                                <span class="css-control-indicator"></span>
-											</label>
-										</td>';
-                $this->data[$i][] = '<td>'.$row['name'].'</td>';
-                $this->data[$i][] = '<td>'.$row['sort_order'].'</td>';
-//					$this->data[$i][] = '<td>
-//											<div class="material-switch pull-right">
-//											<input data-id="'.$row['id'].'" class="checkboxStatus" name="switch_checkbox" id="chat_module" type="checkbox" value="'.$row['status'].'" '.$checked.'/>
-//											<label for="chat_module" class="label-success"></label>
-//										</div>
-//                                        </td>';
-                $this->data[$i][] = '<td>
-                                            <select data-id="'.$row['id'].'" name="status" class="select floating checkboxStatus" id="input-payment-status" >
-                                                <option value="0" '.$this->selected.'>Inactive</option>
-                                                <option value="1" '.$this->selected.'>Active</option>
-                                            </select>
-                                        </td>';
-                $this->data[$i][] = '<td>'.$row['created_at'].'</td>';
-                $this->data[$i][] = '<td>'.$row['updated_at'].'</td>';
-                $this->data[$i][] = '<td class="text-right">
-	                            <div class="dropdown">
-	                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-	                                <ul class="dropdown-menu pull-right">
-	                                    <li><a class="edit" href="'.url('shop/category/edit/'.$row['id']).'" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-	                                </ul>
-	                            </div>
-	                        </td>
-                        ';
-                $i++;
-            }
-
-
-        }
-
-        if($this->data) {
-            return $this->output
-                ->set_content_type('application/json')
-                ->set_status_header(200)
-                ->set_output(json_encode(array('data' => $this->data)));
-        } else {
-            return $this->output
-                ->set_content_type('application/json')
-                ->set_status_header(200)
-                ->set_output(json_encode(array('data' => [])));
-        }
-    }
-    public function onClickStatusEventHandler() {
-        if($this->isAjaxRequest()) {
-            $this->request = $this->input->post();
-            $this->categoryId   = (isset($this->request['id'])) ? $this->request['id'] : '';
-            $this->status       = (isset($this->request['status'])) ? $this->request['status'] : '';
-
-            $this->load->model('ShopCategory_model');
-            $this->ShopCategory_model->updateStatus($this->categoryId, $this->status);
-            $this->json['message'] = 'Data has been successfully updated';
-            $this->json['status'] = true;
-
-            return $this->output
-                ->set_content_type('application/json')
-                ->set_status_header(200)
-                ->set_output(json_encode($this->json));
-
-        }
-    }
     public function index() {
 
         $this->init();
         $this->data['title']     = 'Shop Category';
         $this->data['columns'][] = 'Name';
         $this->data['columns'][] = 'Sort Order';
+        $this->data['columns'][] = 'Image';
         $this->data['columns'][] = 'Status';
         $this->data['columns'][] = 'Created At';
         $this->data['columns'][] = 'Updated At';
         $this->data['add'] = url('shop/category/create');
+
         attach('assets/theme/light/js/datatables/dataTables.bootstrap4.css', 'css');
         attach('assets/theme/light/js/datatables/jquery.dataTables.min.js', 'js');
         attach('assets/theme/light/js/datatables/dataTables.bootstrap4.min.js', 'js');
         attach('assets/js/shop/Category.js', 'js');
-
         render('category/index', $this->data);
     }
     public function init() {
@@ -138,8 +55,8 @@ class Category extends AdminController {
         $this->data['deleteBtn']     = 'Delete';
 
         $this->data['form']             = array(
-            'id'    => 'CategoryForm',
-            'name'  => 'CategoryForm',
+            'id'    => 'frmShopCategory',
+            'name'  => 'frmShopCategory',
         );
         // Category ID
         if (!empty($this->input->post('id'))) {
@@ -246,48 +163,23 @@ class Category extends AdminController {
         $this->data['back'] = url('shop/category');
         $this->data['category'] = ShopCategory_model::factory()->findAll([],null,'name', 'ASC');
         //$this->dd($this->data);
+
     }
-    public function validateForm() {
-        $this->lang->load('admin/category');
-        if ((strlen($this->input->post('name')) < 1) || (strlen(trim($this->input->post('name'))) > 255)) {
-            $this->error['name'] = $this->lang->line('error_name');
-        }
 
-        if ((strlen($this->input->post('sort_order')) < 1)) {
-            $this->error['sort_order'] = $this->lang->line('error_sort_order');
-        }
-        //dd($this->input->post('status'));
-        if ($this->input->post('status') == '') {
-            $this->error['status'] = $this->lang->line('error_status');
-        }
-        if ((strlen($this->input->post('meta_title')) < 1) || (strlen(trim($this->input->post('meta_title'))) > 255)) {
-            $this->error['meta_title'] = $this->lang->line('error_meta_title');
-        }
-
-        if ((strlen($this->input->post('image')) < 1)) {
-            $this->error['image'] = $this->lang->line('error_image');
-        }
-
-        $this->load->model('ShopCategory_model');
-
-        if ($this->error && !isset($this->error['warning'])) {
-            $this->error['warning'] = $this->lang->line('error_warning');
-        }
-        //dd($this->error);
-
-        return !$this->error;
-    }
     public function create() {
         $this->init();
         $this->data['title'] = 'Add Shop Category Form';
         $this->data['route'] = url('shop/category/store');
+
         attach('assets/js/jquery.validate.js', 'js');
         attach('assets/js/additional-methods.js', 'js');
-        attach('assets/theme/light/js/datatables/dataTables.bootstrap4.css', 'css');
-        attach('assets/js/shop/Category.js', 'js');
-        render('category/create', $this->data); 
+        attach('assets/js/shop/Category.js');
+        render('category/create', $this->data);
     }
-    
+
+    /**
+     *
+     */
     public function store() {
         try {
             $this->init();
@@ -312,33 +204,28 @@ class Category extends AdminController {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
     }
+
+    /**
+     * @param $id
+     * @throws Exception
+     */
     public function edit($id) {
-       
         $this->category = ShopCategory_model::factory()->findOne($id);
-        
         if(!$this->category) {
             setMessage('message', 'Record not found');
             redirect(url('shop/category/'));
         }
-       
         $this->init();
         $this->data['title'] = 'Edit Shop Category Form';
         $this->data['route'] = url('shop/category/update/'.$id);
-        //$this->dd($this->data);
         attach('assets/js/jquery.validate.js', 'js');
         attach('assets/js/additional-methods.js', 'js');
-        attach('assets/js/shop/Category.js', 'js');
+        attach('assets/js/shop/Product.js');
         render('category/edit', $this->data);
     }
     public function update($id) {
         try {
-            $this->category = ShopCategory_model::factory()->findOne($id);
-            if(!$this->category) {
-                setMessage('message', 'Info: Category does not exists!');
-                redirect(url('shop/category'));
-            }
             $this->init();
-            // Category Model
             ShopCategory_model::factory()->update([
                 'name'          => $this->data['name'],
                 'slug'          => $this->data['slug'],
@@ -357,19 +244,6 @@ class Category extends AdminController {
             ],[
                 'category_id' => $id
             ]);
-            // Category Image Model
-            if(isset($this->data['image'])) {
-                ShopCategory_model::factory()->delete([
-                    'id' => $categoryId
-                ], true);
-                foreach ($this->data['image'] as $image) {
-                    ShopCategory_model::factory()->insert([
-                        'id'            => $categoryId,
-                        'image'         => $image['image'],
-                    ]);
-                }
-            }
-            //dd($this->data);
             setMessage('message', "Success: You have modified category! ");
             redirect(url('shop/category/edit/'. $id));
         } catch (Exception $e) {
@@ -380,16 +254,15 @@ class Category extends AdminController {
     public function delete() {
         if($this->isAjaxRequest()) {
             $this->request = $this->input->post();
-
             if(!empty($this->request['selected']) && isset($this->request['selected'])) {
                 if(array_key_exists('selected', $this->request) && is_array($this->request['selected'])) {
                     $this->selected = $this->request['selected'];
                 }
             }
             if($this->selected) {
-                $this->load->model('ShopCategory_model');
-                foreach ($this->selected as $categoryId) {
-                    $this->ShopCategory_model->deleteCategory($categoryId);
+                foreach ($this->selected as $id) {
+                    ShopCategory_model::factory()->delete($id);
+                    ShopCategoryDescription_model::factory()->delete(['category_id' => $id]);
                 }
                 return $this->output
                     ->set_content_type('application/json')
@@ -400,12 +273,85 @@ class Category extends AdminController {
                 ->set_content_type('application/json')
                 ->set_status_header(200)
                 ->set_output(json_encode(array('data' => $this->onLoadDatatableEventHandler(), 'status' => false, 'message' => 'Sorry! we could not delete this record')));
+        }
+    }
+    public function onLoadDatatableEventHandler() {
+
+        $this->results = ShopCategory_model::factory()->findAll();
+        if($this->results) {
+            foreach($this->results as $result) {
+                $this->rows[] = array(
+                    'id'			=> $result->id,
+                    'name'		    => $result->name,
+                    'slug' 		    => $result->slug,
+                    'sort_order'    => $result->sort_order,
+                    'img'           => resize($result->image,100,100),
+                    'status' 		=> ($result->status && $result->status == 1) ? 1 : 0,
+                    'created_at'    => Carbon::createFromTimeStamp(strtotime($result->created_at))->diffForHumans(),
+                    'updated_at'    => ($result->updated_at) ? Carbon::createFromTimeStamp(strtotime($result->updated_at))->diffForHumans() : ''
+                );
+            }
+            $i = 0;
+            foreach($this->rows as $row) {
+                $this->selected = ($row['status'] == 1) ? 'selected' : '';
+                $this->data[$i][] = '<td class="text-center">
+											<label class="css-control css-control-primary css-checkbox">
+                                                <input type="checkbox" class="css-control-input selectCheckbox" value="'.$row['id'].'" name="selected[]">
+                                                <span class="css-control-indicator"></span>
+											</label>
+										</td>';
+                $this->data[$i][] = '<td>'.$row['name'].'</td>';
+                $this->data[$i][] = '<td>'.$row['sort_order'].'</td>';
+                $this->data[$i][] = '<td><img src="'.$row['img'].'"></td>';
+                $this->data[$i][] = '<td>
+                                        <select data-id="'.$row['id'].'" name="status" class="form-control select floating updateStatus" id="input-payment-status" >
+                                            <option value="0" '.$this->selected.'>Inactive</option>
+                                            <option value="1" '.$this->selected.'>Active</option>
+                                        </select>
+                                     </td>';
+                $this->data[$i][] = '<td>'.$row['created_at'].'</td>';
+                $this->data[$i][] = '<td>'.$row['updated_at'].'</td>';
+                $this->data[$i][] = '<td class="text-right">
+	                            <div class="dropdown">
+	                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+	                                <ul class="dropdown-menu pull-right">
+	                                    <li><a class="edit" href="'.url('shop/category/edit/'.$row['id']).'" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+	                                </ul>
+	                            </div>
+	                        </td>
+                        ';
+                $i++;
+            }
+
 
         }
 
+        if($this->data) {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode(array('data' => $this->data)));
+        } else {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode(array('data' => [])));
+        }
     }
-    public function show($id)
-    {
-        // TODO: Implement show() method.
+    /**
+     * @return mixed
+     */
+    public function onClickStatusEventHandler() {
+        if($this->isAjaxRequest()) {
+            $this->request = $this->input->post();
+            if(isset($this->request['status']) && isset($this->request['id'])) {
+                ShopCategory_model::factory()->update(['status' => $this->request['status']], ['id' => $this->request['id']]);
+                $this->json['status'] = 'Status has been successfully updated';
+                return $this->output
+                    ->set_content_type('application/json')
+                    ->set_status_header(200)
+                    ->set_output(json_encode($this->json));
+            }
+        }
     }
 }

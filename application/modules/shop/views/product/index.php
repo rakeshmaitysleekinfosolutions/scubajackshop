@@ -26,7 +26,7 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="datatable">
+                    <table class="table table-bordered table-hover datatable" id="datatable">
                         <thead>
                         <tr>
                             <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
@@ -47,7 +47,7 @@
 <script>
     var myLabel             = myLabel || {};
     myLabel.baseUrl         = '<?php echo base_url();?>';
-    myLabel.fetch        = '<?php echo url('shop/category/onLoadDatatableEventHandler');?>';
-    myLabel.status    = '<?php echo url('shop/category/onClickStatusEventHandler');?>';
-    myLabel.delete          = '<?php echo url('shop/category/delete');?>';
+    myLabel.fetch           = '<?php echo url('shop/product/onLoadDatatableEventHandler');?>';
+    myLabel.status          = '<?php echo url('shop/product/onClickStatusEventHandler');?>';
+    myLabel.delete          = '<?php echo url('shop/product/delete');?>';
 </script>

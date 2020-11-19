@@ -8,9 +8,17 @@ class Product extends AdminController {
      * @var object
      */
     private $product;
+
+    /**
+     * Product constructor.
+     */
     public function __construct() {
         parent::__construct();
     }
+
+    /**
+     * @throws Exception
+     */
     public function init() {
         $this->data['heading']                  = 'Product Management';
 
@@ -76,7 +84,7 @@ class Product extends AdminController {
             $this->data['sort_order'] = 1;
         }
         //status
-        if (!empty($this->input->post('status'))) {
+        if ($this->input->post('status') != '') {
             $this->data['status'] = $this->input->post('status');
         } elseif (!empty($this->product)) {
             $this->data['status'] = $this->product->status;
@@ -171,7 +179,6 @@ class Product extends AdminController {
                 'image'      => $image,
                 'thumb'      => resize($thumb, 100, 100),
                 'sort_order' => $projectImage['sort_order'],
-                'thumbnail'  => $projectImage['thumbnail'],
             );
         }
         $this->data['placeholder'] = $this->resize('no_image.png', 100, 100);
@@ -179,6 +186,9 @@ class Product extends AdminController {
         $this->data['categories'] = ShopCategory_model::factory()->findAll(['status' => 1],null,'sort_order', 'ASC');
     }
 
+    /**
+     *
+     */
     public function index() {
         $this->init();
         $this->data['title']        = 'Product List';
@@ -188,17 +198,30 @@ class Product extends AdminController {
         $this->data['columns'][]    = 'Created At';
         $this->data['columns'][]    = 'Updated At';
 
+        attach('assets/theme/light/js/datatables/dataTables.bootstrap4.css', 'css');
+        attach('assets/theme/light/js/datatables/jquery.dataTables.min.js', 'js');
+        attach('assets/theme/light/js/datatables/dataTables.bootstrap4.min.js', 'js');
+        attach('assets/js/shop/Product.js', 'js');
         render('product/index', $this->data);
     }
 
-
+    /**
+     *
+     */
     public function create() {
         $this->init();
         $this->data['title'] = 'Add Product';
         $this->data['route'] = url('shop/product/store');
+
+        attach('assets/js/jquery.validate.js', 'js');
+        attach('assets/js/additional-methods.js', 'js');
+        attach('assets/js/shop/Product.js');
         render('product/create', $this->data);
     }
-    
+
+    /**
+     *
+     */
     public function store() {
         try {
             $this->init();
@@ -217,7 +240,7 @@ class Product extends AdminController {
                 'description'       => $this->data['description'],
                 'meta_title'        => $this->data['meta_title'],
                 'meta_description'  => $this->data['meta_description'],
-                'meta_keyword'     => $this->data['meta_keyword'],
+                'meta_keywords'     => $this->data['meta_keywords'],
             ]);
             if(isset($this->data['images'])) {
                 foreach ($this->data['images'] as $image) {
@@ -242,8 +265,13 @@ class Product extends AdminController {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
     }
+
+    /**
+     * @param $id
+     */
     public function edit($id) {
-        $this->product = ShopCategory_model::factory()->findOne($id);
+        $this->product = Shop_model::factory()->findOne($id);
+
         if(!$this->product) {
             setMessage('message', 'Record not found');
             redirect(url('shop/product/'));
@@ -251,8 +279,17 @@ class Product extends AdminController {
         $this->init();
         $this->data['title'] = 'Edit Shop';
         $this->data['route'] = url('shop/product/update/'.$id);
+
+        attach('assets/js/jquery.validate.js', 'js');
+        attach('assets/js/additional-methods.js', 'js');
+        attach('assets/js/shop/Product.js');
+
         render('product/edit', $this->data);
     }
+
+    /**
+     * @param $id
+     */
     public function update($id) {
         try {
             $this->init();
@@ -271,7 +308,7 @@ class Product extends AdminController {
                 'description'       => $this->data['description'],
                 'meta_title'        => $this->data['meta_title'],
                 'meta_description'  => $this->data['meta_description'],
-                'meta_keyword'     => $this->data['meta_keyword'],
+                'meta_keywords'     => $this->data['meta_keywords'],
             ],[
                 'shop_id' => $id
             ]);
@@ -288,7 +325,7 @@ class Product extends AdminController {
                 }
             }
             if(isset($this->data['categories_id'])) {
-                ShopCategory_model::factory()->delete([
+                ShopToCategory_model::factory()->delete([
                     'shop_id' => $id
                 ], true);
                 foreach ($this->data['categories_id'] as $categoryId) {
@@ -298,13 +335,16 @@ class Product extends AdminController {
                     ]);
                 }
             }
-            setMessage('message', "Success: You have modified category! ");
+            setMessage('message', "Success: You have modified shop product! ");
             redirect(url('shop/product/edit/'. $id));
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function delete() {
         if($this->isAjaxRequest()) {
             $this->request = $this->input->post();
@@ -330,8 +370,13 @@ class Product extends AdminController {
                 ->set_output(json_encode(array('data' => $this->onLoadDatatableEventHandler(), 'status' => false, 'message' => 'Sorry! we could not delete this record')));
         }
     }
+
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function onLoadDatatableEventHandler() {
-        $this->results = ShopCategory_model::factory()->findAll();
+        $this->results = Shop_model::factory()->findAll();
         if($this->results) {
             foreach($this->results as $result) {
                 $this->rows[] = array(
@@ -362,11 +407,11 @@ class Product extends AdminController {
 //										</div>
 //                                        </td>';
                 $this->data[$i][] = '<td>
-                                            <select data-id="'.$row['id'].'" name="status" class="select floating checkboxStatus" id="input-payment-status" >
-                                                <option value="0" '.$this->selected.'>Inactive</option>
-                                                <option value="1" '.$this->selected.'>Active</option>
-                                            </select>
-                                        </td>';
+                                        <select data-id="'.$row['id'].'" name="status" class="form-control select floating updateStatus" id="input-payment-status" >
+                                            <option value="0" '.$this->selected.'>Inactive</option>
+                                            <option value="1" '.$this->selected.'>Active</option>
+                                        </select>
+                                     </td>';
                 $this->data[$i][] = '<td>'.$row['created_at'].'</td>';
                 $this->data[$i][] = '<td>'.$row['updated_at'].'</td>';
                 $this->data[$i][] = '<td class="text-right">
@@ -396,26 +441,21 @@ class Product extends AdminController {
                 ->set_output(json_encode(array('data' => [])));
         }
     }
+
+    /**
+     * @return mixed
+     */
     public function onClickStatusEventHandler() {
         if($this->isAjaxRequest()) {
             $this->request = $this->input->post();
-            $this->productId   = (isset($this->request['id'])) ? $this->request['id'] : '';
-            $this->status       = (isset($this->request['status'])) ? $this->request['status'] : '';
-
-            $this->load->model('ShopCategory_model');
-            $this->ShopCategory_model->updateStatus($this->productId, $this->status);
-            $this->json['message'] = 'Data has been successfully updated';
-            $this->json['status'] = true;
-
-            return $this->output
-                ->set_content_type('application/json')
-                ->set_status_header(200)
-                ->set_output(json_encode($this->json));
-
+            if(isset($this->request['status']) && isset($this->request['id'])) {
+                Shop_model::factory()->update(['status' => $this->request['status']], ['id' => $this->request['id']]);
+                $this->json['status'] = 'Status has been successfully updated';
+                return $this->output
+                    ->set_content_type('application/json')
+                    ->set_status_header(200)
+                    ->set_output(json_encode($this->json));
+            }
         }
-    }
-    public function show($id)
-    {
-        // TODO: Implement show() method.
     }
 }

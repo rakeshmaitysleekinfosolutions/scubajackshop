@@ -13,9 +13,4 @@ class ShopDescription_model extends BaseModel {
     public static function factory($attr = array()) {
         return new ShopDescription_model($attr);
     }
-    
-    // public function description() {
-    //     return $this->hasOne(ShopCategoryDescription_model::class, 'category_id', 'id');
-    // }
-
 }
