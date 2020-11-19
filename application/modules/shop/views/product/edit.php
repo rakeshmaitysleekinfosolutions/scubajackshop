@@ -28,19 +28,19 @@
                         <div class="profile-basic">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group form-focus">
+                                    <div class="form-group">
                                         <label class="control-label"><?php echo $entryName;?> <span class="text-danger"></span></label>
                                         <input value="<?php echo $name;?>" class="form-control floating" type="text" name="name" id="input-name" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group form-focus">
+                                    <div class="form-group">
                                         <label class="control-label"><?php echo $entrySlug;?> <span class="text-danger"></span></label>
                                         <input value="<?php echo $slug;?>" class="form-control floating" type="text" name="slug" id="input-slug" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group form-focus">
+                                    <div class="form-group">
                                         <label class="control-label">Status <span class="text-danger">*</span></label>
                                         <select name="status" class="select floating" id="input-status" >
                                             <option value="0" <?php echo ($status == 0) ? 'selected' : '';?>>Inactive</option>
@@ -49,19 +49,19 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group form-focus">
+                                    <div class="form-group">
                                         <label class="control-label">Sort Order <span class="text-danger">*</span></label>
                                         <input value="<?php echo $sort_order;?>" class="form-control floating" type="text" name="sort_order" id="input-sort_order" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group form-focus">
+                                    <div class="form-group">
                                         <label class="control-label">Quantity <span class="text-danger"></span></label>
                                         <input value="<?php echo $quantity;?>" placeholder="QTY" class="form-control floating" type="text" name="quantity" id="input-quantity" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group form-focus">
+                                    <div class="form-group">
                                         <label class="control-label">Price <span class="text-danger"></span></label>
                                         <input value="<?php echo $price;?>"  class="form-control floating" type="text" name="price" id="input-price" autocomplete="off" >
                                     </div>
@@ -201,7 +201,7 @@
                                                 <input type="hidden" name="images[<?php echo $imageRow;?>][image]" value="<?php echo $image['image'];?>" id="input-image<?php echo $imageRow;?>"/>
                                             </td>
                                             <td>
-                                                <div class="form-group form-focus select-focus">
+                                                <div class="form-group select-focus">
                                                     <input value="<?php echo $image['sort_order'];?>" type="text" name="images[<?php echo $imageRow;?>][sort_order]" data-placeholder="Sort Order" class="form-control floating">
                                                 </div>
                                             </td>

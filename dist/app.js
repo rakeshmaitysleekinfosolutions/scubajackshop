@@ -14785,16 +14785,6 @@ $(document).ready(function () {
 
     $.App.init();
 }(window.jQuery);
-
-$(document).ready(function () {
-    if ($('.select').length > 0) {
-        $('.select').select2({
-            minimumResultsForSearch: -1,
-            width: '100%'
-        });
-    }
-});
-
 $(document).ready(function () {
     if ($('.modal').length > 0) {
         var modalUniqueClass = ".modal";
@@ -14957,30 +14947,7 @@ $(document).ready(function () {
         });
     }
 });
-$(document).ready(function () {
-    if ($('.checkbox-all').length > 0) {
-        $('.checkbox-all').click(function () {
-            $('.checkmail').click();
-        });
-    }
-    if ($('.checkmail').length > 0) {
-        $('.checkmail').each(function () {
-            $(this).click(function () {
-                if ($(this).closest('tr').hasClass("checked")) {
-                    $(this).closest('tr').removeClass('checked');
-                } else {
-                    $(this).closest('tr').addClass('checked');
-                }
-            });
-        });
-    }
-    if ($('.mail-important').length > 0) {
-        $(".mail-important").click(function () {
-            $(this).find('i.fa').toggleClass("fa-star");
-            $(this).find('i.fa').toggleClass("fa-star-o");
-        });
-    }
-});
+
 $(document).ready(function () {
     if ($('select').length > 0) {
         $('select').select2({
@@ -14998,10 +14965,8 @@ $('.summernote').summernote({
 /* Dynamic Menu Selction */
 /** Select Dynamic Menu*/
 $('#menu a[href]').on('click', function () {
-
     sessionStorage.setItem('menu', $(this).attr('href'));
 });
-
 if (!sessionStorage.getItem('menu')) {
     $('#menu #dashboard').addClass('active');
 } else {
@@ -15010,7 +14975,6 @@ if (!sessionStorage.getItem('menu')) {
         $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
     }
 }
-
 if (localStorage.getItem('sidebar') == 'active') {
     $('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
 
@@ -15024,7 +14988,6 @@ if (localStorage.getItem('sidebar') == 'active') {
     $('#menu li li.active').has('ul').children('ul').addClass(' in');
     $('#menu li li').not('.active').has('ul').children('ul').addClass('');
 }
-
 // Menu button
 $('#button-menu').on('click', function () {
     // Checks if the left column is active or not.

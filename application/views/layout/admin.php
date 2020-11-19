@@ -140,7 +140,7 @@
 			</div>
         </div>
 		<div class="sidebar-overlay" data-reff="#sidebar"></div>
-<!--        <script type="text/javascript" src="--><?php //echo base_url();?><!--dist/app.js" ></script>-->
+
         <script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/jquery.slimscroll.js" ></script>
@@ -155,7 +155,7 @@
 
 		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/sweetalert/sweetalert.js" ></script>
 		 <script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/summernote/summernote.js" ></script>
-		<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/App.js" ></script> -->
 		<?php echo $this->template->javascript; ?>
+
     </body>
 </html>
