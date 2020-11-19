@@ -29,121 +29,7 @@ class Product extends AdminController {
             'id'    => 'frmShopProduct',
             'name'  => 'frmShopProduct',
         );
-
-        // model
-        /*
-        if (!empty($this->input->post('model'))) { //add
-            $this->data['model'] = $this->input->post('model');
-        } elseif (!empty($this->product)) {//edit
-            $this->data['model'] = $this->product->model;
-        } else {
-            $this->data['model'] = '';
-        }
-        // sku
-        if (!empty($this->input->post('sku'))) {
-            $this->data['sku'] = $this->input->post('sku');
-        } elseif (!empty($this->product)) {
-            $this->data['sku'] = $this->product->sku;
-        } else {
-            $this->data['sku'] = '';
-        }
-        // upc
-        if (!empty($this->input->post('upc'))) {
-            $this->data['upc'] = $this->input->post('upc');
-        } elseif (!empty($this->product)) {
-            $this->data['upc'] = $this->product->upc;
-        } else {
-            $this->data['upc'] = '';
-        }
-
-        // ean
-        if (!empty($this->input->post('ean'))) {
-            $this->data['ean'] = $this->input->post('ean');
-        } elseif (!empty($this->product)) {
-            $this->data['ean'] = $this->product->description->description;
-        } else {
-            $this->data['ean'] = '';
-        }
-        // jan
-        if (!empty($this->input->post('jan'))) {
-            $this->data['jan'] = $this->input->post('jan');
-        } elseif (!empty($this->product)) {
-            $this->data['jan'] = $this->product->jan;
-        } else {
-            $this->data['jan'] = '';
-        }
-        // isbn
-        if (!empty($this->input->post('isbn'))) {
-            $this->data['isbn'] = $this->input->post('isbn');
-        } elseif (!empty($this->product)) {
-            $this->data['isbn'] = $this->product->isbn;
-        } else {
-            $this->data['isbn'] = '';
-        }
-        // mpn
-        if (!empty($this->input->post('mpn'))) {
-            $this->data['mpn'] = $this->input->post('mpn');
-        } elseif (!empty($this->product)) {
-            $this->data['mpn'] = $this->product->mpn;
-        } else {
-            $this->data['mpn'] = '';
-        }
-
-
-        // mpn
-
-        // stock_status_id
-        if (!empty($this->input->post('stock_status_id'))) {
-            $this->data['stock_status_id'] = $this->input->post('stock_status_id');
-        } elseif (!empty($this->product)) {
-            $this->data['stock_status_id'] = $this->product->stock_status_id;
-        } else {
-            $this->data['stock_status_id'] = 0;
-        }
-        //dd($this->data);
-        // Status
-        if (!empty($this->input->post('tax_class_id'))) {
-            $this->data['tax_class_id'] = $this->input->post('tax_class_id');
-        } elseif (!empty($this->product)) {
-            $this->data['tax_class_id'] = $this->product->tax_class_id;
-        } else {
-            $this->data['tax_class_id'] = 0;
-        }
-        //parent
-        if (!empty($this->input->post('shipping'))) {
-            $this->data['shipping'] = $this->input->post('shipping');
-        } elseif (!empty($this->product)) {
-            $this->data['shipping'] = $this->product->shipping;
-        } else {
-            $this->data['shipping'] = '';
-        }
-        //parent
-        if (!empty($this->input->post('date_available'))) {
-            $this->data['date_available'] = $this->input->post('date_available');
-        } elseif (!empty($this->product)) {
-            $this->data['date_available'] = $this->product->date_available;
-        } else {
-            $this->data['date_available'] = date('mm-dd-yyyy');
-        }
-        //parent
-        if (!empty($this->input->post('subtract'))) {
-            $this->data['subtract'] = $this->input->post('subtract');
-        } elseif (!empty($this->product)) {
-            $this->data['subtract'] = $this->product->subtract;
-        } else {
-            $this->data['subtract'] = '';
-        }
-
-        //parent
-        if (!empty($this->input->post('viewed'))) {
-            $this->data['viewed'] = $this->input->post('viewed');
-        } elseif (!empty($this->product)) {
-            $this->data['viewed'] = $this->product->status;
-        } else {
-            $this->data['viewed'] = '';
-        }
-        */
-        // model
+        
         if (!empty($this->input->post('name'))) { //add
             $this->data['name'] = $this->input->post('name');
         } elseif (!empty($this->product)) {//edit
@@ -223,12 +109,12 @@ class Product extends AdminController {
             $this->data['meta_description'] = '';
         }
         // Meta keyword
-        if (!empty($this->input->post('meta_keywords'))) {
-            $this->data['meta_keywords'] = $this->input->post('meta_keywords');
+        if (!empty($this->input->post('meta_keyword'))) {
+            $this->data['meta_keyword'] = $this->input->post('meta_keyword');
         } elseif (!empty($this->product)) {
-            $this->data['meta_keywords'] = $this->product->description->meta_keywords;
+            $this->data['meta_keyword'] = $this->product->description->meta_keyword;
         } else {
-            $this->data['meta_keywords'] = '';
+            $this->data['meta_keyword'] = '';
         }
 
         // Image
@@ -323,7 +209,7 @@ class Product extends AdminController {
                 'description'       => $this->data['description'],
                 'meta_title'        => $this->data['meta_title'],
                 'meta_description'  => $this->data['meta_description'],
-                'meta_keywords'     => $this->data['meta_keywords'],
+                'meta_keyword'     => $this->data['meta_keyword'],
             ]);
             if(isset($this->data['images'])) {
                 foreach ($this->data['images'] as $image) {
@@ -377,7 +263,7 @@ class Product extends AdminController {
                 'description'       => $this->data['description'],
                 'meta_title'        => $this->data['meta_title'],
                 'meta_description'  => $this->data['meta_description'],
-                'meta_keywords'     => $this->data['meta_keywords'],
+                'meta_keyword'     => $this->data['meta_keyword'],
             ],[
                 'shop_id' => $id
             ]);
@@ -437,7 +323,6 @@ class Product extends AdminController {
         }
     }
     public function onLoadDatatableEventHandler() {
-
         $this->results = ShopCategory_model::factory()->findAll();
         if($this->results) {
             foreach($this->results as $result) {
