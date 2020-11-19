@@ -303,12 +303,12 @@ class Product extends AdminController {
             $this->data['meta_description'] = '';
         }
         // Meta keyword
-        if (!empty($this->input->post('meta_keywords'))) {
-            $this->data['meta_keywords'] = $this->input->post('meta_keywords');
+        if (!empty($this->input->post('meta_keyword'))) {
+            $this->data['meta_keyword'] = $this->input->post('meta_keyword');
         } elseif (!empty($this->product)) {
-            $this->data['meta_keywords'] = $this->product->description->meta_keywords;
+            $this->data['meta_keyword'] = $this->product->description->meta_keyword;
         } else {
-            $this->data['meta_keywords'] = '';
+            $this->data['meta_keyword'] = '';
         }
         
         // Image
@@ -380,34 +380,34 @@ class Product extends AdminController {
         try {
             $this->init();
             Shop_model::factory()->insert([
-                'model'             => $this->data['name'],
-                'sku'               => $this->data['slug'],
-                'upc'               => $this->data['image'],
-                'ean'               => $this->data['parent_id'],
-                'jan'               => $this->data['sort_order'],
-                'isbn'              => $this->data['status'],
+                'model'             => $this->data['model'],
+                'sku'               => $this->data['sku'],
+                'upc'               => $this->data['upc'],
+                'ean'               => $this->data['ean'],
+                'jan'               => $this->data['jan'],
+                'isbn'              => $this->data['isbn'],
                 'mpn'               => $this->data['status'],
-                'quantity'          => $this->data['status'],
-                'stock_status_id'   => $this->data['status'],
-                'image'             => $this->data['status'],
-                'shipping'          => $this->data['status'],
-                'price'             => $this->data['status'],
-                'tax_class_id'      => $this->data['status'],
-                'date_available'    => $this->data['status'],
-                'subtract'          => $this->data['status'],
-                'sort_order'        => $this->data['status'],
+                'quantity'          => $this->data['quantity'],
+                'stock_status_id'   => $this->data['stock_status_id'],
+                'image'             => $this->data['image'],
+                'shipping'          => $this->data['shipping'],
+                'price'             => $this->data['price'],
+                'tax_class_id'      => $this->data['tax_class_id'],
+                'date_available'    => $this->data['date_available'],
+                'subtract'          => $this->data['subtract'],
+                'sort_order'        => $this->data['sort_order'],
                 'status'            => $this->data['status'],
-                'viewed'            => $this->data['status'],
+                'viewed'            => $this->data['viewed'],
             ]);
             ShopDescription_model::factory()->insert([
                 'shop_id'           => Shop_model::factory()->getLastInsertID(),
                 'description'       => $this->data['description'],
                 'meta_title'        => $this->data['meta_title'],
                 'meta_description'  => $this->data['meta_description'],
-                'meta_keywords'     => $this->data['meta_keywords'],
+                'meta_keyword'     => $this->data['meta_keyword'],
             ]);
             setMessage('message', 'Success: You have modified features product!');
-            redirect(url('shop/category/create/'));
+            redirect(url('shop/product/create/'));
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
@@ -418,7 +418,7 @@ class Product extends AdminController {
         
         if(!$this->product) {
             setMessage('message', 'Record not found');
-            redirect(url('shop/category/'));
+            redirect(url('shop/product/'));
         }
        
         $this->init();
@@ -453,7 +453,7 @@ class Product extends AdminController {
                 'description'       => $this->data['description'],
                 'meta_title'        => $this->data['meta_title'],
                 'meta_description'  => $this->data['meta_description'],
-                'meta_keywords'     => $this->data['meta_keywords'],
+                'meta_keyword'     => $this->data['meta_keyword'],
             ],[
                 'category_id' => $id
             ]);
