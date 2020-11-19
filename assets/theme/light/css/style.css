@@ -78,7 +78,7 @@ table.dataTable {margin-bottom: 15px !important;margin-top: 15px !important;}
 .text-ellipsis {display: block;max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .text-muted-light {color:#aaa;}
 .card-box {background-color: #fff;border: 1px solid #ededed;border-radius: 4px;box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);margin-bottom: 30px;padding:20px;}
-.card-title {color: #333;font-size: 18px;font-weight: normal;margin-bottom: 20px;text-align: center; margin-top: 5px}
+.card-title {color: #333;font-size: 18px;font-weight: normal;margin-bottom: 20px;text-align: left; margin-top: 5px}
 .page-title {color: #565656;font-size: 21px;font-weight: normal;margin-bottom: 20px;}
 .page-sub-title {color: #565656;font-size: 18px;font-weight: normal;margin-bottom: 20px;}
 .cal-icon::after {background: transparent url("../img/calander.png") no-repeat scroll 0 0;bottom: 0;content: "";display: block;height: 19px;margin: auto;position: absolute;right: 15px;top: 0;width: 17px;}

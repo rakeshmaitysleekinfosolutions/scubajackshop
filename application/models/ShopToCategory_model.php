@@ -1,9 +1,9 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class ShopCategory_model extends BaseModel {
+class ShopToCategory_model extends BaseModel {
     
-    protected $table = "shop_category";
+    protected $table = "shop_to_category";
 
     protected $primaryKey = 'id';
 
@@ -11,7 +11,7 @@ class ShopCategory_model extends BaseModel {
     const SOFT_DELETED = 'is_deleted';
 
     public static function factory($attr = array()) {
-        return new ShopCategory_model($attr);
+        return new ShopToCategory_model($attr);
     }
 
 }

@@ -110,6 +110,7 @@ class Category extends AdminController {
     }
     public function index() {
 
+        $this->init();
         $this->data['title']     = 'Shop Category';
         $this->data['columns'][] = 'Name';
         $this->data['columns'][] = 'Sort Order';
@@ -121,14 +122,21 @@ class Category extends AdminController {
         attach('assets/theme/light/js/datatables/jquery.dataTables.min.js', 'js');
         attach('assets/theme/light/js/datatables/dataTables.bootstrap4.min.js', 'js');
         attach('assets/js/shop/Category.js', 'js');
+
         render('category/index', $this->data);
     }
     public function init() {
         
-        $this->data['heading']                  = 'Project Management';
-        $this->data['entryName']                = 'Name';
-        $this->data['entrySlug']                = 'Slug';
-        $this->data['entryStatus']              = 'Status';
+        $this->data['heading']       = 'Shop Category';
+        $this->data['entryName']     = 'Name';
+        $this->data['entrySlug']     = 'Slug';
+        $this->data['entryStatus']   = 'Status';
+        $this->data['back']          = url('shop/category');
+        $this->data['btnSave']       = 'Save & Update';
+        $this->data['btnBack']       = 'Back';
+        $this->data['addBtn']        = 'Add';
+        $this->data['deleteBtn']     = 'Delete';
+
         $this->data['form']             = array(
             'id'    => 'CategoryForm',
             'name'  => 'CategoryForm',
