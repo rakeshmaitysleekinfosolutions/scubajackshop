@@ -25,6 +25,13 @@ class Product extends AdminController {
         $this->data['entryMetaDescription']     = 'Meta Description';
         $this->data['entryMetaKeywords']        = 'Meta Keywords';
 
+        $this->data['add']                      = url('shop/product/create');
+        $this->data['btnSave']                  = 'Save & Update';
+        $this->data['btnBack']                  = 'Back';
+        $this->data['back']                     = url('shop/product');
+        $this->data['addBtn']                   = 'Add';
+        $this->data['deleteBtn']                = 'Delete';
+
         $this->data['form']             = array(
             'id'    => 'frmShopProduct',
             'name'  => 'frmShopProduct',
@@ -109,12 +116,12 @@ class Product extends AdminController {
             $this->data['meta_description'] = '';
         }
         // Meta keyword
-        if (!empty($this->input->post('meta_keyword'))) {
-            $this->data['meta_keyword'] = $this->input->post('meta_keyword');
+        if (!empty($this->input->post('meta_keywords'))) {
+            $this->data['meta_keywords'] = $this->input->post('meta_keywords');
         } elseif (!empty($this->product)) {
-            $this->data['meta_keyword'] = $this->product->description->meta_keyword;
+            $this->data['meta_keywords'] = $this->product->description->meta_keywords;
         } else {
-            $this->data['meta_keyword'] = '';
+            $this->data['meta_keywords'] = '';
         }
 
         // Image
@@ -173,6 +180,7 @@ class Product extends AdminController {
     }
 
     public function index() {
+        $this->init();
         $this->data['title']        = 'Product List';
         $this->data['columns'][]    = 'Name';
         $this->data['columns'][]    = 'Sort Order';
