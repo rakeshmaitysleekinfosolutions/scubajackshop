@@ -2,8 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] 	= 'app';
-$route['404_override']          = 'PageNotFoundController/index';
 
+
+
+$route['store/']                = 'store/index';
 // Frontend Login Register
 $route['register'] 				= 'register';
 $route['login'] 				= 'login';
@@ -59,6 +61,7 @@ $route['filemanager']           = 'filemanager';
 $route['(:any)/explore']        = 'app/explore';
 $route['(:any)/explore/(:any)']    = 'app/blog/$1/$2';
 
+
 $route['about'] 	            = 'app/about';
 $route['contact'] 	            = 'app/contact';
 $route['(:any)'] 	            = 'app/products/$1';
@@ -70,6 +73,7 @@ $route['(:any)'] 	            = 'app/products/$1';
 
 // Update Children Account
 $route['account/update']        = 'account/update';
+
 
 
 
