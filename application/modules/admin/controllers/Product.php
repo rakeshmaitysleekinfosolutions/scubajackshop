@@ -326,20 +326,38 @@ class Product extends AdminController implements ProductContract {
             // Youtube URL
             if (!empty($this->input->post('youtubeUrl'))) {
                 $this->data['youtubeUrl'] = $this->input->post('youtubeUrl');
+                $this->data['youtubeThumb'] = makeThumbnail($this->input->post('youtubeUrl'));
             } elseif (!empty($this->productVideos)) {
-                $this->data['youtubeUrl'] = $this->productVideos->url;
+                $rx = '~
+                      ^(?:https?://)?                           
+                       (?:www[.])?                              
+                       (?:youtube[.]com/watch[?]v=) 
+                       ([^&]{11})                               
+                        ~x';
+
+                $has_match = preg_match($rx, $this->productVideos->url, $matches);
+                if($has_match) {
+                    $this->data['youtubeUrl'] = $this->productVideos->url;
+                } else {
+                    $extractUrl = explode('https://youtu.be/',$this->productVideos->url);
+                    $youtubeId = (isset($extractUrl[1])) ? $extractUrl[1] : '';
+                    $this->data['youtubeUrl'] = 'https://www.youtube.com/watch?v='.$youtubeId;
+                }
+                $this->data['youtubeThumb'] = makeThumbnail($this->data['youtubeUrl']);
             } else {
                 $this->data['youtubeUrl'] = '';
-            }
-            //dd($this->data[''])
-            // Youtube URL Thumb
-            if (!empty($this->input->post('youtubeThumb'))) {
-                $this->data['youtubeThumb'] = $this->input->post('youtubeThumb');
-            } elseif (!empty($this->productVideos)) {
-                $this->data['youtubeThumb'] = $this->productVideos->thumb;
-            } else {
                 $this->data['youtubeThumb'] = '';
             }
+
+
+            // Youtube URL Thumb
+//            if (!empty($this->input->post('youtubeThumb'))) {
+//                $this->data['youtubeThumb'] = $this->input->post('youtubeThumb');
+//            } elseif (!empty($this->productVideos)) {
+//                $this->data['youtubeThumb'] = $this->productVideos->thumb;
+//            } else {
+//                $this->data['youtubeThumb'] = '';
+//            }
             // PDF
             if (!empty($this->input->post('pdf'))) {
                 $this->data['pdf'] = $this->input->post('pdf');

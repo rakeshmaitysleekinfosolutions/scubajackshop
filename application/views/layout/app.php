@@ -52,7 +52,7 @@
                         <li class="nav-item active"> <a class="nav-link" href="<?php echo base_url();?>">Home <span class="sr-only">(current)</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" href="<?php echo base_url('about');?>">About us</a> </li>
                         <li class="nav-item"> <a class="nav-link" href="<?php echo base_url('viewplans');?>">Membership</a> </li>
-                        <li class="nav-item"> <a class="nav-link" href="javascript:void(0)">Shop</a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="<?php echo base_url('home-store');?>">Shop</a> </li>
                         <li class="nav-item"> <a class="nav-link" href="<?php echo base_url('worksheets');?>">Worksheets</a> </li>
                         <li class="nav-item"> <a class="nav-link " href="<?php echo base_url('contact');?>">Contact us</a> </li>
                         <li class="nav-item"> <a class="nav-link" href="javascript:void(0)">Game</a> </li>

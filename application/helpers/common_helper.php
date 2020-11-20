@@ -356,7 +356,7 @@ if(!function_exists('resizeAssetImage')) {
         }
     }
 }
-function makeThumbnail($youTubeLink='',$thumbNailQuality='',$fileNameWithExt='',$fileDownLoadPath='') {
+function makeThumbnail($youTubeLink='',$thumbNailQuality='HIGH',$fileNameWithExt='',$fileDownLoadPath='') {
     $videoIdExploded = explode('?v=', $youTubeLink);
 
     if ( sizeof($videoIdExploded) == 1)
