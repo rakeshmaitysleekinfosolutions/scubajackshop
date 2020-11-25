@@ -169,10 +169,10 @@
 <!--                                </iframe>-->
                                 <?php if($youtubeUrl) {?>
                                     <div id="iframe">
-                                        <video controls controlsList="nofullscreen nodownload" src="<?php echo $youtubeUrl;?>" poster="<?php echo $youtubeThumb;?>"preload="none"> </video>
+                                        <video controls controlsList="nofullscreen nodownload" src="<?php echo $youtubeUrl;?>" poster="<?php echo makeThumbnail($youtubeUrl);?>" preload="none"> </video>
                                     </div>
                                 <?php } ?>
-                                <input type="hidden" value="<?php echo $youtubeThumb;?>" id="youtubeThumb" name="youtubeThumb">
+                                <input type="hidden" value="<?php echo makeThumbnail($youtubeUrl);?>" id="youtubeThumb" name="youtubeThumb">
                             </div>
                         </div>
                     </div>

@@ -166,12 +166,12 @@
                             <input value="<?php echo $youtubeUrl;?>" id="videoInputBox" name="youtubeUrl" type="text" class="form-control">
                             <?php if($youtubeUrl) {?>
                                 <div id="iframe">
-                                    <video controls controlsList="nofullscreen nodownload" src="<?php echo $youtubeUrl;?>" poster="<?php echo $youtubeThumb;?>"preload="none"> </video>
+                                    <video controls controlsList="nofullscreen nodownload" src="<?php echo $youtubeUrl;?>" poster="<?php echo makeThumbnail($youtubeUrl);?>"preload="none"> </video>
                                 </div>
                             <?php } ?>
 
 <!--                                <img width="100%" height="100%" src="--><?php //echo $youtubeThumb;?><!--" frameborder="0" allowfullscreen/>-->
-                                <input type="hidden" value="<?php echo $youtubeThumb;?>" id="youtubeThumb" name="youtubeThumb">
+                                <input type="hidden" value="<?php echo makeThumbnail($youtubeUrl);?>" id="youtubeThumb" name="youtubeThumb">
 
                            <!--  <div id="">
                                 <iframe src="<?php echo $youtubeThumb;?> ">

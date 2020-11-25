@@ -45,7 +45,7 @@
   <section class="pre-school">
     <h3>We provide a <span>variety of  quality</span> of Pre-school and elementary</h3>
     <p>education for children</p>
-    <div class="pre-banner ">
+    <div class="pre-banner">
         <ul class="activityBooks">
             <li data-src="<?php echo getSession('settings')['video'];?>" data-poster="<?php echo makeThumbnail(getSession('settings')['video'],'HIGH');?>"  >
                 <a href="<?php echo getSession('settings')['video'];?>" >
@@ -195,7 +195,7 @@
         <div class="row demo-gallery">
             <ul class="activityBooks">
             <?php foreach ($activityBooks as $activityBook) { ?>
-                <li class="col-lg-3 col-md-6 col-sm-6 col-12" data-poster="<?php echo makeThumbnail($activityBook['video'],'HIGH');?>" data-src="<?php echo $activityBook['video'];?>" data-id="<?php echo $activityBook['id'];?>">
+                <li class="col-lg-3 col-md-6 col-sm-6 col-12" data-poster="<?php echo makeThumbnail($activityBook['video'],'HIGH');?>" data-src="<?php echo $activityBook['video'];?>" data-name="<?php echo $activityBook['name'];?>">
                     <div class="activity-box">
                         <a  href="">
                             <img class="img-responsive" src="<?php echo makeThumbnail($activityBook['video'],'HIGH');?>" />

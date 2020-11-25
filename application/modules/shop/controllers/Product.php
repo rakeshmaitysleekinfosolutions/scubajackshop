@@ -44,7 +44,7 @@ class Product extends AdminController {
             'id'    => 'frmShopProduct',
             'name'  => 'frmShopProduct',
         );
-        
+
         if (!empty($this->input->post('name'))) { //add
             $this->data['name'] = $this->input->post('name');
         } elseif (!empty($this->product)) {//edit

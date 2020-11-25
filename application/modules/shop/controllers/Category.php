@@ -43,7 +43,7 @@ class Category extends AdminController {
         render('category/index', $this->data);
     }
     public function init() {
-        
+
         $this->data['heading']       = 'Shop Category';
         $this->data['entryName']     = 'Name';
         $this->data['entrySlug']     = 'Slug';
@@ -139,7 +139,7 @@ class Category extends AdminController {
         } else {
             $this->data['parent_id'] = '';
         }
-        
+
         // Image
 
         if (!empty($this->input->post('image'))) {

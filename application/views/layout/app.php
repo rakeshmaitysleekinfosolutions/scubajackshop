@@ -153,7 +153,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/popper.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/loadingoverlay.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/sweetalert/sweetalert.js" ></script>
 
@@ -235,6 +235,79 @@
         $("#toggleText1").slideToggle(300);
     }
 </script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+var quantitiy=0;
+   $('.quantity-right-plus').click(function(e){
+        
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        var quantity = parseInt($('#quantity').val());
+        
+        // If is not undefined
+            
+            $('#quantity').val(quantity + 1);
+
+          
+            // Increment
+        
+    });
+
+     $('.quantity-left-minus').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        var quantity = parseInt($('#quantity').val());
+        
+        // If is not undefined
+      
+            // Increment
+            if(quantity>0){
+            $('#quantity').val(quantity - 1);
+            }
+    });
+    
+});
+  </script>
+
+  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/modernizr.custom.17475.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.elastislide.js"></script>
+  <script type="text/javascript">
+      
+      // example how to integrate with a previewer
+
+      var current = 0,
+        $preview = $( '#preview' ),
+        $carouselEl = $( '#carousel' ),
+        $carouselItems = $carouselEl.children(),
+        carousel = $carouselEl.elastislide( {
+          current : current,
+          minItems : 4,
+          onClick : function( el, pos, evt ) {
+
+            changeImage( el, pos );
+            evt.preventDefault();
+
+          },
+          onReady : function() {
+
+            changeImage( $carouselItems.eq( current ), current );
+            
+          }
+        } );
+
+      function changeImage( el, pos ) {
+
+        $preview.attr( 'src', el.data( 'preview' ) );
+        $carouselItems.removeClass( 'current-img' );
+        el.addClass( 'current-img' );
+        carousel.setCurrent( pos );
+
+      }
+
+    </script>
 </body>
 
 </html>

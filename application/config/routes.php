@@ -2,17 +2,17 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] 	= 'app';
+$route['404_override']          = 'PageNotFoundController/index';
 
-
-
-$route['store/']                = 'store/index';
+$route['home-store']            = 'store/index';
+$route['product/(:any)']        = 'store/view/$1';
 // Frontend Login Register
 $route['register'] 				= 'register';
 $route['login'] 				= 'login';
 $route['forgotten'] 		    = 'forgotten';
 $route['reset'] 		        = 'reset';
 
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes']  = FALSE;
 
 //Set Splash Screen
 $route['setSplashScreen'] 	    = 'app/setSplashScreen';

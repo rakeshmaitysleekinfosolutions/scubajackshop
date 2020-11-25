@@ -92,7 +92,6 @@ class App extends AppController {
      * @var string
      */
     private $meta;
-    private $currencyArray;
 
     public function __construct()
     {
@@ -100,14 +99,16 @@ class App extends AppController {
         $this->template->set_template('layout/app');
         $this->paypal = new Paypal();
         //$this->paypal->setApiContext($this->config->item('CLIENT_ID'),$this->config->item('CLIENT_SECRET'));
-        $this->settings         = Settings_model::factory()->find()->get()->row_array();
-        $this->meta             = SettingsMetaData_model::factory()->find()->get()->row_array();
-        $this->currencyArray    = $this->currency->getCurrency(SettingsCurrencyConfiguration_model::factory()->getCurrency($this->settings['id']));
+        $this->settings = Settings_model::factory()->find()->get()->row_array();
+        $this->meta     = SettingsMetaData_model::factory()->find()->get()->row_array();
 
-        // Set Session Data
+
         $this->setSession('settings', $this->settings);
         $this->setSession('meta', $this->meta);
-        $this->setSession('currency', $this->currencyArray);
+        if($this->settings) {
+            $this->setSession('currency', $this->currency->getCurrency(SettingsCurrencyConfiguration_model::factory()->getCurrency($this->settings['id'])));
+        }
+
     }
 
     /**
@@ -161,20 +162,34 @@ class App extends AppController {
                     $this->image = $this->resize('no_image.png', 255, 325);
                 }
                // dd($productModelInstance->product->categoryToProduct->category);
-                $this->data[$this->var][] = array(
-                    'id'            => $productModelInstance->product->id,
-                    'name'          => $productModelInstance->product->name,
-                    'slug'          => $productModelInstance->product->slug,
-                    'description'   => ($productModelInstance->product->description) ? $productModelInstance->product->description->description : "",
-                    'img'           => $this->image,
-                    'video'         => ($productModelInstance->product->videos) ? $productModelInstance->product->videos->url : "",
-                    'pdf'           => ($productModelInstance->product->pdf) ? $productModelInstance->product->pdf->pdf : "",
-                    'quiz'          => ($productModelInstance->product->quiz) ? base_url('quiz/'.$productModelInstance->product->quiz->slug) : "",
-                    'category'      => array(
-                        'name'        => $productModelInstance->product->categoryToProduct->category->name,
-                        'description' => $productModelInstance->product->categoryToProduct->category->description->description
-                    )
-                );
+                if($productModelInstance->product->status) {
+                    $video = 'https://www.youtube.com';
+                    if($productModelInstance->product->videos) {
+                        $rx = '~^(?:https?://)?(?:www[.])?(?:youtube[.]com/watch[?]v=)([^&]{11})~x';
+                        $has_match = preg_match($rx, $productModelInstance->product->videos->url, $matches);
+                        if($has_match) {
+                            $video = $productModelInstance->product->videos->url;
+                        } else {
+                            $extractUrl = explode('https://youtu.be/',$productModelInstance->product->videos->url);
+                            $video = 'https://www.youtube.com/watch?v='.$extractUrl[1];
+                        }
+                    }
+
+                    $this->data[$this->var][] = array(
+                        'id' => $productModelInstance->product->id,
+                        'name' => $productModelInstance->product->name,
+                        'slug' => $productModelInstance->product->slug,
+                        'description' => ($productModelInstance->product->description) ? $productModelInstance->product->description->description : "",
+                        'img' => $this->image,
+                        'video' => ($video) ? $video : "",
+                        'pdf' => ($productModelInstance->product->pdf) ? $productModelInstance->product->pdf->pdf : "",
+                        'quiz' => ($productModelInstance->product->quiz) ? base_url('quiz/' . $productModelInstance->product->quiz->slug) : "",
+                        'category' => array(
+                            'name' => $productModelInstance->product->categoryToProduct->category->name,
+                            'description' => $productModelInstance->product->categoryToProduct->category->description->description
+                        )
+                    );
+                }
             }
         }
     }
@@ -1065,4 +1080,9 @@ class App extends AppController {
         }
     }
 
+
+    public function store() {
+        echo 1;
+        render('store/index');
+    }
 }
