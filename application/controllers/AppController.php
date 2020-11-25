@@ -4,9 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class AppController extends BaseController {
 
     private $csrfArray;
-    public function __constructor() {
-
-         parent::__constructor();
+    public function __construct() {
+         parent::__construct();
 
 
          $this->csrfArray =  array(

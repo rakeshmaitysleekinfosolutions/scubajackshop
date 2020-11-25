@@ -1,7 +1,16 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Register extends AppController {
-    
+
+    private $expiration;
+    /**
+     * @var float|int
+     */
+    private $expirationDate;
+    /**
+     * @var string
+     */
+    private $signUpTimestamp;
 	public function __construct()
 	{
         parent::__construct();
@@ -72,14 +81,14 @@ class Register extends AppController {
 
 
 				// Sent mail to user
-				$subject 						= sprintf($this->lang->line('text_subject'), "SCUBA JACK");
+				$subject 						= sprintf($this->lang->line('text_subject'), "Adventuresofscubajack");
 
-				$this->data['text_welcome'] 	= sprintf($this->lang->line('text_welcome'), "SCUBA JACK");
+				$this->data['text_welcome'] 	= sprintf($this->lang->line('text_welcome'), "Adventuresofscubajack");
 
 				$this->data['text_email'] 		= sprintf($this->lang->line('text_email'), $this->request['email']);
 				$this->data['text_password'] 	= sprintf($this->lang->line('text_password'), $this->request['password']);
 
-				$this->data['text_app_name'] 	= "SCUBA JACK";
+				$this->data['text_app_name'] 	= "Adventuresofscubajack";
 				$this->data['text_service'] 	= $this->lang->line('text_service');
 				$this->data['text_thanks'] 		= $this->lang->line('text_thanks');
 
@@ -97,8 +106,48 @@ class Register extends AppController {
 				$mail->setSender($this->config->item('config_sender_name'));
 				$mail->setSubject($subject);
 				$mail->setHtml($this->template->content->view('emails/registration', $this->data));
-				$mail->send(); 
+				$mail->send();
+				// Set Subscribe
+                $this->expiration       = 30;
+                $this->signUpTimestamp  = ($this->getSession('user')) ? strtotime($this->getSession('user')['created_at']) : '';
+                $this->expirationDate   = $this->signUpTimestamp + ($this->expiration*24*60*60);
 
+                Subscriber_model::factory()->insert([
+                    'user_id'           => userId(),
+                    'membership_plan_id'=> 'P-811216868F965540J6VOAF4I',
+                    'type'              => 'MONTH',
+                    'plan'              => 'Trial',
+                    'price'             => 0.00,
+                    'beg_date'          => date('Y-m-d H:i:s'),
+                    'end_at'            => date('Y-m-d H:i:s', $this->expirationDate),
+                ]);
+
+
+                try {
+                    $subject 						= sprintf('Thanks for subscribing a free trial plan to Adventuresofscubajack');
+
+                    $mail 							= new Mail($this->config->item('config_mail_engine'));
+                    $mail->parameter 				= $this->config->item('config_mail_parameter');
+                    $mail->smtp_hostname 			= $this->config->item('config_mail_smtp_hostname');
+                    $mail->smtp_username 			= $this->config->item('config_mail_smtp_username');
+                    $mail->smtp_password 			= html_entity_decode($this->config->item('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+                    $mail->smtp_port 				= $this->config->item('config_mail_smtp_port');
+                    $mail->smtp_timeout 			= $this->config->item('config_mail_smtp_timeout');
+
+                    $mail->setTo($this->config->item('config_email'));
+                    $mail->setFrom($this->config->item('config_email'));
+                    $mail->setReplyTo($this->request['email']);
+                    $mail->setSender($this->config->item('config_sender_name'));
+                    $mail->setSubject($subject);
+                    $mail->setHtml($this->template->content->view('emails/subscribing', $this->request));
+                    $mail->send();
+
+                    $this->setSession('subscribe', true);
+                    $this->json['success']          = 'Thanks for submitting contact us form';
+                    $this->json['redirect'] 		= url('/');
+                } catch (Exception $e) {
+                    dd($e->getMessage());
+                }
 				$this->json['success']          = $this->lang->line('text_success');
 				$this->json['redirect'] 		= url('/');
             } 
