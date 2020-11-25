@@ -145,8 +145,8 @@ class Paypal {
         // Live
         $this->apiContext = new ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                'AXG3WsnoHrkb9v2GfOK7kUYvj5tAzXL0V9J2-bEo2RiY5AiMqpfq5MtY8WRfJL8M84AwI6CvXUh6d3Wc',
-                'EHRdoaE6fi1eDSyLe54AIInj2IQrgbN1SttRs7Ywv4IDKE4iB1_KcuZVqjcegpZY0Wn11FvQxmVg6Laj'
+                'AR1l6f9ecIIU5E_YeQOdTtEBOSQeu-65XaRlb94EHMY8lQumwf1a1BYRR7G-LxfQebEpR68dz5aAG268',
+                'EKLxtyKqPmM51u4ZJMrELSW6n1Br99zvqr8CGAkJnYrwkTLS-Yy7Ln5adKpjNhHqMiyvEVM-wggk_VZe'
             )
         );
 

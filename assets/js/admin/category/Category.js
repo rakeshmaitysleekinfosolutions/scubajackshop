@@ -51,6 +51,21 @@
                         }
                     }
                 });
+            }).on('change', '.setActivityBook', function (e) {
+                var id      = $(this).attr('data-id');
+                var activity_book  = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: myLabel.setToActivityBook,
+                    cache: false,
+                    data: {id: id, activity_book: activity_book},
+                    success: function (res) {
+                        if (res.status) {
+                            dataTable.ajax.reload();
+                            swal(res.message);
+                        }
+                    }
+                });
             }).on('click', '#checkAll', function () {
                 $('.datatable input[type=checkbox]').prop('checked', this.checked);
             });
