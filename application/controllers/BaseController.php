@@ -6,14 +6,26 @@ class BaseController extends MX_Controller {
     public  $results;
     public  $json = array();
     public  $request = array();
+    public  $currencies = array();
     private $headers = array();
 	private $level = 0;
     private $output;
     
-    public function __constructor() {
-         parent::__constructor();
+    public function __construct() {
+         parent::__construct();
          $this->load->library('security');
 
+         $this->results = Currency_model::factory()->findAll();
+         foreach ($this->results as $result) {
+            $this->currencies[$result['code']] = array(
+                'currency_id'   => $result['id'],
+                'title'         => $result['name'],
+                'symbol_left'   => $result['symbol_left'],
+                'symbol_right'  => $result['symbol_right'],
+                'decimal_place' => $result['decimal_place'],
+                'value'         => $result['value']
+            );
+         }
 	}
     
     protected function dd($attr) {
@@ -290,6 +302,97 @@ class BaseController extends MX_Controller {
 			echo $output;
 		}
 	}
+    public function format($number, $currency, $value = '', $format = true) {
+	    //$this->dd($currency);
+        $symbol_left = $this->currencies[$currency]['symbol_left'];
+        $symbol_right = $this->currencies[$currency]['symbol_right'];
+        $decimal_place = $this->currencies[$currency]['decimal_place'];
 
+        if (!$value) {
+            $value = $this->currencies[$currency]['value'];
+        }
+
+        $amount = $value ? (float)$number * $value : (float)$number;
+
+        $amount = round($amount, (int)$decimal_place);
+
+        if (!$format) {
+            return $amount;
+        }
+
+        $string = '';
+
+        if ($symbol_left) {
+            $string .= $symbol_left;
+        }
+
+        $string .= number_format($amount, (int)$decimal_place, $this->config->item('decimal_point'), $this->config->item('thousand_point'));
+
+        if ($symbol_right) {
+            $string .= $symbol_right;
+        }
+
+        return $string;
+    }
+
+    public function convert($value, $from, $to) {
+        if (isset($this->currencies[$from])) {
+            $from = $this->currencies[$from]['value'];
+        } else {
+            $from = 1;
+        }
+
+        if (isset($this->currencies[$to])) {
+            $to = $this->currencies[$to]['value'];
+        } else {
+            $to = 1;
+        }
+
+        return $value * ($to / $from);
+    }
+
+    public function getCurrencyId($currency) {
+        if (isset($this->currencies[$currency])) {
+            return $this->currencies[$currency]['currency_id'];
+        } else {
+            return 0;
+        }
+    }
+
+    public function getSymbolLeft($currency) {
+        if (isset($this->currencies[$currency])) {
+            return $this->currencies[$currency]['symbol_left'];
+        } else {
+            return '';
+        }
+    }
+
+    public function getSymbolRight($currency) {
+        if (isset($this->currencies[$currency])) {
+            return $this->currencies[$currency]['symbol_right'];
+        } else {
+            return '';
+        }
+    }
+
+    public function getDecimalPlace($currency) {
+        if (isset($this->currencies[$currency])) {
+            return $this->currencies[$currency]['decimal_place'];
+        } else {
+            return 0;
+        }
+    }
+
+    public function getValue($currency) {
+        if (isset($this->currencies[$currency])) {
+            return $this->currencies[$currency]['value'];
+        } else {
+            return 0;
+        }
+    }
+
+    public function hasCurrency($currency) {
+        return isset($this->currencies[$currency]);
+    }
     
 }

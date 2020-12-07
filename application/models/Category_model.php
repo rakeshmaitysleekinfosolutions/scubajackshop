@@ -52,7 +52,7 @@ class Category_model extends BaseModel {
         return $this->hasOne(CategoryDescription_model::class, 'category_id', 'id');
     }
     public function products() {
-        return $this->hasMany(CategoryToProduct_model::class, 'category_id', 'id');
+        return $this->hasMany(CategoryToProduct_model::class, 'category_id', 'id')->order_by('sort_order','ASC');
     }
 
 }

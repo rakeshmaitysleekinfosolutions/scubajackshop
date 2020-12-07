@@ -192,7 +192,9 @@ class Product extends AdminController {
     public function index() {
         $this->init();
         $this->data['title']        = 'Product List';
+        $this->data['columns'][]    = 'Image';
         $this->data['columns'][]    = 'Name';
+        $this->data['columns'][]    = 'Price';
         $this->data['columns'][]    = 'Sort Order';
         $this->data['columns'][]    = 'Status';
         $this->data['columns'][]    = 'Created At';
@@ -381,7 +383,9 @@ class Product extends AdminController {
             foreach($this->results as $result) {
                 $this->rows[] = array(
                     'id'			=> $result->id,
+                    'img'           => resize($result->image,100,100),
                     'name'		    => $result->name,
+                    'price'		    => $result->price,
                     'slug' 		    => $result->slug,
                     'sort_order'     => $result->sort_order,
                     'status' 		=> ($result->status && $result->status == 1) ? 1 : 0,
@@ -398,7 +402,9 @@ class Product extends AdminController {
                                                 <span class="css-control-indicator"></span>
 											</label>
 										</td>';
+                $this->data[$i][] = '<td><img src="'.$row['img'].'"></td>';
                 $this->data[$i][] = '<td>'.$row['name'].'</td>';
+                $this->data[$i][] = '<td>'.$row['price'].'</td>';
                 $this->data[$i][] = '<td>'.$row['sort_order'].'</td>';
 //					$this->data[$i][] = '<td>
 //											<div class="material-switch pull-right">
@@ -450,7 +456,8 @@ class Product extends AdminController {
             $this->request = $this->input->post();
             if(isset($this->request['status']) && isset($this->request['id'])) {
                 Shop_model::factory()->update(['status' => $this->request['status']], ['id' => $this->request['id']]);
-                $this->json['status'] = 'Status has been successfully updated';
+                $this->json['status'] = true;
+                $this->json['message'] = 'Status has been successfully updated';
                 return $this->output
                     ->set_content_type('application/json')
                     ->set_status_header(200)

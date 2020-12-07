@@ -47,7 +47,7 @@
                                             <?php if(!empty($categories)) {
 
                                                 foreach ($categories as $category) {?>
-                                                    <option value="<?php echo $category->id;?>" <?php echo  (in_array($category->id, $categoryProducts)) ? "selected" : ""?>><?php echo $category->name;?></option>
+                                                    <option value="<?php echo $category->id;?>" <?php echo  ($category->id == $categoryProducts) ? "selected" : ""?>><?php echo $category->name;?></option>
                                                 <?php } ?>
                                             <?php } ?>
                                         </select>
@@ -95,6 +95,15 @@
                                         <?php } ?>
                                     </div>
 
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Sort Order <span class="text-danger">*</span></label>
+                                        <input value="<?php echo $sort_order;?>" class="form-control" type="text" name="sort_order" id="input-sort_order" autocomplete="off" required>
+                                        <?php if($error_sort_order) { ?>
+                                            <div class="text-danger"><?php echo $error_sort_order;?></div>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

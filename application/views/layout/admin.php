@@ -156,6 +156,60 @@
 		<script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/sweetalert/sweetalert.js" ></script>
 		 <script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/summernote/summernote.js" ></script>
 		<?php echo $this->template->javascript; ?>
+        <script>
+            /** Select Dynamic Menu*/
+            $('#menu a[href]').on('click', function() {
+                sessionStorage.setItem('menu', $(this).attr('href'));
+            });
+            if (!sessionStorage.getItem('menu')) {
+                $('#menu #dashboard').addClass('active');
+            } else {
+                // Sets active and open to selected page in the left column menu.
+                if (sessionStorage.getItem('menu') != '#') {
+                    $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
+                }
 
+            }
+
+            if (localStorage.getItem('sidebar') == 'active') {
+                $('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
+
+                $('#sidebar').addClass('active');
+
+                // Slide Down Menu
+                $('#menu li.active').has('ul').children('ul').addClass(' in');
+                $('#menu li').not('.active').has('ul').children('ul').addClass('');
+            } else {
+                $('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
+
+                $('#menu li li.active').has('ul').children('ul').addClass(' in');
+                $('#menu li li').not('.active').has('ul').children('ul').addClass('');
+            }
+
+            // Menu button
+            $('#button-menu').on('click', function() {
+                // Checks if the left column is active or not.
+                if ($('#sidebar').hasClass('active')) {
+                    localStorage.setItem('sidebar', '');
+
+                    $('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
+
+                    $('#sidebar').removeClass('active');
+
+                    $('#menu > li > ul').removeClass('in collapse');
+                    $('#menu > li > ul').removeAttr('style');
+                } else {
+                    localStorage.setItem('sidebar', 'active');
+
+                    $('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
+
+                    $('#sidebar').addClass('active');
+
+                    // Add the slide down to open menu items
+                    $('#menu li.open').has('ul').children('ul').addClass('collapse in');
+                    $('#menu li').not('.open').has('ul').children('ul').addClass('collapse');
+                }
+            });
+        </script>
     </body>
 </html>

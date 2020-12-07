@@ -1,4 +1,5 @@
-<section class="book-list">
+<?php if(!$category['isActivityBook']) {?>
+    <section class="book-list">
     <h3><span><?php echo ($category['name']) ? $category['name'] : "";?> </span></h3>
 	<p><?php echo ($category['description']) ? $category['description'] : "";?></p>
 	<div class="container">
@@ -47,7 +48,35 @@
 	</div>
 </section>
 <!-- book-list part end -->
-
+<?php } else {?>
+    <section class="book-list">
+        <h3><span><?php echo ($category['name']) ? $category['name'] : "";?> </span></h3>
+        <p><?php echo ($category['description']) ? $category['description'] : "";?></p>
+        <div class="container">
+            <div class="activity-wrapper">
+                <div class="row demo-gallery">
+                    <ul class="activityBooks">
+                        <?php foreach ($products as $product) { ?>
+                            <li class="col-lg-3 col-md-6 col-sm-6 col-12" data-poster="<?php echo makeThumbnail($product['video'],'HIGH');?>" data-src="<?php echo $product['video'];?>" data-name="<?php echo $product['name'];?>">
+                                <div class="activity-box">
+                                    <a  href="">
+                                        <img class="img-responsive" src="<?php echo makeThumbnail($product['video'],'HIGH');?>" />
+                                        <div class="demo-gallery-poster">
+                                            <img src="<?php echo base_url('assets/images/play-button-2.png');?>">
+                                        </div>
+                                    </a>
+                                    <center>
+                                        <button type="button" class="btn activity-book"><i class="far fa-arrow-alt-circle-down"></i>activity book</button>
+                                    </center>
+                                </div>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php } ?>
 <script>
 var myLabel = myLabel || {};
 myLabel.baseUrl = '<?php echo base_url();?>';

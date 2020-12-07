@@ -8,11 +8,6 @@ class Ecart {
 	public function __construct()
 	{
 		$this->ci = &get_instance();
-		$this->ci->load->library('User');
-		$this->ci->load->library('Currency');
-		$this->ci->load->library('Extension');
-		$this->ci->load->library('session');
-		$this->ci->load->library('tax');
 		// Remove all the expired carts with no customer ID
 		$this->ci->db->query("DELETE FROM carts WHERE (user_id = '0') AND created_at < DATE_SUB(NOW(), INTERVAL 1 HOUR)");
 		if ($this->ci->user->getId()) {
@@ -27,12 +22,12 @@ class Ecart {
 			}
 		}
 	}
-    
+
 
     public function getSumOfTotalQty($id) {
         $result = $this->ci->db->select('SUM(qty) AS qty')
                 ->from('carts')
-                ->where('id_seat_infos', $id)
+                ->where('product_id', $id)
                 ->get()
 				->row_array();
 		if($result) {
@@ -40,66 +35,50 @@ class Ecart {
 		}
     }
     public function add($data) {
-		$query = $this->ci->db->query("SELECT COUNT(*) AS total FROM carts WHERE session_id = '" . $this->ci->db->escape_str(session_id()) . "' AND user_id = '" . (int)$this->ci->user->getId() . "' AND id_seat_infos = '" . (int)$data['id_seat_infos'] . "'");
+		$query = $this->ci->db->query("SELECT COUNT(*) AS total FROM carts WHERE session_id = '" . $this->ci->db->escape_str(session_id()) . "' AND user_id = '" . (int)$this->ci->user->getId() . "' AND product_id = '" . (int)$data['product_id'] . "'");
         $row = $query->row_array();
 		if (!$row['total']) {
-			$this->ci->db->query("INSERT carts SET session_id = '" . $this->ci->db->escape_str(session_id()) . "', id_seat_infos = '" . (int)$data['id_seat_infos'] . "', name = '" . $this->ci->db->escape_str($data['name']) . "', venue = '" . $this->ci->db->escape_str($data['venue']) . "',qty = '" . (int)$data['qty'] . "',id_events = '" . (int)$data['id_events'] . "',id_seatmaps = '" . (int)$data['id_seatmaps'] . "',user_id = '" . (int)$this->ci->user->getId() . "',price = '" . (int)$data['price'] . "',total = '" . (int)$data['total'] . "'");
+			$this->ci->db->query("INSERT carts SET session_id = '" . $this->ci->db->escape_str(session_id()) . "', product_id = '" . (int)$data['product_id'] . "', name = '" . $this->ci->db->escape_str($data['name']) . "', quantity = '" . (int)$data['quantity'] . "',user_id = '" . (int)$this->ci->user->getId() . "',price = '" . (int)$data['price'] . "',total = '" . (int)$data['total'] . "'");
 		} else {
-			$this->ci->db->query("UPDATE carts SET qty = (qty + " . (int)$data['qty'] . "),user_id = '" . (int)$this->ci->user->getId() . "' WHERE session_id = '" . $this->ci->db->escape_str(session_id()) . "'  AND id_seat_infos = '" . (int)$data['id_seat_infos'] . "'");
+			$this->ci->db->query("UPDATE carts SET quantity = (quantity + " . (int)$data['quantity'] . "),user_id = '" . (int)$this->ci->user->getId() . "' WHERE session_id = '" . $this->ci->db->escape_str(session_id()) . "'  AND product_id = '" . (int)$data['product_id'] . "'");
 		}
 	}
-
-	public function update_cart($data) {
-		// AND user_id = '" . (int)$this->ci->user->getId() . "' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'
-		$this->ci->db->query("UPDATE carts SET price = '" . (int)$data['price'] . "',total = (qty * " . (int)$data['price'] . ") WHERE id_carts = '" . (int)$data['id_carts'] . "'");
-	}
-
 	public function remove($id_carts) {
-		$cart_query = $this->ci->db->query("SELECT * FROM `carts` WHERE id_carts = '" . (int)$id_carts . "' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
-		$row = $cart_query->row_array();
-		if(!empty($row)) {
-			$this->ci->db->query("DELETE FROM carts WHERE id_carts = '" . (int)$id_carts . "' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
-			$this->updateUsed($row['id_seat_infos'], $row['qty']);
-			//$this->ci->db->query("UPDATE `seat_infos` SET used = (used - " . (int)$cart['qty'] . ") WHERE id = '" . $this->ci->db->escape_str($cart['id_seat_infos']) . "'");
-		}
+		$this->ci->db->query("DELETE FROM `carts` WHERE id = '" . (int)$id_carts . "' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
 	}
-
+    public function update($cart_id, $quantity) {
+        $this->ci->db->query("UPDATE `carts` SET quantity = '" . (int)$quantity . "' WHERE id = '" . (int)$cart_id . "' AND user_id = '" . (int)$this->ci->user->getId() . "' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
+    }
 	public function clear() {
-		$cart_query =$this->ci->db->query("SELECT * FROM carts WHERE  session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
-		$result = $cart_query->result_array();
-		if(!empty($result)) {
-			foreach ($result as $key => $value) {
-				$this->ci->db->query("DELETE FROM carts WHERE id_carts = '" . (int)$value['id_carts'] . "' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
-				$this->updateUsed($value['id_seat_infos'], $value['qty']);
-			}
-		}
+		$this->ci->db->query("DELETE FROM carts WHERE  session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
     }
     public function getProducts() {
-		// echo "SELECT * FROM carts WHERE user_id = '" . (int)$this->ci->user->getId() . "' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'";
-		// exit;
 		$product_data = array();
 		$cart_query = $this->ci->db->query("SELECT * FROM carts WHERE user_id = '" . (int)$this->ci->user->getId() . "' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
 		foreach ($cart_query->result_array() as $cart) {
-			$this->ci->load->model('Event_model','event_model');
-			$tax_class_id = $this->ci->event_model->getEvent($cart['id_events'])['tax_class_id'];
-			
-			if ($cart['qty'] > 0) {
+            $stock = true;
+            $product_query = $this->ci->db->query("SELECT * FROM shop p LEFT JOIN shop_description pd ON (p.id = pd.shop_id) WHERE p.id = '" . (int)$cart['product_id'] . "'  AND p.date_available <= NOW() AND p.status = '1'");
+            // Stock
+            if (!$product_query->row_array()['quantity'] || ($product_query->row_array()['quantity'] < $cart['quantity'])) {
+                $stock = false;
+            }
+
+			if ($cart['quantity'] > 0) {
 				$product_data[] = array(
-					'cart_id'           => $cart['id_carts'],
-					'tax_class_id'      => $tax_class_id,
-					'id_seat_infos'     => $cart['id_seat_infos'],
+					'cart_id'           => $cart['id'],
+					'product_id'        => $cart['product_id'],
 					'session_id'        => $cart['session_id'],
-					'id_events'         => $cart['id_events'],
-					'id_seatmaps'       => $cart['id_seatmaps'],
-					'user_id'      => $cart['user_id'],
+					'user_id'           => $cart['user_id'],
                     'name'              => $cart['name'],
-                    'venue'             => $cart['venue'],
+                    'slug'              => $product_query->row_array()['slug'],
+                    'image'             => $product_query->row_array()['image'],
 					'price'             => $cart['price'],
-					'qty'               => $cart['qty'],
-					'total'             => (int)($cart['price'] * $cart['qty']),
+					'quantity'          => $cart['quantity'],
+					'stock'             => $stock,
+					'total'             => (int)($cart['price'] * $cart['quantity']),
 				);
 			} else {
-				$this->remove($cart['id_carts']);
+				$this->remove($cart['id']);
 			}
 		}
 		return $product_data;
@@ -107,16 +86,16 @@ class Ecart {
     public function getSubTotal() {
 		$total = 0;
 		foreach ($this->getProducts() as $product) {
-			$total += $product['price'];
+			$total += $product['total'];
 		}
 		return $total;
 	}
 
 	public function getTaxes() {
 		$tax_data = array();
-		
+
 		foreach ($this->getProducts() as $product) {
-			
+
 			if ($product['tax_class_id']) {
 				$tax_rates = $this->ci->tax->getRates($product['price'], $product['tax_class_id']);
 				// echo "<pre>";
@@ -151,7 +130,7 @@ class Ecart {
 		$products = $this->getProducts();
 
 		foreach ($products as $product) {
-			$product_total += $product['qty'];
+			$product_total += $product['quantity'];
 		}
 
 		return $product_total;
@@ -160,7 +139,15 @@ class Ecart {
 	public function hasProducts() {
 		return count($this->getProducts());
 	}
+    public function hasStock() {
+        foreach ($this->getProducts() as $product) {
+            if (!$product['stock']) {
+                return false;
+            }
+        }
 
+        return true;
+    }
 	public function setPreviousUsed($value) {
         $this->previousUsed = $value;
 	}
@@ -170,7 +157,7 @@ class Ecart {
     /**
      * @desc get seat details or insert seat info
      * @method getSeatInfoCreate
-     * @return mixed 
+     * @return mixed
      */
     public function getSeatInfoCreate($id, $data) {
 		$seat = $this->ci->seatinfo->find()->where(['id' => $id])->get()->row_array();
@@ -186,13 +173,13 @@ class Ecart {
 				$this->ci->db->query("UPDATE `seat_infos` SET used = ".(int)$data['qty']. " WHERE id = '" . $this->ci->db->escape_str($id) . "'");
 				$seatInfo = $this->ci->seatinfo->find()->where(['id' => $id])->get()->row_array();
 				$this->setNextUsed((int)$seatInfo['used']);
-				
+
 			}
-			
-            
+
+
         } else {
             $this->ci->seatinfo->insert($data);
-            $seatInfo = $this->ci->seatinfo->find()->where(['id_seat_infos' => $this->ci->seatinfo->getLastInsertID()])->get()->row_array();
+            $seatInfo = $this->ci->seatinfo->find()->where(['product_id' => $this->ci->seatinfo->getLastInsertID()])->get()->row_array();
             $this->setPreviousUsed((int)$seatInfo['used']);
 		}
 		if($seatInfo) {
@@ -201,7 +188,7 @@ class Ecart {
     }
 
 	public function updateUsed($id, $qty) {
-		$seat_query = $this->ci->db->query("SELECT `qty` FROM `seat_infos` WHERE id_seat_infos = '" . (int)$this->ci->db->escape_str($id) . "'");
+		$seat_query = $this->ci->db->query("SELECT `qty` FROM `seat_infos` WHERE product_id = '" . (int)$this->ci->db->escape_str($id) . "'");
 		$row = $seat_query->row_array();
 		if(!empty($row)) {
 			$qty_ = ($row['used']-$qty);
@@ -210,13 +197,13 @@ class Ecart {
 			} else {
 				$used = $qty_;
 			}
-			$this->ci->db->query("UPDATE `seat_infos` SET used = '" . (int)$used . "' WHERE id_seat_infos = '" . $this->ci->db->escape_str($id) . "'");
+			$this->ci->db->query("UPDATE `seat_infos` SET used = '" . (int)$used . "' WHERE product_id = '" . $this->ci->db->escape_str($id) . "'");
 		}
 	}
 	/**
      * @desc check seat already in cart by seat_info id
      * @method inCart
-     * @return int 
+     * @return int
      */
     public function inCart($id) {
         return $this->ci->ecart->getSumOfTotalQty($id);
@@ -224,55 +211,62 @@ class Ecart {
     /**
      * @desc check seat already in cart by seat_info id
      * @method inCart
-     * @return int 
+     * @return int
      */
     public function inOrder($id) {
         return $this->ci->order_item->getSumOfTotalQty($id);
-       
+
 	}
 	public function totals() {
         	$totals = array();
-			$taxes = $this->getTaxes();
-			
+			$taxes = array();
+
 			$total = 0;
-			// Because __call can not keep var references so we put them into an array. 			
+			// Because __call can not keep var references so we put them into an array.
 			$total_data = array(
 				'totals' => &$totals,
 				'taxes'  => &$taxes,
 				'total'  => &$total
 			);
 			// Display prices
-			if ($this->ci->user->isLogged() || !$this->ci->setting->getValue('config_customer_price')) {
+			//if ($this->ci->user->isLogged()) {
 				$sort_order = array();
                 $results = $this->ci->extension->getExtensions('total');
+
 				foreach ($results as $key => $value) {
-					$sort_order[$key] = $this->ci->setting->getValue($value['code'] . '_sort_order');
+					$sort_order[$key] = $this->getValue($value['code'] . '_sort_order');
 				}
-               
+
 				array_multisort($sort_order, SORT_ASC, $results);
-                
+
 				foreach ($results as $index => $result) {
-					if ($this->ci->setting->getValue($result['code'] . '_status')) {
-						$type = ucfirst($result['code']); 
+                   // print_r($result);
+					if ($this->getValue($result['code'] . '_status')) {
+						$type = ucfirst($result['code']);
+
 						$field = new $type();
 						get_class($field)::factory()->getTotal($total_data);
 					}
 				}
                
 				$sort_order = array();
-				
+
 				foreach ($totals as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
-				
-
 				array_multisort($sort_order, SORT_ASC, $totals);
-			} 
+			//}
 
 			return $total_data;
 		
 			
             
     }
-    
+    public function getValue($key) {
+        $query = $this->ci->db->query("SELECT `value` FROM `config` WHERE `key` = '" . $this->ci->db->escape_str($key) . "'");
+        $row =  $query->row_array();
+        if($row) {
+            return $row['value'];
+        }
+    }
 }

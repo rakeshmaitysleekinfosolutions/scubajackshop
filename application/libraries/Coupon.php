@@ -4,9 +4,6 @@ class Coupon {
 	public function __construct()
 	{
 		$this->ci = &get_instance();
-		$this->ci->load->library('Customer');
-		$this->ci->load->library('Ecart');
-		$this->ci->load->library(('session'));
 	}
 	public function getCoupon($code) {
 		$status = true;
@@ -24,12 +21,12 @@ class Coupon {
 				$status = false;
 			}
 
-			if ($row['logged'] && !$this->customer->getId()) {
+			if ($row['logged'] && !$this->user->getId()) {
 				$status = false;
 			}
 
-			if ($this->ci->customer->getId()) {
-				$coupon_history_query = $this->ci->db->query("SELECT COUNT(*) AS total FROM `coupon_history` ch WHERE ch.coupon_id = '" . (int)$row['coupon_id'] . "' AND ch.customer_id = '" . (int)$this->ci->customer->getId() . "'");
+			if ($this->user->getId()) {
+				$coupon_history_query = $this->ci->db->query("SELECT COUNT(*) AS total FROM `coupon_history` ch WHERE ch.coupon_id = '" . (int)$row['coupon_id'] . "' AND ch.user_id = '" . (int)$this->ci->customer->getId() . "'");
 				if ($row['uses_customer'] > 0 && ($coupon_history_query->row_array()['total'] >= $row['uses_customer'])) {
 					$status = false;
 				}
@@ -219,7 +216,7 @@ class Coupon {
 	public function unconfirm($order_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_history` WHERE order_id = '" . (int)$order_id . "'");
 	}
-	public function factory($attr = array()) {
+	public static   function factory($attr = array()) {
 		return new Coupon($attr);
 	}
 }

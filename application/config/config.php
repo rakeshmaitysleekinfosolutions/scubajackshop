@@ -535,7 +535,37 @@ $config['CLIENT_SECRET'] = 'EHc_fc822fUDKIZUGiODxT5q4f_L5I1C6inGzBuSPxXVPi4ikQJ7
 
 $config['decimal_point']                 = '.';
 $config['thousand_point']                = ',';
+$config['text_sub_total'] = 'Sub-Total';
+// Coupon
+$config['sub_total'] = array(
+    'code'  => 'sub_total',
+    'key'   => 'sub_total_sort_order',
+    'value' => 1
+);
+$config['total'] = array(
+    'code'  => 'total',
+    'key'   => 'total_sort_order',
+    'value' => 9
+);
+$config['tax'] = array(
+    'code'  => 'tax',
+    'key'   => 'tax_sort_order',
+    'value' => 5
+);
 
+$config['config'] = array(
+    'code'  => 'config',
+    'key'   => 'config_customer_price',
+    'value' => 0
+);
+$config['coupon'] = array(
+    'code'  => 'coupon',
+    'key'   => 'coupon_sort_order',
+    'value' => 4
+);
+$config['text_total'] = 'Total';
+
+$config['config_tax'] = 1;
 @ini_set( 'upload_max_filesize' , '7200M' );
 @ini_set( 'post_max_size', '7200M');
 @ini_set( 'memory_limit', '7200M' );

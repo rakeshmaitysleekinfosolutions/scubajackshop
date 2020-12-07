@@ -29,6 +29,21 @@ class Shop_model extends BaseModel {
             return $ids;
         }
     }
+    public function category($id) {
+        $shopCategory = ShopToCategory_model::factory()->findOne(['shop_id' => $id]);
+        $category = array();
+        if($shopCategory) {
+            $category = ShopCategory_model::factory()->findOne($shopCategory->shop_category_id);
+        }
+        if($category) {
+            return array(
+                'id' => $category->id,
+                'name' => $category->name,
+                'slug' => $category->slug
+            );
+        }
+        return false;
+    }
     public function images($projectId) {
         return ShopImage_model::factory()->find()->where('shop_id', $projectId)->order_by('sort_order','ASC')->get()->result_array();
     }

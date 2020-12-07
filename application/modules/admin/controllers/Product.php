@@ -58,6 +58,7 @@ class Product extends AdminController implements ProductContract {
                     'img'		    => $image,
 					'name'		    => $result->name,
 					'slug' 		    => $result->slug,
+					'category' 		    => $result->categoryByProductId($result->id)['name'],
                     'status' 		=> ($result->status && $result->status == 1) ? 1 : 0,
                     'hasVideo'      => ($result->videos) ? "YES" : "NO",
                     'hasPdf'        => ($result->pdf) ? "YES" : "NO",
@@ -78,6 +79,7 @@ class Product extends AdminController implements ProductContract {
                     $this->data[$i][] = '<td><img src="'.$row['img'].'"></td>';
 					$this->data[$i][] = '<td>'.$row['name'].'</td>';
 					$this->data[$i][] = '<td>'.$row['slug'].'</td>';
+					$this->data[$i][] = '<td>'.$row['category'].'</td>';
 //					$this->data[$i][] = '<td>
 //											<div class="material-switch pull-right">
 //											<input data-id="'.$row['id'].'" class="checkboxStatus" name="switch_checkbox" id="chat_module" type="checkbox" value="'.$row['status'].'" '.$checked.'/>
@@ -180,6 +182,11 @@ class Product extends AdminController implements ProductContract {
             } else {
                 $this->data['error_slug'] = '';
             }
+            if (isset($this->error['sort_order'])) {
+                $this->data['error_sort_order'] = $this->error['sort_order'];
+            } else {
+                $this->data['error_sort_order'] = '';
+            }
 
             // Status
             if (isset($this->error['status'])) {
@@ -215,10 +222,11 @@ class Product extends AdminController implements ProductContract {
             if (!empty($this->input->post('category'))) {
                 $this->data['categoryProducts'] = $this->input->post('category');
             } elseif (!empty($this->categoryProducts)) {
-                foreach($this->categoryProducts as $categoryProduct) {
+                //foreach($this->categoryProducts as $categoryProduct) {
                     //dd($categoryProduct);
-                    $this->data['categoryProducts'][] = $categoryProduct->category_id;
-                }
+                    //$this->data['categoryProducts'][] = $categoryProduct->category_id;
+                    $this->data['categoryProducts'] = $this->categoryProducts->category_id;
+               // }
             } else {
                 $this->data['categoryProducts'] = '';
             }
@@ -247,6 +255,15 @@ class Product extends AdminController implements ProductContract {
                 $this->data['slug'] = $this->product->slug;
             } else {
                 $this->data['slug'] = url_title($this->input->post('name'),'dash', true);
+            }
+            // Sort Order
+            if (!empty($this->input->post('sort_order'))) {
+                $this->data['sort_order'] = $this->input->post('sort_order');
+            } elseif (!empty($this->categoryProducts)) {
+                //dd($this->categoryProducts);
+                $this->data['sort_order'] = (!empty($this->categoryProducts->sort_order)) ? $this->categoryProducts->sort_order : 0;
+            } else {
+                $this->data['sort_order'] = 0;
             }
             //dd($this->data);
             // Description
@@ -305,7 +322,7 @@ class Product extends AdminController implements ProductContract {
             } elseif (!empty($this->product)) {
                 $this->data['status'] = $this->product->status;
             } else {
-                $this->data['status'] = 0;
+                $this->data['status'] = 1;
             }
             // Image
             if (!empty($this->input->post('image'))) {
@@ -382,7 +399,7 @@ class Product extends AdminController implements ProductContract {
                     'xlsx',
                 );
 
-                $this->data['pdf_thumb'] = $this->resize($ext.'-placeholder.png', 100, 100);
+                $this->data['pdf_thumb'] = $this->resize($ext.'-placeholder-original.png', 100, 100);
             } else {
                 $this->data['pdf_thumb'] = $this->resize('pdf-placeholder.png', 100, 100);
             }
@@ -408,6 +425,9 @@ class Product extends AdminController implements ProductContract {
         if ($this->input->post('status') == '') {
             $this->error['status'] = $this->lang->line('error_status');
         }
+        if ((strlen($this->input->post('sort_order')) < 1) || is_int($this->input->post('sort_order'))) {
+            $this->error['sort_order'] = 'required sort order|support number only';
+        }
 
         // Category
 //        echo count($this->input->post('category'));
@@ -422,9 +442,9 @@ class Product extends AdminController implements ProductContract {
         if ((strlen($this->input->post('meta_title')) < 1) || (strlen(trim($this->input->post('meta_title'))) > 255)) {
             $this->error['meta_title'] = $this->lang->line('error_meta_title');
         }
-        if ((strlen($this->input->post('image')) < 1)) {
-            $this->error['image'] = $this->lang->line('error_image');
-        }
+//        if ((strlen($this->input->post('image')) < 1)) {
+//            $this->error['image'] = $this->lang->line('error_image');
+//        }
 
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->lang->line('error_warning');
@@ -460,7 +480,6 @@ class Product extends AdminController implements ProductContract {
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-
     }
 
     public function edit($productId) {

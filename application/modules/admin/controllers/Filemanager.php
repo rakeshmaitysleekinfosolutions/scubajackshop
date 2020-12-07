@@ -133,7 +133,7 @@ class Filemanager extends AdminController {
 
                     if(in_array($this->ext, array('ppt','pptx'))) {
                         $this->data['images'][] = array(
-                            'thumb' => $this->resize('ppt-placeholder.png', 100, 100),
+                            'thumb' => $this->resize('ppt-placeholder-original.png', 100, 100),
                             'name'  => implode('', $name),
                             'type'  => 'craft',
                             'originalFileType' => 'ppt',
@@ -143,7 +143,7 @@ class Filemanager extends AdminController {
                     }
                     if(in_array($this->ext, array('doc','docx'))) {
                         $this->data['images'][] = array(
-                            'thumb' => $this->resize('doc-placeholder.png', 100, 100),
+                            'thumb' => $this->resize('doc-placeholder-original.png', 100, 100),
                             'name'  => implode('', $name),
                             'type'  => 'craft',
                             'originalFileType' => 'doc',
@@ -153,7 +153,7 @@ class Filemanager extends AdminController {
                     }
                     if(in_array($this->ext, array('xls','xlsx'))) {
                         $this->data['images'][] = array(
-                            'thumb' => $this->resize('xls-placeholder.png', 100, 100),
+                            'thumb' => $this->resize('xls-placeholder-original.png', 100, 100),
                             'name'  => implode('', $name),
                             'type'  => 'craft',
                             'originalFileType' => 'xls',

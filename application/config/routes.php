@@ -6,6 +6,12 @@ $route['404_override']          = 'PageNotFoundController/index';
 
 $route['home-store']            = 'store/index';
 $route['product/(:any)']        = 'store/view/$1';
+$route['cart']                  = 'cart/add';
+$route['cart/remove']                  = 'cart/remove';
+$route['cart/coupon']                  = 'cart/coupon';
+$route['checkout/cart']                  = 'cart/index';
+$route['checkout/cart/update']                  = 'cart/update';
+$route['wishlist/add']                  = 'wishlist/add';
 // Frontend Login Register
 $route['register'] 				= 'register';
 $route['login'] 				= 'login';
@@ -18,6 +24,9 @@ $route['translate_uri_dashes']  = FALSE;
 $route['setSplashScreen'] 	    = 'app/setSplashScreen';
 $route['index2'] 	            = 'app/index2';
 
+$route['game']                  = 'app/game';
+$route['preschool-learning']    = 'app/preschool';
+$route['elementary-learning']   = 'app/elementary';
 
 
 // Membership Plans

@@ -1066,4 +1066,19 @@ class App extends AppController {
         }
     }
 
+    public function game() {
+        $this->template->set_template('layout/game');
+        $this->data['title'] = 'Game';
+        render('game/index', $this->data);
+    }
+    public function preschool() {
+        $this->template->set_template('layout/game');
+        $this->data['title'] = 'PRESCHOOL LEARNING';
+        render('game/preschool/index', $this->data);
+    }
+    public function elementary() {
+        $this->template->set_template('layout/game');
+        $this->data['title'] = 'ELEMENTARY LEARNING';
+        render('game/elementary/index', $this->data);
+    }
 }

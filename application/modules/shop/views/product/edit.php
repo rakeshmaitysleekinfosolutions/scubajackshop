@@ -230,6 +230,6 @@
     var myLabel = myLabel || {};
     myLabel.baseUrl         = '<?php echo base_url();?>';
     myLabel.imageRow        = '<?php echo $imageRow;?>';
-    myLabel.filemanager     = '<?php echo url('filemanager');?>';
+    myLabel.filemanager     = '<?php echo admin_url('filemanager');?>';
     myLabel.placeholder     = '<?php echo $placeholder;?>';
 </script>

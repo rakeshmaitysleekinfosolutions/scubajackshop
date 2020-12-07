@@ -11,17 +11,16 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url();?>assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url();?>assets/images/favicon-16x16.png">
     <link rel="shortcut icon" href="<?php echo base_url();?>assets/images/favicon.ico">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet" />
-    <link href="<?php echo base_url();?>assets/css/all.min.css" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.css">
+    <link href="<?php echo base_url();?>assets/css/all.min.css" rel="stylesheet" />
+
     <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
     <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>assets/css/responsive.css">
     <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>assets/font/font.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/theme/light/js/sweetalert/sweetalert.css">
     <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>assets/js/lightgallery/css/lightgallery.css">
     <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>assets/js/twitter-typeahead/css/normalize.min.css">
-    <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>assets/js/twitter-typeahead/css/main.css">
     <!--    <link type="text/css" rel="stylesheet" href="--><?php //echo base_url();?><!--assets/js/mapify/jquery.mapify.css">-->
     <?php echo $this->template->stylesheet; ?>
 
@@ -42,10 +41,10 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg ">
                 <a class="navbar-brand" href="<?php echo base_url();?>"> <img src="<?php echo (getSession('settings')) ? resize(getSession('settings')['logo'],118,66) :  resize(getSession('assets/theme/light/img/scuba-logo.png;',118,66)) ?>"> </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> 
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     <span class="navbar-toggler-icon"></span>
-                    <span class="navbar-toggler-icon"></span> 
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
@@ -55,19 +54,28 @@
                         <li class="nav-item"> <a class="nav-link" href="<?php echo base_url('home-store');?>">Shop</a> </li>
                         <li class="nav-item"> <a class="nav-link" href="<?php echo base_url('worksheets');?>">Worksheets</a> </li>
                         <li class="nav-item"> <a class="nav-link " href="<?php echo base_url('contact');?>">Contact us</a> </li>
-                        <li class="nav-item"> <a class="nav-link" href="javascript:void(0)">Game</a> </li>
+                        <li class="nav-item"> <a class="nav-link " href="<?php echo base_url('game');?>">Game</a> </li>
+<!--                        <li class="nav-item dropdown">-->
+<!--                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                                Game-->
+<!--                            </a>-->
+<!--                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
+<!--                                <a class="dropdown-item" href="--><?php //echo base_url('learn-the-alphabet');?><!--">Learn The Alphabet</a>-->
+<!--                                <a class="dropdown-item" href="--><?php //echo base_url('learn-letters-sounds');?><!--">Learn Letters Sounds</a>-->
+<!--                            </div>-->
+<!--                        </li>-->
                     </ul>
                     <!-- <a href="#" data-toggle="tooltip" data-placement="top" title="Game"><img src="<?php //echo base_url('assets/images/xbox-brands.png');?>" alt="game" class="game_img"/></a> -->
 
-                   <form class="form-inline searchsec">
-                       <a href="javascript:toggle1();"><i class="fas fa-search"></i> </a>
+                    <form class="form-inline searchsec">
+                        <a href="javascript:toggle1();"><i class="fas fa-search"></i> </a>
                         <div id="toggleText1" style="display:none;" class="search_link">
 
                             <input class="Typeahead-hint type-hidden" type="text" tabindex="-1" readonly >
                             <input class="form-control Typeahead-hint js-typeahead" placeholder="Search here..." name="q" autofocus autocomplete="off">
-<!--                            <input type="button" value="Search"/>-->
-                      </div>
-                   </form>
+                            <!--                            <input type="button" value="Search"/>-->
+                        </div>
+                    </form>
                     <!-- <form action="" method="get">
                         <div class="border-right-none form-group scroll-search typeahead__container">
                             <div class="input-group typeahead__field">
@@ -76,7 +84,7 @@
                                 </div>
                                 <input class="Typeahead-hint type-hidden" type="text" tabindex="-1" readonly >
                                 <input class="form-control Typeahead-hint js-typeahead" placeholder="After Scroll Search events" name="q" autofocus autocomplete="off">
-                                
+
                             </div>
                         </div>
                     </form> -->
@@ -137,23 +145,30 @@
         <div class="ProfileCard-details">
             <div class="ProfileCard-realName">{{name}}</div>
             <div class="ProfileCard-screenName">{{category.name}}</div>
-<!--            <div class="ProfileCard-description">{{description}}</div>-->
+            <!--            <div class="ProfileCard-description">{{description}}</div>-->
         </div>
     </div>
 </script>
 <script id="empty-template" type="text/x-handlebars-template">
     <div class="EmptyMessage">Your search turned up 0 results.</div>
 </script>
+<script>
+    var myLabel = myLabel || {};
+    myLabel.baseUrl = '<?php echo base_url();?>';
 
+    function logout () {
+        window.location.href = '<?php echo base_url('account/logout');?>';
+        // return true or false, depending on whether you want to allow the `href` property to follow through or not
+    }
+</script>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquiry.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/popper.min.js"></script>
-<script src="<?php echo base_url();?>assets/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/loadingoverlay.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/theme/light/js/sweetalert/sweetalert.js" ></script>
 
@@ -167,6 +182,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/twitter-typeahead/js/typeahead.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/Search.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>dist/app.js"></script>
 
 <!--<script type="text/javascript" src="--><?php //echo base_url();?><!--assets/js/lightgallery/js/jquery.mousewheel.min.js"></script>-->
 <?php echo $this->template->javascript; ?>
@@ -217,15 +233,7 @@
 
     }(window.jQuery);
 </script>
-<script>
-    var myLabel = myLabel || {};
-    myLabel.baseUrl = '<?php echo base_url();?>';
 
-    function logout () {
-        window.location.href = '<?php echo base_url('account/logout');?>';
-        // return true or false, depending on whether you want to allow the `href` property to follow through or not
-    }
-</script>
 <!---------search form---------->
 
 <script type="text/javascript">
@@ -235,79 +243,53 @@
         $("#toggleText1").slideToggle(300);
     }
 </script>
-<script type="text/javascript">
+<script>
     $(document).ready(function(){
-
-var quantitiy=0;
-   $('.quantity-right-plus').click(function(e){
-        
-        // Stop acting like a button
-        e.preventDefault();
-        // Get the field name
-        var quantity = parseInt($('#quantity').val());
-        
-        // If is not undefined
-            
+        var quantitiy=0;
+        $('.quantity-right-plus').click(function(e){
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+            // If is not undefined
             $('#quantity').val(quantity + 1);
-
-          
             // Increment
-        
-    });
-
-     $('.quantity-left-minus').click(function(e){
-        // Stop acting like a button
-        e.preventDefault();
-        // Get the field name
-        var quantity = parseInt($('#quantity').val());
-        
-        // If is not undefined
-      
+        });
+        $('.quantity-left-minus').click(function(e){
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+            // If is not undefined
             // Increment
             if(quantity>0){
-            $('#quantity').val(quantity - 1);
+                $('#quantity').val(quantity - 1);
             }
+        });
     });
-    
-});
-  </script>
-
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/modernizr.custom.17475.js"></script>
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.elastislide.js"></script>
-  <script type="text/javascript">
-      
-      // example how to integrate with a previewer
-
-      var current = 0,
+    var current = 0,
         $preview = $( '#preview' ),
         $carouselEl = $( '#carousel' ),
         $carouselItems = $carouselEl.children(),
         carousel = $carouselEl.elastislide( {
-          current : current,
-          minItems : 4,
-          onClick : function( el, pos, evt ) {
-
-            changeImage( el, pos );
-            evt.preventDefault();
-
-          },
-          onReady : function() {
-
-            changeImage( $carouselItems.eq( current ), current );
-            
-          }
+            current : current,
+            minItems : 4,
+            onClick : function( el, pos, evt ) {
+                changeImage( el, pos );
+                evt.preventDefault();
+            },
+            onReady : function() {
+                changeImage( $carouselItems.eq( current ), current );
+            }
         } );
 
-      function changeImage( el, pos ) {
-
+    function changeImage( el, pos ) {
         $preview.attr( 'src', el.data( 'preview' ) );
         $carouselItems.removeClass( 'current-img' );
         el.addClass( 'current-img' );
         carousel.setCurrent( pos );
-
-      }
-
-    </script>
+    }
+</script>
 </body>
 
 </html>

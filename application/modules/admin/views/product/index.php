@@ -58,6 +58,7 @@
                         <th>Image</th>
                         <th>Name</th>
                         <th>Slug</th>
+                        <th>Category</th>
                         <th>Status</th>
                         <th>Video</th>
                         <th>Pdf</th>

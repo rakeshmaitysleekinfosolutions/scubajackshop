@@ -61,7 +61,7 @@ class Product_model extends BaseModel {
         if($data['categoryProducts']) {
             $this->db->query("DELETE FROM category_to_products WHERE product_id = '" . (int)$productId . "'");
             foreach ($data['categoryProducts'] as $categoryId) {
-                $this->db->query("INSERT INTO category_to_products SET category_id = '".(int)$categoryId."', product_id = '" . (int)$productId . "'");
+                $this->db->query("INSERT INTO category_to_products SET category_id = '".(int)$categoryId."', product_id = '" . (int)$productId . "', sort_order = '" . $this->db->escape_str($data['sort_order'])."'");
             }
         }
         if(isset($data['description'])) {
@@ -105,7 +105,7 @@ class Product_model extends BaseModel {
     }
 
     public function categoryProducts() {
-        return $this->hasMany('CategoryToProduct_model', 'product_id', 'id')->get()->result_object();
+        return $this->hasOne('CategoryToProduct_model', 'product_id', 'id')->order_by('sort_order', 'ASC')->get()->row_object();
     }
     public function productDescription() {
         return $this->hasOne('ProductDescription_model', 'product_id', 'id')->get()->row_object();
@@ -144,7 +144,7 @@ class Product_model extends BaseModel {
         return $this->hasOne(ProductImages_model::class, 'product_id', 'id');
     }
     public function search($data) {
-        $sql    = "SELECT p.* FROM `products` p WHERE  p.is_deleted = '0' AND status = 1 AND CONCAT(',', search_keywords, ',') LIKE '%".$this->db->escape_like_str($data['q'])."%' ";
+        $sql    = "SELECT p.* FROM `products` p WHERE  p.is_deleted = '0' AND status = 1 AND CONCAT(',', search_keywords, ',') LIKE '".$this->db->escape_like_str($data['q'])."%' ";
         $query  = $this->db->query($sql);
         $arr    = array();
         $image  = null;

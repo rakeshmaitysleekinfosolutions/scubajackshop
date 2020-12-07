@@ -47,7 +47,7 @@
                     visible: false
                 } ],
                 "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]
-            }).on('change', '.checkboxStatus', function (e) {
+            }).on('change', '.updateStatus', function (e) {
                 var id      = $(this).attr('data-id');
                 var status  = $(this).val();
                 $.ajax({

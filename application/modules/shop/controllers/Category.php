@@ -346,7 +346,8 @@ class Category extends AdminController {
             $this->request = $this->input->post();
             if(isset($this->request['status']) && isset($this->request['id'])) {
                 ShopCategory_model::factory()->update(['status' => $this->request['status']], ['id' => $this->request['id']]);
-                $this->json['status'] = 'Status has been successfully updated';
+                $this->json['status'] = true;
+                $this->json['message'] = 'Status has been successfully updated';
                 return $this->output
                     ->set_content_type('application/json')
                     ->set_status_header(200)
