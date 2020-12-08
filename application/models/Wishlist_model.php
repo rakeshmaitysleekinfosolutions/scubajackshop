@@ -17,4 +17,5 @@ class Wishlist_model extends BaseModel {
         $query = $this->db->query("SELECT COUNT(*) AS total FROM `users_wishlist` WHERE `user_id` = '" . (int)$this->user->getId() . "'");
         return $query->row_array()['total'];
     }
+
 }

@@ -12,6 +12,8 @@ $route['cart/coupon']                  = 'cart/coupon';
 $route['checkout/cart']                  = 'cart/index';
 $route['checkout/cart/update']                  = 'cart/update';
 $route['wishlist/add']                  = 'wishlist/add';
+$route['wishlist']                  = 'wishlist/index';
+$route['wishlist/remove']                  = 'wishlist/remove';
 // Frontend Login Register
 $route['register'] 				= 'register';
 $route['login'] 				= 'login';

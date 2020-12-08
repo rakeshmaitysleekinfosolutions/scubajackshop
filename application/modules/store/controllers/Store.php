@@ -77,6 +77,7 @@ class Store extends AppController {
                 'slug'        => $this->product->slug,
                 'url'         => url('/product/'.$this->product->slug),
                 'price'       => currencyFormat($this->product->price, $this->options['currency']['code']),
+                'mrp'       => currencyFormat($this->product->mrp, $this->options['currency']['code']),
                 'description' => $this->product->description->description,
             );
             $this->data['breadcrumbs'][] = array(

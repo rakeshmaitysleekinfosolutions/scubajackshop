@@ -28,6 +28,7 @@ class Product extends AdminController {
         $this->data['entrySlug']                = 'Slug';
         $this->data['entrySortOrder']           = 'Sort Order';
         $this->data['entryCategory']            = 'Category';
+        $this->data['entryStockStatus']         = 'Stock Status';
 
         $this->data['entryMetaTitle']           = 'Meta Title';
         $this->data['entryMetaDescription']     = 'Meta Description';
@@ -73,7 +74,14 @@ class Product extends AdminController {
         } elseif (!empty($this->product)) {
             $this->data['price'] = $this->product->price;
         } else {
-            $this->data['price'] = 0.00;
+            $this->data['price'] = '';
+        }
+        if (!empty($this->input->post('mrp'))) {
+            $this->data['mrp'] = $this->input->post('mrp');
+        } elseif (!empty($this->product)) {
+            $this->data['mrp'] = $this->product->mrp;
+        } else {
+            $this->data['mrp'] = '';
         }
         //sort_order
         if (!empty($this->input->post('sort_order'))) {
@@ -90,6 +98,14 @@ class Product extends AdminController {
             $this->data['status'] = $this->product->status;
         } else {
             $this->data['status'] = 1;
+        }
+        // Stock Status
+        if (!empty($this->input->post('stock_status_id'))) {
+            $this->data['stock_status_id'] = $this->input->post('stock_status_id');
+        } elseif (!empty($this->product)) {
+            $this->data['stock_status_id'] = $this->product->stock_status_id;
+        } else {
+            $this->data['stock_status_id'] = 9;
         }
         // Category
         if (!empty($this->input->post('categories_id'))) {
@@ -181,6 +197,7 @@ class Product extends AdminController {
                 'sort_order' => $projectImage['sort_order'],
             );
         }
+        $this->data['stocks'] = StockStatus_model::factory()->findAll();
         $this->data['placeholder'] = $this->resize('no_image.png', 100, 100);
         $this->data['back'] = url('shop/product/');
         $this->data['categories'] = ShopCategory_model::factory()->findAll(['status' => 1],null,'sort_order', 'ASC');
@@ -234,7 +251,9 @@ class Product extends AdminController {
                 'sort_order'       => $this->data['sort_order'],
                 'quantity'         => $this->data['quantity'],
                 'price'            => $this->data['price'],
+                'mrp'              => $this->data['mrp'],
                 'status'           => $this->data['status'],
+                'stock_status_id'  => $this->data['stock_status_id'],
             ]);
             $shopId = Shop_model::factory()->getLastInsertID();
             ShopDescription_model::factory()->insert([
@@ -302,7 +321,9 @@ class Product extends AdminController {
                 'sort_order'       => $this->data['sort_order'],
                 'quantity'         => $this->data['quantity'],
                 'price'            => $this->data['price'],
+                'mrp'              => $this->data['mrp'],
                 'status'           => $this->data['status'],
+                'stock_status_id'  => $this->data['stock_status_id'],
             ],[
                 'id' => $id
             ]);

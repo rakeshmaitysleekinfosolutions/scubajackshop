@@ -26,7 +26,7 @@
               <h5 class="text-left"><?php echo $product['name'];?></h5>
               <div class="single-product-price">
                   <h2><?php echo $product['price'];?></h2>
-<!--                  <small>&nbsp;<s>40% off</s></small>-->
+                  <small>&nbsp;<s><?php echo $product['mrp'];?></s></small>
               </div>
                 <div class="row">
                     <div class="col-md-4 mt-3">

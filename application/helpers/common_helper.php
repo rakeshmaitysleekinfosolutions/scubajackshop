@@ -495,10 +495,10 @@ if(!function_exists('currencyFormat')) {
         }
     }
     if(!function_exists('getTotalWishListed')) {
-        function getTotalWishListed() {
+        function getTotalWishListed()
+        {
             $ci = get_instance();
-            $ci = get_instance();
-            return ($ci->session->userdata('totalWishListed')) && (int) $ci->session->userdata('totalWishListed') > 0 ? (int) $ci->session->userdata('totalWishListed') : 0;
+            return (int)(Wishlist_model::factory()->getTotalWishlist()) ? Wishlist_model::factory()->getTotalWishlist() : 0;
         }
     }
 }

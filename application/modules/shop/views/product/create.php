@@ -54,34 +54,7 @@
                                         <input value="<?php echo $sort_order;?>" class="form-control floating" type="text" name="sort_order" id="input-ortOrder" autocomplete="off" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Quantity <span class="text-danger"></span></label>
-                                        <input value="<?php echo $quantity;?>" placeholder="QTY" class="form-control floating" type="text" name="quantity" id="input-payment-lastname" autocomplete="off" >
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Price <span class="text-danger"></span></label>
-                                        <input value="<?php echo $price;?>"  class="form-control floating" type="text" name="price" id="input-payment-lastname" autocomplete="off" >
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label"><?php echo $entryCategory;?><span class="text-danger">*</span></label>
-                                        <select class="select form-control floating" name="categories_id[]" multiple>
-                                            <?php if(count($categories)) {
-                                                foreach ($categories as $category) {
-                                                    $selected = '';
-                                                    if($category_id == $category->id){
-                                                        $selected = 'selected';
-                                                    }?>
-                                                    <option value="<?php echo $category->id;?>" <?php echo $selected;?>><?php echo $category->name;?></option>
-                                                <?php } ?>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -92,6 +65,60 @@
             <div class="card-box">
                 <h3 class="card-title">Description</h3>
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">MRP
+                                <div class="price">
+                                    <span> <?php echo currencyFormat(1000, 'USD');?></span>
+                                </div>
+                            </label>
+                            <input value="<?php echo $mrp;?>"  class="form-control floating" type="text" name="mrp" id="input-mrp" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Price <span class="text-danger"></span></label>
+                            <input value="<?php echo $price;?>"  class="form-control floating" type="text" name="price" id="input-price" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Quantity <span class="text-danger"></span></label>
+                            <input value="<?php echo $quantity;?>" placeholder="QTY" class="form-control floating" type="text" name="quantity" id="input-quantity" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label"><?php echo $entryCategory;?><span class="text-danger">*</span></label>
+                            <select class="select form-control floating" name="categories_id[]" multiple required>
+                                <?php if(count($categories)) {
+                                    foreach ($categories as $category) {
+                                        $selected = '';
+                                        if($category_id == $category->id){
+                                            $selected = 'selected';
+                                        }?>
+                                        <option value="<?php echo $category->id;?>" <?php echo $selected;?>><?php echo $category->name;?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label"><?php echo $entryStockStatus;?><span class="text-danger">*</span></label>
+                            <select class="select form-control floating" name="stock_status_id">
+                                <?php if(count($stocks)) {
+                                    foreach ($stocks as $value) {
+                                        $selected = '';
+                                        if($stock_status_id == $value->id){
+                                            $selected = 'selected';
+                                        }?>
+                                        <option value="<?php echo $value->id;?>" <?php echo $selected;?>><?php echo $value->name;?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label"><?php echo $entryDescription;?></label>

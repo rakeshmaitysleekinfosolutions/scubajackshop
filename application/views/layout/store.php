@@ -56,7 +56,7 @@
                         <!--                        <li class="nav-item"> <a class="nav-link " href="--><?php //echo base_url('game');?><!--">Game</a> </li>-->
 
 
-                        <li  class="nav-item"><a class="nav-link" href="#" id="wishlist-total" title="Wish List (0)"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">Wish List (<?php echo getTotalWishListed();?>)</span></a></li>
+                        <li  class="nav-item"><a class="nav-link" href="<?php echo url('/wishlist');?>" id="wishlist-total" title="Wish List (0)"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">Wish List (<?php echo getTotalWishListed();?>)</span></a></li>
                         <li  class="nav-item" id="cart"><a class="nav-link" href="<?php echo url('/checkout/cart');?>"><i class="fa fa-shopping-cart"></i> <span id="cart-total"><?php echo getSession('total');?></span></a></li>
 <!--                        <li  class="nav-item">-->
 <!--                            <div id="cart" class="btn-group btn-block">-->
@@ -180,7 +180,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/twitter-typeahead/js/typeahead.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/Search.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>dist/app.js"></script>
+<!--<script type="text/javascript" src="--><?php //echo base_url();?><!--dist/app.js"></script>-->
 
 <!--<script type="text/javascript" src="--><?php //echo base_url();?><!--assets/js/lightgallery/js/jquery.mousewheel.min.js"></script>-->
 <?php echo $this->template->javascript; ?>
@@ -226,7 +226,7 @@
                 //$.cookie("splashscreen", 1, { expires : 10 }); // cookie is valid for 10 days
 
             });
-
+            //$('[data-toggle="tooltip"]').tooltip()
         });
 
     }(window.jQuery);
@@ -239,53 +239,6 @@
         var ele = document.getElementById("toggleText1");
         var text = document.getElementById("displayText1");
         $("#toggleText1").slideToggle(300);
-    }
-</script>
-<script>
-    $(document).ready(function(){
-        var quantitiy=0;
-        $('.quantity-right-plus').click(function(e){
-            // Stop acting like a button
-            e.preventDefault();
-            // Get the field name
-            var quantity = parseInt($('#quantity').val());
-            // If is not undefined
-            $('#quantity').val(quantity + 1);
-            // Increment
-        });
-        $('.quantity-left-minus').click(function(e){
-            // Stop acting like a button
-            e.preventDefault();
-            // Get the field name
-            var quantity = parseInt($('#quantity').val());
-            // If is not undefined
-            // Increment
-            if(quantity>0){
-                $('#quantity').val(quantity - 1);
-            }
-        });
-    });
-    var current = 0,
-        $preview = $( '#preview' ),
-        $carouselEl = $( '#carousel' ),
-        $carouselItems = $carouselEl.children(),
-        carousel = $carouselEl.elastislide( {
-            current : current,
-            minItems : 4,
-            onClick : function( el, pos, evt ) {
-                changeImage( el, pos );
-                evt.preventDefault();
-            },
-            onReady : function() {
-                changeImage( $carouselItems.eq( current ), current );
-            }
-        } );
-
-    function changeImage( el, pos ) {
-        $preview.attr( 'src', el.data( 'preview' ) );
-        $carouselItems.removeClass( 'current-img' );
-        el.addClass( 'current-img' );
-        carousel.setCurrent( pos );
     }
 </script>
 </body>

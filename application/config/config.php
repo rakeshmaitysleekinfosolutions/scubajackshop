@@ -530,6 +530,7 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
 $config['CLIENT_ID'] = 'AcAd2GLtMixowVxgyKC9m4k2UJLW7xviVtVtPP2-AsM9XBdfA0cnQyW8JRLkIa5-ZPkSL51IUjk4ARKb';
 $config['CLIENT_SECRET'] = 'EHc_fc822fUDKIZUGiODxT5q4f_L5I1C6inGzBuSPxXVPi4ikQJ7SeQ40qnQQVL3B23ciUJEYlDQjITM';
 
@@ -566,6 +567,7 @@ $config['coupon'] = array(
 $config['text_total'] = 'Total';
 
 $config['config_tax'] = 1;
+$config['config_stock_display'] = 0;
 @ini_set( 'upload_max_filesize' , '7200M' );
 @ini_set( 'post_max_size', '7200M');
 @ini_set( 'memory_limit', '7200M' );
