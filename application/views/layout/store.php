@@ -57,7 +57,7 @@
 
 
                         <li  class="nav-item"><a class="nav-link" href="<?php echo url('/wishlist');?>" id="wishlist-total" title="Wish List (0)"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">Wish List (<?php echo getTotalWishListed();?>)</span></a></li>
-                        <li  class="nav-item" id="cart"><a class="nav-link" href="<?php echo url('/checkout/cart');?>"><i class="fa fa-shopping-cart"></i> <span id="cart-total"><?php echo getSession('total');?></span></a></li>
+                        <li  class="nav-item" id="cart"><a class="nav-link" href="<?php echo url('/cart');?>"><i class="fa fa-shopping-cart"></i> <span id="cart-total"><?php echo getSession('total');?></span></a></li>
 <!--                        <li  class="nav-item">-->
 <!--                            <div id="cart" class="btn-group btn-block">-->
 <!--                                <button type="button" data-toggle="dropdown" data-loading-text="Loading..." class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total">--><?php //echo getSession('total');?><!--</span></button>-->
@@ -179,11 +179,12 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/twitter-typeahead/js/jquery.xdomainrequest.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/twitter-typeahead/js/typeahead.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/Search.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
+
 <!--<script type="text/javascript" src="--><?php //echo base_url();?><!--dist/app.js"></script>-->
 
 <!--<script type="text/javascript" src="--><?php //echo base_url();?><!--assets/js/lightgallery/js/jquery.mousewheel.min.js"></script>-->
 <?php echo $this->template->javascript; ?>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
 <script>
     !function ($) {
         "use strict";

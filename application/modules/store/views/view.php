@@ -52,5 +52,5 @@
   </section>
 <script>
     var myLabel = {};
-    myLabel.cart = '<?php echo url('/cart');?>';
+    myLabel.cart = '<?php echo url('/cart/add');?>';
 </script>

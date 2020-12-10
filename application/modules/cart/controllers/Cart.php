@@ -32,6 +32,7 @@ class Cart extends AppController {
           'action' => url('checkout/cart/update'),
             'name' => 'frmCart'
         );
+        $this->data['logged'] = $this->user->isLogged();
         if ($this->ecart->hasProducts()) {
             if (!$this->ecart->hasStock()) {
                 $this->data['warning'] = 'Products marked with *** are not available in the desired quantity or not in stock!';
@@ -120,8 +121,11 @@ class Cart extends AppController {
                         ->set_status_header(200)
                         ->set_output(json_encode(array('status' => false,'message' => 'Already Booked or Added in cart')));
                 }
-                $this->ecart->add($this->data);
 
+                unsetSession('payment_address', array());
+                unsetSession('shipping_address', array());
+
+                $this->ecart->add($this->data);
                 $this->json['success']  = 'Success: Product has been successfully added to cart';
                 $this->json['total']    = sprintf('%s item(s) - %s', $this->ecart->countProducts() , $this->currency->format($this->ecart->totals()['total'], $this->options['currency']['code']));
 

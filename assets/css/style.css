@@ -3120,3 +3120,49 @@ button.btn.activity-book i {
   left: 0;
   color: red;
 }
+
+
+.payment-method .form-check-label {
+  margin-bottom: 0;
+  color: #33373a;
+}
+
+.payment-method span{
+  display: block
+}
+
+.billing-details .table.table-bordered td{
+  vertical-align: middle
+}
+
+.billing-details .table-bordered td, .table-bordered th{
+  border:none;
+}
+
+tr.add-border {
+  border-top: 1px solid #ccc;
+}
+
+.gray-bg {
+  background: #eee;
+  padding: 15px 20px;
+}
+
+.payment-method label{
+  color:#000;
+}
+
+span.question {
+  position: relative;
+}
+
+.question i {
+  position: absolute;
+  top: -28px;
+  right: 41%;
+  font-size: 17px;
+}
+
+.billing-details .form-control, .cart-totals .form-control{
+  border-radius:0;
+}

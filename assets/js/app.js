@@ -499,3 +499,157 @@ $(document).ready(function(){
         carousel.setCurrent( pos );
     }
 });
+// Payment Address
+$('select[name="payment_address[country_id]"]').on('change', function() {
+    var country_id = $('select[name="payment_address[country_id]"]').find(":selected").val();
+    $.ajax({
+        url: myLabel.states,
+        dataType: 'json',
+        method: 'POST',
+        data: {
+            country_id: country_id
+        },
+        beforeSend: function() {
+            $('select[name="payment_address[country_id]"]').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+        },
+        complete: function() {
+            $('.fa-spin').remove();
+        },
+        success: function(json) {
+            // }
+            var html = '';
+            // html = '<option value="">select option</option>';
+
+            if (json['states'] && json['states'] != '') {
+                for (var i = 0; i < json['states'].length; i++) {
+                    html += '<option value="' + json['states'][i]['id'] + '"';
+                    //console.log(json['states'][i]['id']);
+                    if (json['states'][i]['id'] == myLabel.state_id) {
+
+                        html += ' selected="selected"';
+                    }
+
+                    html += '>' + json['states'][i]['name'] + '</option>';
+                }
+            } else {
+                html += '<option value="0" selected="selected">Empty</option>';
+            }
+
+            $('select[name="payment_address[state_id]"]').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+$('select[name="payment_address[country_id]"]').trigger('change');
+// Shipping Address
+$('select[name="shipping_address[country_id]"]').on('change', function() {
+    var country_id = $('select[name="shipping_address[country_id]"]').find(":selected").val();
+    $.ajax({
+        url: myLabel.states,
+        dataType: 'json',
+        method: 'POST',
+        data: {
+            country_id: country_id
+        },
+        beforeSend: function() {
+            $('select[name="shipping_address[country_id]"]').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+        },
+        complete: function() {
+            $('.fa-spin').remove();
+        },
+        success: function(json) {
+            // }
+            var html = '';
+            // html = '<option value="">select option</option>';
+
+            if (json['states'] && json['states'] != '') {
+                for (var i = 0; i < json['states'].length; i++) {
+                    html += '<option value="' + json['states'][i]['id'] + '"';
+                    //console.log(json['states'][i]['id']);
+                    if (json['states'][i]['id'] == myLabel.state_id) {
+
+                        html += ' selected="selected"';
+                    }
+
+                    html += '>' + json['states'][i]['name'] + '</option>';
+                }
+            } else {
+                html += '<option value="0" selected="selected">Empty</option>';
+            }
+
+            $('select[name="shipping_address[state_id]"]').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+$('select[name="shipping_address[country_id]"]').trigger('change');
+
+$('#ship-different-address-chkbox').on('change', function(){
+    $shippingAddress = $('#shiiping-address');
+    $shippingAddress.toggle();
+})
+
+$('#submit-payment-address-btn').on('click', function() {
+
+})
+
+
+var $formBillingAddress = $("#billing-address"),
+    validate = ($.fn.validate !== undefined);
+var $paymentBtn = $("#submit-payment-address-btn");
+if ($formBillingAddress.length > 0 && validate) {
+    $formBillingAddress.validate({
+        rules:{
+            "payment_address[firstname]": {
+                required: true,
+            },
+            "payment_address[lastname]": {
+                required: true,
+            },
+            "payment_address[address_1]": {
+                required: true,
+            },
+            "payment_address[city]": {
+                required: true,
+            },
+            "payment_address[postcode]": {
+                required: true,
+            },
+            "payment_address[country_id]": {
+                required: true,
+            },
+            "payment_address[state_id]": {
+                required: true,
+            },
+        },
+        submitHandler: function (form) {
+            $.ajax({
+                type: "POST",
+                url: $(form).attr('action'),
+                dataType: "json",
+                data: $(form).serialize(),
+                beforeSend: function() {
+                    $paymentBtn.LoadingOverlay("show");
+                },
+                success: function (json) {
+                    if (json['success']) {
+                        $paymentBtn.LoadingOverlay("hide");
+                        location.href = json['redirect'];
+                    }
+
+                }
+            });
+
+            return false; // required to block normal submit since you used ajax
+        }
+
+    });
+}
+    // Credit Card Form Validation
+
+
+

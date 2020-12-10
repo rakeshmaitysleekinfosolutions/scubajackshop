@@ -38,7 +38,12 @@ class Login extends AppController {
                         }
                     }
                     $this->json['success']  = $this->lang->line('text_success');
-                    $this->json['redirect'] = url('account');
+                    if($this->ecart->hasProducts()) {
+                        $this->json['redirect'] = url('checkout/cart');
+                    } else {
+                        $this->json['redirect'] = url('account');
+                    }
+
                 } else {
                     $this->json['error']['warning']            = $this->lang->line('error_login');
                     $this->json['redirect'] = url('signin');

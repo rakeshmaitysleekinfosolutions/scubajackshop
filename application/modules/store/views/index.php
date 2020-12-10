@@ -40,6 +40,6 @@
 <script>
 var myLabel = myLabel || {};
 myLabel.baseUrl = '<?php echo base_url();?>';
-myLabel.cart = '<?php echo url('/cart');?>';
+myLabel.cart = '<?php echo url('/cart/add');?>';
 myLabel.wishlist = '<?php echo url('/wishlist/add');?>';
 </script>

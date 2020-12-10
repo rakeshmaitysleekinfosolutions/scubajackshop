@@ -76,14 +76,20 @@
                 </tbody>
             </table>
         </div>
-        <a href="#" class="checkout-button btn btn-primary">
+        <?php if($logged) { ?>
+            <a href="<?php echo url('/checkout');?>" class="checkout-button btn btn-primary">
+                Proceed to checkout</a>
+        <?php } else { ?>
+            <a href="<?php echo url('/login');?>" class="checkout-button btn btn-primary">
             Proceed to checkout</a>
+        <?php } ?>
+
     </div>
 </section>
 
 <script>
     var myLabel = myLabel || {};
-    myLabel.baseUrl                 = '<?php echo url();?>';
+    myLabel.baseUrl          = '<?php echo url();?>';
     myLabel.remove           = '<?php echo url('cart/remove');?>';
     myLabel.coupon           = '<?php echo url('cart/coupon');?>';
 </script>

@@ -16,7 +16,7 @@ class Ecart {
 			// Once the customer is logged in we want to update the customers cart
 			$cart_query = $this->ci->db->query("SELECT * FROM carts WHERE user_id = '0' AND session_id = '" . $this->ci->db->escape_str(session_id()) . "'");
 			foreach ($cart_query->result_array() as $cart) {
-				$this->ci->db->query("DELETE FROM carts WHERE id_carts = '" . (int)$cart['id_carts'] . "'");
+				$this->ci->db->query("DELETE FROM carts WHERE id = '" . (int)$cart['id'] . "'");
 				// The advantage of using $this->add is that it will check if the products already exist and increaser the quantity if necessary.
 				$this->add($cart);
 			}
