@@ -6,8 +6,8 @@
             <?php } ?>
         <?php } ?>
         <div class="row">
-            <form id="billing-address" action="<?php echo url('checkout/save-payment-address');?>" method="post">
-                <div class="col-md-12">
+                <div class="col-md-8">
+                    <form id="billing-address" action="<?php echo url('checkout/save-payment-address');?>" method="post">
                     <div class="billing-details">
                         <h2>Billing Details</h2>
                             <div class="form-group">
@@ -132,9 +132,37 @@
                                 </div>
                             </div>
                     </div>
+                    <button type="submit" class="btn btn-info mt-4 w-100" id="submit-payment-address-btn">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-info mt-4 w-100" id="submit-payment-address-btn">Continue</button>
-            </form>
+                <div class="col-md-4">
+                    <div class="billing-details">
+                        <h3>Order Summary</h3>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <?php if(count($products) > 0) {
+                                foreach ($products as $product) { ?>
+                                    <tr>
+                                        <td>
+                                            <?php if($product['thumb']) { ?> <a href="<?php echo $product['href'];?>"><img src="<?php echo $product['thumb'];?>" alt="<?php echo $product['name'];?>" title="<?php echo $product['name'];?>"/></a> <?php } ?>
+                                        </td>
+                                        <td><?php echo $product['name'];?></td>
+                                        <td>x&nbsp;<?php echo $product['quantity'];?></td>
+                                        <td><?php echo $product['price'];?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } ?>
+                            <?php foreach ($totals as $key => $total) { ?>
+                                <tr class="add-border">
+                                    <td></td>
+                                    <td colspan="2"><strong><?php echo $total['title'];?></strong></td>
+                                    <td><strong><?php echo $total['text'];?></strong></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         </div>
     </div>
 </section>

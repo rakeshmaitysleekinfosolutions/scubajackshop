@@ -9,7 +9,7 @@ $route['product/(:any)']        = 'store/view/$1';
 // Cart
 $route['cart']                  = 'cart/index';
 $route['cart/add']              = 'cart/add';
-$route['cart/update']            = 'cart/update';
+$route['cart/update']           = 'cart/update';
 $route['cart/remove']           = 'cart/remove';
 $route['cart/coupon']           = 'cart/coupon';
 // Wishlist
@@ -18,8 +18,9 @@ $route['wishlist']              = 'wishlist/index';
 $route['wishlist/remove']       = 'wishlist/remove';
 // Checkout
 $route['checkout']              = 'checkout/index';
+$route['checkout/payment']   	= 'checkout/getPaymentForm';
 $route['checkout/save-payment-address']  = 'checkout/savePaymentAddress';
-$route['checkout/payment-method']  = 'checkout/payment';
+
 // Get States
 $route['states']                = 'checkout/states';
 // Authentication

@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select name="exp_year" class="form-control" autocomplete="off" required>
-                                            <?php for($i = 0; $i <= $years; $i++) { ?>
+                                            <?php for($i = 0; $i <= count($years); $i++) { ?>
                                                 <option value="<?php echo $years[$i];?>"><?php echo $years[$i];?></option>
                                             <?php } ?>
                                         </select>
@@ -47,7 +47,7 @@
 
                 </div>
             </div>
-            <div class="col-md-4">
+             <div class="col-md-4">
                 <div class="billing-details">
                     <h3>Order Summary</h3>
                     <table class="table table-bordered">
@@ -73,9 +73,7 @@
                         <?php } ?>
                         </tbody>
                     </table>
-
                 </div>
-
             </div>
         </div>
     </div>

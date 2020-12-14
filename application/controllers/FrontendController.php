@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class AppController extends BaseController {
+class FrontendController extends BaseController {
     public function __construct() {
-         parent::__construct();
-         //Currency_model::factory()->refresh(true, 'USD');
+        parent::__construct();
+        //Currency_model::factory()->refresh(true, 'USD');
         $this->onLoad();
     }
     public function onLoad() {

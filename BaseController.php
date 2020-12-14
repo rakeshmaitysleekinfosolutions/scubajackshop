@@ -4,36 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class BaseController extends MX_Controller {
     public  $data;
     public  $results;
-    public  $json       = array();
-    public  $request    = array();
-    public  $currencies    = array();
-    private $csrfArray;
-    public  $options    = array();
-
-    public function __construct() {
-         parent::__construct();
+    public  $json = array();
+    public  $request = array();
+    private $headers = array();
+	private $level = 0;
+    private $output;
+    
+    public function __constructor() {
+         parent::__constructor();
          $this->load->library('security');
-         $this->csrfArray =  array(
-            'name' => $this->security->get_csrf_token_name(),
-            'hash' => $this->security->get_csrf_hash()
-         );
-
-	}
-    public  function __token() {
-        return (isset($this->csrfArray['name'])) ? $this->csrfArray['name'] : '';
-    }
-    public	function csrf_token() {
-        return (isset($this->csrfArray['hash'])) ? $this->csrfArray['hash'] : '';
-    }
-    public function isSubscribed() {
-        if($this->hasSession('subscribe')) {
-            return true;
-        }
-        return false;
-    }
-//    public function clear() {
-//        $this->ecart->clear();
-//    }
+	}	
+    
     protected function dd($attr) {
         echo "<pre>";
         print_r($attr);
@@ -143,7 +124,7 @@ class BaseController extends MX_Controller {
 		}
 		exit;
     }
-
+   
     /**
      * Site URL
      *
@@ -154,16 +135,16 @@ class BaseController extends MX_Controller {
      * @param	string	$protocol
      * @return	string
      */
-    // public function url($uri = '', $protocol = NULL) {
-    //     //getLocale(getLocaleId()).'/'.
-    //     return get_instance()->config->site_url($uri, $protocol);
-    // }
+    public function url($uri = '', $protocol = NULL) {
+        //getLocale(getLocaleId()).'/'.
+        return get_instance()->config->site_url($uri, $protocol);
+    }
 
     public function resize($filename, $width, $height) {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
 			return;
 		}
-
+	
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 
 		$image_old = $filename;
@@ -171,11 +152,11 @@ class BaseController extends MX_Controller {
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-
-			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
+				 
+			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
 				return DIR_IMAGE . $image_old;
 			}
-
+ 
 			$path = '';
 
 			$directories = explode('/', dirname($image_new));
@@ -189,7 +170,7 @@ class BaseController extends MX_Controller {
 			}
 
 			if ($width_orig != $width || $height_orig != $height) {
-
+                
                 $this->image->setFile(DIR_IMAGE . $image_old);
 				$this->image->resize($width, $height);
 				$this->image->save(DIR_IMAGE . $image_new);
@@ -204,7 +185,7 @@ class BaseController extends MX_Controller {
 			return url() . 'image/' . $image_new;
 		}
     }
-
+    
     /**
 	 * Constructor
 	 *
@@ -214,9 +195,9 @@ class BaseController extends MX_Controller {
 	public function addHeader($header) {
 		$this->headers[] = $header;
 	}
-
+	
 	/**
-	 *
+	 * 
 	 *
 	 * @param	string	$url
 	 * @param	int		$status
@@ -226,23 +207,40 @@ class BaseController extends MX_Controller {
 	// 	header('Location: ' . str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url), true, $status);
 	// 	exit();
 	// }
-
+	
 	/**
-	 *
+	 * 
 	 *
 	 * @param	int		$level
  	*/
 	public function setCompression($level) {
 		$this->level = $level;
 	}
-
-
+	
 	/**
+	 * 
 	 *
+	 * @return	array
+ 	*/
+	public function getOutput() {
+		return $this->output;
+	}
+	
+	/**
+	 * 
+	 *
+	 * @param	string	$output
+ 	*/	
+	public function setOutput($output) {
+		$this->output = $output;
+	}
+	
+	/**
+	 * 
 	 *
 	 * @param	string	$data
 	 * @param	int		$level
-	 *
+	 * 
 	 * @return	string
  	*/
 	private function compress($data, $level = 0) {
@@ -274,92 +272,23 @@ class BaseController extends MX_Controller {
 
 		return gzencode($data, (int)$level);
 	}
-
+	
 	/**
-	 *
+	 * 
  	*/
+	public function output() {
+		if ($this->output) {
+			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;
+			
+			if (!headers_sent()) {
+				foreach ($this->headers as $header) {
+					header($header, true);
+				}
+			}
+			
+			echo $output;
+		}
+	}
 
-    public function format($number, $currency, $value = '', $format = true) {
-        $symbol_left = $this->currencies[$currency]['symbol_left'];
-        $symbol_right = $this->currencies[$currency]['symbol_right'];
-        $decimal_place = $this->currencies[$currency]['decimal_place'];
-        if (!$value) {
-            $value = $this->currencies[$currency]['value'];
-        }
-        $amount = $value ? (float)$number * $value : (float)$number;
-        $amount = round($amount, (int)$decimal_place);
-        if (!$format) {
-            return $amount;
-        }
-        $string = '';
-        if ($symbol_left) {
-            $string .= $symbol_left;
-        }
-        $string .= number_format($amount, (int)$decimal_place, $this->config->item('decimal_point'), $this->config->item('thousand_point'));
-        if ($symbol_right) {
-            $string .= $symbol_right;
-        }
-        return $string;
-    }
-
-    public function convert($value, $from, $to) {
-        if (isset($this->currencies[$from])) {
-            $from = $this->currencies[$from]['value'];
-        } else {
-            $from = 1;
-        }
-
-        if (isset($this->currencies[$to])) {
-            $to = $this->currencies[$to]['value'];
-        } else {
-            $to = 1;
-        }
-
-        return $value * ($to / $from);
-    }
-
-    public function getCurrencyId($currency) {
-        if (isset($this->currencies[$currency])) {
-            return $this->currencies[$currency]['currency_id'];
-        } else {
-            return 0;
-        }
-    }
-
-    public function getSymbolLeft($currency) {
-        if (isset($this->currencies[$currency])) {
-            return $this->currencies[$currency]['symbol_left'];
-        } else {
-            return '';
-        }
-    }
-
-    public function getSymbolRight($currency) {
-        if (isset($this->currencies[$currency])) {
-            return $this->currencies[$currency]['symbol_right'];
-        } else {
-            return '';
-        }
-    }
-
-    public function getDecimalPlace($currency) {
-        if (isset($this->currencies[$currency])) {
-            return $this->currencies[$currency]['decimal_place'];
-        } else {
-            return 0;
-        }
-    }
-
-    public function getValue($currency) {
-        if (isset($this->currencies[$currency])) {
-            return $this->currencies[$currency]['value'];
-        } else {
-            return 0;
-        }
-    }
-
-    public function hasCurrency($currency) {
-        return isset($this->currencies[$currency]);
-    }
-
+    
 }

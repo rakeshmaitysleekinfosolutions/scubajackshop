@@ -113,9 +113,18 @@
                 <div class="col-md-4 footer_item">
                     <div class="foot-two">
                         <h4>Contact Us</h4>
-                        <h5>16 Gibbs Hill Drive, Gloucester, MA. 01930</h5>
-                        <h6>berhcostanzo@hotmail.com</h6>
-                        <p>Call us at <span>+978-491-0747</span></p>
+                        <h5><?php echo getSession('settings')['address_1'];?></h5>
+                        <?php if(getSession('settings')['address_2']) {?>
+                            <h5><?php echo getSession('settings')['address_2'];?></h5>
+                        <?php } ?>
+                        <h6><?php echo getSession('settings')['email'];?></h6>
+                        <?php if(getSession('settings')['email_2']) {?>
+                            <h6><?php echo getSession('settings')['email_2'];?></h6>
+                        <?php } ?>
+                        <p>Call us at <span>+<?php echo getSession('settings')['phone_1'];?></span></p>
+                        <?php if(getSession('settings')['phone_2']) {?>
+                            <p>Call us at <span>+<?php echo getSession('settings')['phone_2'];?></span></p>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="col-md-4 footer_item">

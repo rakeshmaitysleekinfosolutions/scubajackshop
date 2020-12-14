@@ -626,24 +626,20 @@ if ($formBillingAddress.length > 0 && validate) {
                 required: true,
             },
         },
-        submitHandler: function (form) {
+        submitHandler: function (form, event) {
+            event.preventDefault();
             $.ajax({
                 type: "POST",
                 url: $(form).attr('action'),
-                dataType: "json",
                 data: $(form).serialize(),
                 beforeSend: function() {
                     $paymentBtn.LoadingOverlay("show");
                 },
                 success: function (json) {
-                    if (json['success']) {
-                        $paymentBtn.LoadingOverlay("hide");
-                        location.href = json['redirect'];
-                    }
-
+                    $paymentBtn.LoadingOverlay("hide");
+                    window.location.href = json['redirect'];
                 }
             });
-
             return false; // required to block normal submit since you used ajax
         }
 

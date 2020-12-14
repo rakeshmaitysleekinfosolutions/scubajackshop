@@ -29,7 +29,7 @@ class Cart extends AppController {
      */
     public function index() {
         $this->data['form'] = array(
-          'action' => url('checkout/cart/update'),
+          'action' => url('cart/update'),
             'name' => 'frmCart'
         );
         $this->data['logged'] = $this->user->isLogged();
@@ -61,9 +61,9 @@ class Cart extends AppController {
                         'href'      => url('/product/'.$value['slug']),
                         'thumb'     => resize($value['image'],100,100),
                         'stock'     => $value['stock'] ? true : 'Out Of Stock',
-                        'price'     => $this->format($value['price'], $this->options['currency']['code'], $this->getValue($this->options['currency']['code'])),
+                        'price'     => $this->currency->format($value['price'], $this->options['currency']['code'], $this->getValue($this->options['currency']['code'])),
                         'quantity'       => $value['quantity'],
-                        'total'     => $this->format($value['total'], $this->options['currency']['code'], $this->getValue($this->options['currency']['code'])),
+                        'total'     => $this->currency->format($value['total'], $this->options['currency']['code'], $this->getValue($this->options['currency']['code'])),
                         'value'     => $value['total']
 
                     );
@@ -74,7 +74,7 @@ class Cart extends AppController {
                 foreach ($totals as $total) {
                     $this->data['totals'][] = array(
                         'title' => $total['title'],
-                        'text'  => $this->format($total['value'],$this->options['currency']['code'],$this->getValue($this->options['currency']['code']))
+                        'text'  => $this->currency->format($total['value'],$this->options['currency']['code'],$this->getValue($this->options['currency']['code']))
                     );
                 }
             }
@@ -149,7 +149,7 @@ class Cart extends AppController {
                 }
                 $this->json['success'] = 'Success: You have modified your shopping cart!';
                 $this->json['total']    = sprintf('%s item(s) - %s', $this->ecart->countProducts() , $this->currency->format($this->ecart->totals()['total'], $this->options['currency']['code']));
-                $this->json['redirect'] = url('checkout/cart');
+                $this->json['redirect'] = url('cart');
             }
             return $this->output
                 ->set_content_type('application/json')
@@ -193,7 +193,7 @@ class Cart extends AppController {
         if($this->isAjaxRequest()) {
             $this->ecart->remove($this->input->post('cart_id'));
             $this->json['success'] = true;
-            $this->json['redirect'] = url('checkout/cart');
+            $this->json['redirect'] = url('cart');
             $this->json['total']    = sprintf('%s item(s) - %s', $this->ecart->countProducts() , $this->currency->format($this->ecart->totals()['total'], $this->options['currency']['code']));
             return $this->output
                 ->set_content_type('application/json')

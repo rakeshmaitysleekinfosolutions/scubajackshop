@@ -1,15 +1,11 @@
 <?php
 
 class Currency {
-	private $currencies = array();
-    private $ci;
+	public $currencies = array();
+    public $ci;
 	public function __construct() {
-        
         $this->ci = &get_instance();
-        $query = $this->ci->db->query("SELECT * FROM currency");
-
-
-		foreach ($query->result_array() as $result) {
+		foreach ($this->all() as $result) {
 			$this->currencies[$result['code']] = array(
 				'id'   => $result['id'],
 				'name'         => $result['name'],
@@ -20,8 +16,12 @@ class Currency {
 				'value'         => $result['value']
 			);
 		}
+		//dd($this->currencies);
 	}
-
+	public function all() {
+	    $query =  $this->ci->db->query("SELECT * FROM currency");
+        return $query->result_array();
+    }
 	public function format($number, $currency, $value = '', $format = true) {
 		$symbol_left = $this->currencies[$currency]['symbol_left'];
 		$symbol_right = $this->currencies[$currency]['symbol_right'];
@@ -30,27 +30,19 @@ class Currency {
 		if (!$value) {
 			$value = $this->currencies[$currency]['value'];
 		}
-
 		$amount = $value ? (float)$number * $value : (float)$number;
-		
 		$amount = round($amount, (int)$decimal_place);
-		
 		if (!$format) {
 			return $amount;
 		}
-
 		$string = '';
-
 		if ($symbol_left) {
 			$string .= $symbol_left;
 		}
-
 		$string .= number_format($amount, (int)$decimal_place, $this->ci->config->item('decimal_point'), $this->ci->config->item('thousand_point'));
-
 		if ($symbol_right) {
 			$string .= $symbol_right;
 		}
-
 		return $string;
 	}
 

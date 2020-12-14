@@ -568,9 +568,9 @@ $config['text_total'] = 'Total';
 
 $config['config_tax'] = 1;
 $config['config_stock_display'] = 0;
-@ini_set( 'upload_max_filesize' , '7200M' );
-@ini_set( 'post_max_size', '7200M');
-@ini_set( 'memory_limit', '7200M' );
-@ini_set( 'max_execution_time', '300000' );
-@ini_set( 'max_input_time', '300000' );
+// @ini_set( 'upload_max_filesize' , '7200M' );
+// @ini_set( 'post_max_size', '7200M');
+// @ini_set( 'memory_limit', '7200M' );
+// @ini_set( 'max_execution_time', '300000' );
+// @ini_set( 'max_input_time', '300000' );
 require_once FCPATH.'autoload.php';

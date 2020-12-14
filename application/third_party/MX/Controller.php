@@ -50,7 +50,8 @@ class MX_Controller
 		
 		/* copy a loader instance and initialize */
 		$this->load = clone load_class('Loader');
-		$this->load->initialize($this);	
+		$this->load->initialize($this);
+		//exit;
 		
 		/* autoload module items */
 		$this->load->_autoloader($this->autoload);
