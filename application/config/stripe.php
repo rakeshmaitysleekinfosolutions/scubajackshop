@@ -12,5 +12,6 @@ $config['config_sender_name']           = 'Developer';
 */
 
 
-$config['stripeApyKey']           = 'sk_test_o5nGXpdRlws3GgpwcOgxzRaP';
+$config['stripe_publishable_key']      = 'pk_test_9X1Edj5lTitMBPOAzC1Q2xcV';
+$config['stripe_secret_key']           = 'sk_test_o5nGXpdRlws3GgpwcOgxzRaP';
 

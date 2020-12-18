@@ -54,9 +54,12 @@
                         <!--                    </div>-->
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-primary update-cart">
-                            <i class="fas fa-sync"></i> Update Cart
-                        </button>
+<!--                        <button type="submit" class="btn btn-primary update-cart">-->
+<!--                            <i class="fas fa-sync"></i> Update Cart-->
+<!--                        </button>-->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-info mt-4 continue_btn update-cart"><i class="fas fa-sync"></i> Update Cart</button>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -77,11 +80,17 @@
             </table>
         </div>
         <?php if($logged) { ?>
-            <a href="<?php echo url('/checkout');?>" class="checkout-button btn btn-primary">
-                Proceed to checkout</a>
+            <div class="text-center">
+                <a href="<?php echo url('/checkout');?>" class="checkout-button btn btn-info mt-4 continue_btn">
+                    Proceed to checkout
+                </a>
+            </div>
         <?php } else { ?>
-            <a href="<?php echo url('/login');?>" class="checkout-button btn btn-primary">
-            Proceed to checkout</a>
+            <div class="text-left">
+                <a href="<?php echo url('/login');?>" class="checkout-button btn btn-info mt-4 continue_btn">
+                    Proceed to checkout
+                </a>
+            </div>
         <?php } ?>
 
     </div>

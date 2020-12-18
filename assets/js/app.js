@@ -326,7 +326,7 @@ $('.buy-now').on('click', function() {
         success: function(json) {
             if (json['success']) {
                 $('#cart > a').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-                window.location.href= myLabel.baseUrl + '/checkout/cart';
+                window.location.href= myLabel.baseUrl + 'cart';
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

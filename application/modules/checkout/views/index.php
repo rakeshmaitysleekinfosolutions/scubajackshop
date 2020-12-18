@@ -1,10 +1,12 @@
 <section class="book-list mb-4">
     <div class="container">
-        <?php if(count($breadcrumbs) > 0) {?>
-            <?php foreach ($breadcrumbs as $breadcrumb) {?>
-                <li><a href="<?php echo $breadcrumb['href'];?>"><?php echo $breadcrumb['text'];?></a></li>
+        <div class="breadcrumb">
+            <?php if(count($breadcrumbs) > 0) {?>
+                <?php foreach ($breadcrumbs as $breadcrumb) {?>
+                    <li><a href="<?php echo $breadcrumb['href'];?>"><?php echo $breadcrumb['text'];?></a></li>
+                <?php } ?>
             <?php } ?>
-        <?php } ?>
+        </div>
         <div class="row">
                 <div class="col-md-8">
                     <form id="billing-address" action="<?php echo url('checkout/save-payment-address');?>" method="post">
@@ -67,12 +69,14 @@
                                 </div>
                             </div>
 
-                        <div class="form-check mb-5">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" id="ship-different-address-chkbox" <?php echo ($shipping) ? 'checked' : '';?>><p>Ship to different address?</p>
-                            </label>
-                        </div>
+
                     </div>
+                        <?php if($shipping_required) { ?>
+                            <div class="form-check mb-5">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" id="ship-different-address-chkbox" <?php echo ($shipping) ? 'checked' : '';?>><p>Ship to different address?</p>
+                                </label>
+                            </div>
                     <div class="cart-totals mt-4" id="shiiping-address" style="<?php echo ($shipping) ? 'display:block' : 'display:none';?>">
                         <h2>Shipping Details</h2>
                         <div class="form-group">
@@ -132,7 +136,10 @@
                                 </div>
                             </div>
                     </div>
-                    <button type="submit" class="btn btn-info mt-4 w-100" id="submit-payment-address-btn">Continue</button>
+                        <?php } ?>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info mt-4 continue_btn" id="submit-payment-address-btn">Continue</button>
+                    </div>
                     </form>
                 </div>
                 <div class="col-md-4">

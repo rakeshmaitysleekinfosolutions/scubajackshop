@@ -13,11 +13,18 @@
           <div class="cards product">
             <div class="book-details product-img"> 
               <a href="#"><img src="<?php echo $product['img']; ?>" alt="<?php echo $product['name'];?>"></a>
+              <div class="heart_sec">
+                <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" class="btn  btn-primary add-to-wishlist"> <i class="fas fa-heart blur_icon"></i> <i class="fas fa-heart red_icon"></i></a>  
+              </div>
               <div class="quick-view-button">
                 <a href="<?php echo base_url(); ?>product/<?php echo $product['slug']; ?>" class="btn btn-info btn-sm">View Detail</a>
               </div>
             </div>
             <div class="card-body">
+                <!-- <div class="btn-group add-to-cart-butt w-100">
+                    <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" data-quantity="1" class="btn  watch mt-3 buy-now">Buy Now</a>
+                    <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" data-quantity="1" class="btn  btn-primary mt-3 ml-2 add-to-cart">Add to Cart</a>
+                </div> -->
                <div class="books-details">
                <p><a href="<?php echo $product['url']; ?>"><?php echo $product['name']; ?></a></p>
 <!--                <p class="wishlist"></p>-->
@@ -25,11 +32,11 @@
                <div class="rightprice">
                   <span><?php echo $product['price']; ?></span>
                 </div>
-                <div class="add-to-cart-butt">
+                <div class="btn-group add-to-cart-butt">
                     <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" data-quantity="1" class="btn  watch mt-3 buy-now">Buy Now</a>
                     <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" data-quantity="1" class="btn  btn-primary mt-3 ml-2 add-to-cart">Add to Cart</a>
-                    <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" class="btn  btn-primary mt-3 ml-2 add-to-wishlist"> <i class="fas fa-heart"></i> Add to wishlist</a>
-                </div>       
+                  <!-- <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" class="btn  btn-primary mt-3 ml-2 add-to-wishlist"> <i class="fas fa-heart"></i></a> -->
+                </div>    
             </div>       
            </div>
         </div>

@@ -2681,7 +2681,8 @@ button.btn.activity-book i {
 
 .product-listing span {
   color: #007bff;
-  font-size: 27px;
+  font-size: 25px;
+  line-height: 0;
 }
 
 .add-to-cart-butt .btn {
@@ -2701,6 +2702,11 @@ button.btn.activity-book i {
 }
 .cards.product {
   border: 1px solid #eee;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
 }
 .product .card-body {
   padding: 0 12px 12px;
@@ -2729,13 +2735,22 @@ button.btn.activity-book i {
 }
 
 .product-img img {
-  transition: all 0.2s ease-out;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
 }
 
 .product:hover .product-img img {
   -webkit-transform: scale(1.1, 1.1);
   -ms-transform: scale(1.1, 1.1);
   transform: scale(1.1, 1.1);
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
 }
 
 .cards:hover.product {
@@ -2766,8 +2781,12 @@ button.btn.activity-book i {
   margin-bottom: 20px;
   padding: 10px 0;
   position: relative;
+  line-height: 20px;
+  margin-right: 10px;
+} 
+.single-product-price > small{
+  font-size: 14px;
 }
-
 .single-product-price > h2::before {
   background: #222 none repeat scroll 0 0;
   bottom: 0;
@@ -3120,49 +3139,197 @@ button.btn.activity-book i {
   left: 0;
   color: red;
 }
-
-
-.payment-method .form-check-label {
-  margin-bottom: 0;
-  color: #33373a;
+.continue_btn{
+  border-radius: 0;
+  font-size: 18px;
+  padding: 10px 30px;
+  font-weight: 600;
+}
+.billing-details .table-bordered td, .billing-details .table-bordered th{
+  font-size: 14px;
 }
 
-.payment-method span{
-  display: block
+.breadcrumb {
+  margin: 0;
+  padding: 0;
+  line-height: 40px;
+  width: 100%;
+  min-height: 40px;
+  background: #18a1b8;
+  margin: 20px 0;
 }
-
-.billing-details .table.table-bordered td{
-  vertical-align: middle
+.breadcrumb a{
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  text-shadow: none;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
 }
-
-.billing-details .table-bordered td, .table-bordered th{
-  border:none;
+.breadcrumb a:hover{
+  color: #002025;
+  text-decoration: underline;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
 }
-
-tr.add-border {
-  border-top: 1px solid #ccc;
+.breadcrumb-item.active {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.2px;
 }
-
-.gray-bg {
-  background: #eee;
-  padding: 15px 20px;
-}
-
-.payment-method label{
-  color:#000;
-}
-
-span.question {
-  position: relative;
-}
-
-.question i {
+.breadcrumb>li:after {
+  content: '';
+  display: block;
   position: absolute;
-  top: -28px;
-  right: 41%;
-  font-size: 17px;
+  top: 13px;
+  right: -5px;
+  width: 15px;
+  height: 15px;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
-
-.billing-details .form-control, .cart-totals .form-control{
-  border-radius:0;
+.product-listing .card-body h5{
+  min-height: auto;
+  margin-bottom: 20px;
+}
+.product-listing .buy-now{
+  float: left;
+  background: #004085;
+  font-size: 14px;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 0;
+  font-family: "Poppins", sans-serif;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+}
+.product-listing .buy-now:hover{
+  background: #001d3d;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+}
+a.cart-btn.btn.heart_btn {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-size: 20px;
+  line-height: 0;
+}
+.product-listing a.cart-btn{
+  border-radius: 0;
+  margin-right: 10px;
+}
+.product-listing .product_btn{
+  margin: 0;
+  border-bottom: 2px solid #ebebeb;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+.product-listing .product-desc{
+  color: rgb(69 69 69);
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+.product-listing .product-desc h3{
+  font-size: 20px;
+  line-height: 39px;
+  color: #3c5d6b;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+  text-transform: capitalize;
+  margin: 0;
+}
+.elastislide-horizontal {
+  padding: 10px 0;
+  box-shadow: none;
+  border: 1px solid #ccc;
+}
+.product-listing .heart_sec {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.product-listing .add-to-cart-butt{
+  margin-bottom: 15px;
+}
+.product-listing .add-to-wishlist{
+  background: none !important;
+  border: none;
+  font-size: 25px;
+  line-height: 0;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.heart_sec .add-to-wishlist{
+padding: 0;
+}
+.blur_icon{
+color: #000;
+opacity: .3;
+}
+.red_icon{
+  color: #FF4343;
+  opacity: .9;
+  display: none;
+}
+.books-details p{
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 99%;
+  margin-bottom: 15px;
+}
+.books-details p a{
+  font-size: 14px;
+  line-height: 15px;
+  text-decoration: none;
+  text-align: left;
+  color: #1b1e21;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+}
+.books-details p a:hover{
+  color: #002751;
+  text-decoration: underline;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+}
+.book-list .table-bordered td, .book-list .table-bordered th{
+  font-size: 14px;
+}
+.delete-icon {
+    color: #f00;
+    cursor: pointer;
+    font-size: 18px;
 }

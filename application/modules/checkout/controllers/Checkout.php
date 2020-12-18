@@ -92,6 +92,7 @@ class Checkout extends AppController {
                 }
             }
         }
+        $this->data['shipping_required'] = $this->ecart->hasShipping();
         attach('assets/js/jquery.validate.js', 'js');
         attach('assets/js/additional-methods.js', 'js');
         render('checkout/index', $this->data);
@@ -175,6 +176,7 @@ class Checkout extends AppController {
                 $this->json['success'] = true;
 
             }
+
             $this->json['redirect'] = url('checkout/payment');
             //dd($this->json);
             return $this->output
@@ -183,56 +185,5 @@ class Checkout extends AppController {
                 ->set_output(json_encode($this->json));
         }
     }
-    public function getPaymentForm() {
-        $this->data['breadcrumbs'] = array();
-        $this->data['breadcrumbs'][] = array(
-            'text' => 'Home',
-            'href' => url('/home-store')
-        );
-        $this->data['breadcrumbs'][] = array(
-            'text' => 'Checkout',
-            'href' => url('/checkout')
-        );
-        $this->data['breadcrumbs'][] = array(
-            'text' => 'Payment Method',
-            'href' => url('/payment')
-        );
-        if ($this->ecart->hasProducts()) {
-            if(!empty($this->ecart->hasProducts())) {
-                $this->product = $this->ecart->getProducts();
-            }
-            $totals = array();
-            if(!empty($this->ecart->totals())) {
-                $totals = $this->ecart->totals()['totals'];
-            }
-            if($this->product) {
-                foreach ($this->product as $key => $value) {
-                    $this->data['products'][] = array(
-                        'cart_id'   => $value['cart_id'],
-                        'name'      => $value['name'],
-                        'href'      => url('/product/'.$value['slug']),
-                        'thumb'     => resize($value['image'],100,100),
-                        'stock'     => $value['stock'] ? true : 'Out Of Stock',
-                        'price'     => $this->currency->format($value['price'], $this->options['currency']['code'], $this->currency->getValue($this->options['currency']['code'])),
-                        'quantity'       => $value['quantity'],
-                        'total'     => $this->currency->format($value['total'], $this->options['currency']['code'], $this->currency->getValue($this->options['currency']['code'])),
-                        'value'     => $value['total']
-
-                    );
-                }
-            }
-
-            if($totals) {
-                foreach ($totals as $total) {
-                    $this->data['totals'][] = array(
-                        'title' => $total['title'],
-                        'text'  => $this->currency->format($total['value'],$this->options['currency']['code'],$this->currency->getValue($this->options['currency']['code']))
-                    );
-                }
-            }
-        }
-        $this->data['years'] = array(2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030);
-       // $this->dd($this->data['years']);
-        render('checkout/payment', $this->data);
-    }
+    
 }

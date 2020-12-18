@@ -28,7 +28,22 @@
                   <h2><?php echo $product['price'];?></h2>
                   <small>&nbsp;<s><?php echo $product['mrp'];?></s></small>
               </div>
-                <div class="row">
+              <div class="btn-group product_btn">
+                <a class="btn cart-btn btn-primary add-to-cart" data-product_id="<?php echo $product['id'];?>" data-quantity="1" href="javascript:void(0);">
+                  <i class="fa fa-cart-plus"></i> Add to Cart
+                </a>
+                <a class="btn cart-btn buy-now" data-product_id="<?php echo $product['id'];?>" data-quantity="1" href="javascript:void(0);">
+                  <i class="fa fa-bolt"></i> Buy Now
+                </a>
+                <a class="cart-btn btn heart_btn" href="javascript:void(0);">
+                  <i class="fa fa-heart blur_icon"></i> <i class="fas fa-heart red_icon"></i>
+                </a>
+              </div>
+              <div class="product-desc">
+               <h3>Product Description</h3>
+               Duis bibendum tincidunt urna eget luctus. Duis vestibulum porta erat, sed egestas neque congue sed. Curabitur auctor rutrum erat, sit amet convallis purus posuere sit amet. Nullam velit orci, tempor nec pulvinar et, tempus sed lacus. Nullam aliquet dictum nunc quis molestie. Proin dapibus massa quis tristique ultricies. Mauris tempor diam eget tellus accumsan fermentum.
+            </div>
+                <!-- <div class="row">
                     <div class="col-md-4 mt-3">
                         <a class="cart-btn btn-danger py-3 px-4 add-to-cart" data-product_id="<?php echo $product['id'];?>" data-quantity="1" href="javascript:void(0);">
                             <i class="fa fa-cart-plus"></i> Add to Cart
@@ -39,14 +54,14 @@
                             <i class="fa fa-bolt"></i> Buy Now
                         </a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
       </div>
-      <div class="product-desc">
+      <!-- <div class="product-desc">
          <h3>Product Description</h3>
          Duis bibendum tincidunt urna eget luctus. Duis vestibulum porta erat, sed egestas neque congue sed. Curabitur auctor rutrum erat, sit amet convallis purus posuere sit amet. Nullam velit orci, tempor nec pulvinar et, tempus sed lacus. Nullam aliquet dictum nunc quis molestie. Proin dapibus massa quis tristique ultricies. Mauris tempor diam eget tellus accumsan fermentum.
-      </div>
+      </div> -->
 
     </div>
   </section>

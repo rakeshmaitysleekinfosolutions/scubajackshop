@@ -180,11 +180,14 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/twitter-typeahead/js/typeahead.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/Search.js"></script>
 
-<!--<script type="text/javascript" src="--><?php //echo base_url();?><!--dist/app.js"></script>-->
+
 
 <!--<script type="text/javascript" src="--><?php //echo base_url();?><!--assets/js/lightgallery/js/jquery.mousewheel.min.js"></script>-->
 <?php echo $this->template->javascript; ?>
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script> -->
+ <!-- Stripe.js v3 for Elements -->
+<script src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="<?php echo base_url();?>dist/app.js"></script>
 <script>
     !function ($) {
         "use strict";

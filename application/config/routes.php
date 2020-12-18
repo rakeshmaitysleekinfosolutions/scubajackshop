@@ -18,8 +18,11 @@ $route['wishlist']              = 'wishlist/index';
 $route['wishlist/remove']       = 'wishlist/remove';
 // Checkout
 $route['checkout']              = 'checkout/index';
-$route['checkout/payment']   	= 'checkout/getPaymentForm';
+$route['checkout/payment']   	= 'payment/index';
+$route['checkout/success']   	= 'success/index';
 $route['checkout/save-payment-address']  = 'checkout/savePaymentAddress';
+
+//Pay Now
 
 // Get States
 $route['states']                = 'checkout/states';

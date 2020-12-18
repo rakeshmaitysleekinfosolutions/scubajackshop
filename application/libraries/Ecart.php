@@ -118,7 +118,7 @@ class Ecart {
 		$total = 0;
 
 		foreach ($this->getProducts() as $product) {
-			$total += $this->ci->tax->calculate($product['price'], $product['tax_class_id'], $this->ci->config->item('config_tax')) * $product['qty'];
+			$total += $product['price'] * $product['quantity'];
 		}
 
 		return $total;
@@ -148,7 +148,17 @@ class Ecart {
 
         return true;
     }
-	public function setPreviousUsed($value) {
+    public function hasShipping() {
+        foreach ($this->getProducts() as $product) {
+            if (isset($product['shipping'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function setPreviousUsed($value) {
         $this->previousUsed = $value;
 	}
 	public function setNextUsed($value) {
