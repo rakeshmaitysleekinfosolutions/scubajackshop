@@ -45,6 +45,7 @@ class Store extends AppController {
                   'url'         => url('product/'.$product->slug),
                   'price'       => currencyFormat($product->price, $this->options['currency']['code']),
                   'description' => $product->description->description,
+                  'wishlist'    => (Wishlist_model::factory()->findOne(['shop_id' => $product->id])) ? true : false
                 );
             }
         }

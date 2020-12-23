@@ -1,9 +1,11 @@
-window.Popper = require('popper.js').default;
-window.$ = global.$ = window.jQuery = require('jquery');
-//import './jquery-ui-1.12.1/jquery-ui';
-require('./additional-methods');
-require('./jquery.validate');
-require('./loadingoverlay.min');
+// window.Popper = require('popper.js').default;
+// window.$ = global.$ = window.jQuery = require('jquery');
+// //import './jquery-ui-1.12.1/jquery-ui';
+// require('./additional-methods');
+// require('./jquery.validate');
+// require('./loadingoverlay.min');
+var Card = require("card");
+//import * as Card from "card";
 
 $( document ).ready(function() {
     var headerVideolinkDiv = $('.headerVideoLink');
@@ -396,6 +398,13 @@ $('.add-to-wishlist').on('click', function() {
 
         success: function(json) {
             if (json['success']) {
+                if(json['remove']) {
+                    $('a[data-product_id="' + product_id + '"] > i.whishstate').removeClass('red_icon');
+                    $('a[data-product_id="' + product_id + '"] > i.whishstate').removeClass('blur_icon');
+                } else {
+                    $('a[data-product_id="' + product_id + '"] > i.whishstate').removeClass('blur_icon');
+                    $('a[data-product_id="' + product_id + '"] > i.whishstate').addClass('red_icon');
+                }
                 //$btn.LoadingOverlay("hide");
                 $('#wishlist-total span').html(json['totalWishListed']);
                 $('#wishlist-total').attr('title', json['totalWishListed']);
@@ -508,6 +517,7 @@ $(document).ready(function(){
 // Payment Address
 $('select[name="payment_address[country_id]"]').on('change', function() {
     var country_id = $('select[name="payment_address[country_id]"]').find(":selected").val();
+    console.log(country_id);
     $.ajax({
         url: myLabel.states,
         dataType: 'json',
@@ -605,9 +615,8 @@ $('#submit-payment-address-btn').on('click', function() {
 
 
 var $formBillingAddress = $("#billing-address"),
-    $paymentFrm = $('#paymentFrm'),
     validate = ($.fn.validate !== undefined);
-var $paymentBtn = $("#submit-payment-address-btn");
+var $paymentBtn = $("#payBtn");
 if ($formBillingAddress.length > 0 && validate) {
     $formBillingAddress.validate({
         rules:{
@@ -653,23 +662,19 @@ if ($formBillingAddress.length > 0 && validate) {
 
     });
 }
-    // Credit Card Form Validation
-
+var $paymentFrm = $('#paymentFrm'),
+validate = ($.fn.validate !== undefined);
 
 if ($paymentFrm.length > 0 && validate) {
     $paymentFrm.validate({
         rules:{
-            card_number: {
-                required: true,
-                creditcard: true
-            },
-            card_exp_month: {
+            number: {
                 required: true,
             },
-            card_exp_year: {
+            exp: {
                 required: true,
             },
-            card_cvc: {
+            cvc: {
                 required: true,
             }
         },
@@ -680,11 +685,10 @@ if ($paymentFrm.length > 0 && validate) {
                 url: $(form).attr('action'),
                 data: $(form).serialize(),
                 beforeSend: function() {
-                    $paymentBtn.LoadingOverlay("show");
+                    $.LoadingOverlay("show");
                 },
                 success: function (json) {
-                    console.log(json);
-                    window.location,href = json['redirect'];
+                    window.location.href = json['redirect'];
                 }
             });
             return false; // required to block normal submit since you used ajax
@@ -692,4 +696,30 @@ if ($paymentFrm.length > 0 && validate) {
 
     });
 }
+if ($paymentFrm.length > 0) {
+    new Card({ 
+        form: "form#paymentFrm",
+        container: ".card-wrapper",
+        formSelectors: { 
+          numberInput: "input#cc-number",
+          expiryInput: "input#cc-exp",
+          cvcInput: "input#cc-cvc",
+        },
+        width: 270,
+        formatting: true,
+        placeholders: {
+          number: "xxxx xxxx xxxx xxxx",
+          cvc: "xxxx"
+        },
+        masks: {
+            cardNumber: '•' // optional - mask card number
+        },
+        messages: {
+          validDate: 'expire\ndate',
+          monthYear: 'mm/yy'
+      }
+      });
+}
+
+
 

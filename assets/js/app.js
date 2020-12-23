@@ -1,5 +1,5 @@
-$( document ).ready(function() {
 
+$( document ).ready(function() {
     var headerVideolinkDiv = $('.headerVideoLink');
     if(headerVideolinkDiv.length != 0) {
         headerVideolinkDiv.magnificPopup({
@@ -390,6 +390,13 @@ $('.add-to-wishlist').on('click', function() {
 
         success: function(json) {
             if (json['success']) {
+                if(json['remove']) {
+                    $('a[data-product_id="' + product_id + '"] > i.whishstate').removeClass('red_icon');
+                    $('a[data-product_id="' + product_id + '"] > i.whishstate').removeClass('blur_icon');
+                } else {
+                    $('a[data-product_id="' + product_id + '"] > i.whishstate').removeClass('blur_icon');
+                    $('a[data-product_id="' + product_id + '"] > i.whishstate').addClass('red_icon');
+                }
                 //$btn.LoadingOverlay("hide");
                 $('#wishlist-total span').html(json['totalWishListed']);
                 $('#wishlist-total').attr('title', json['totalWishListed']);
@@ -502,6 +509,7 @@ $(document).ready(function(){
 // Payment Address
 $('select[name="payment_address[country_id]"]').on('change', function() {
     var country_id = $('select[name="payment_address[country_id]"]').find(":selected").val();
+    console.log(country_id);
     $.ajax({
         url: myLabel.states,
         dataType: 'json',
@@ -600,7 +608,7 @@ $('#submit-payment-address-btn').on('click', function() {
 
 var $formBillingAddress = $("#billing-address"),
     validate = ($.fn.validate !== undefined);
-var $paymentBtn = $("#submit-payment-address-btn");
+var $paymentBtn = $("#payBtn");
 if ($formBillingAddress.length > 0 && validate) {
     $formBillingAddress.validate({
         rules:{
@@ -636,6 +644,7 @@ if ($formBillingAddress.length > 0 && validate) {
                     $paymentBtn.LoadingOverlay("show");
                 },
                 success: function (json) {
+                    console.log(json);
                     $paymentBtn.LoadingOverlay("hide");
                     window.location.href = json['redirect'];
                 }
@@ -645,7 +654,3 @@ if ($formBillingAddress.length > 0 && validate) {
 
     });
 }
-    // Credit Card Form Validation
-
-
-

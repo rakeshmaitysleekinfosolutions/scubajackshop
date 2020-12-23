@@ -30,11 +30,11 @@
 <div id="app">
 
 
-    <div class="splash-screen">
-        <a href="javascript:void(0);" id="splashscreen">
-            <img src="<?php echo base_url('assets/images/splash-bg.jpg');?>" alt="" />
-        </a>
-    </div>
+<!--    <div class="splash-screen">-->
+<!--        <a href="javascript:void(0);" id="splashscreen">-->
+<!--            <img src="--><?php //echo base_url('assets/images/splash-bg.jpg');?><!--" alt="" />-->
+<!--        </a>-->
+<!--    </div>-->
 
     <header class="menu-area sticky">
         <div class="container">
@@ -134,6 +134,53 @@
             </div>
         </div>
     </footer>
+    <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target="#myModal"></input>
+    <?php if(!getSession('is_logged')) { ?>
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="col-md-12"  id="my-container">
+                                <div class="right-side signin-form">
+                                    <h3>Sign in</h3>
+                                    <p>New to Scubajack? <a href="<?php echo base_url('register');?>">Sign Up</a></p>
+                                    <form id="logInModalForm" action="<?php echo url('login');?>" method="post">
+                                        <input type="hidden" name="<?php echo __token();?>" value="<?php echo csrf_token();?>">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input name="identity" id="identity" type="text" class="form-control" autocomplete="off" required>
+                                            <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --></div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Password</label>
+                                            <input name="password" id="password" type="password" class="form-control" autocomplete="off" required>
+                                        </div>
+                                        <div class="form-check pt-4">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember" <?php if(isset($_COOKIE["remember_me"])) { ?> checked <?php } ?>>
+                                            <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="<?php echo url('forgotten');?>" class="forgoat-password-link">Forgot Password?</a>
+                                        </div>
+
+                                        <button type="submit" class="btn submits" id="logInModalButton" data-loading-text="Loading...">Log In</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <?php } ?>
 </div>
 <!-------------------------footer end-------------------------->
 <script id="result-template" type="text/x-handlebars-template">
@@ -179,64 +226,19 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/twitter-typeahead/js/jquery.xdomainrequest.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/twitter-typeahead/js/typeahead.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/Search.js"></script>
-
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.validate.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/additional-methods.js"></script>
 
 
 <!--<script type="text/javascript" src="--><?php //echo base_url();?><!--assets/js/lightgallery/js/jquery.mousewheel.min.js"></script>-->
 <?php echo $this->template->javascript; ?>
-<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script> -->
+
  <!-- Stripe.js v3 for Elements -->
 <script src="https://js.stripe.com/v2/"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script> -->
+<script type="text/javascript" src="<?php echo base_url();?>dist/login.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>dist/payment.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>dist/app.js"></script>
-<script>
-    !function ($) {
-        "use strict";
-        $(document).ready(function () {
-            <?php //unsetSession('splashscreen', 1);?>
-            <?php if(!hasSession('splashscreen')) {?>
-
-            $(".splash-screen").css('display', 'block');
-
-            <?php } else { ?>
-            //console.log(1);
-            $(".splash-screen").css('display', 'none');
-            <?php } ?>
-            // if( $.cookie('splashscreen') == null || $.cookie('splashscreen') == '') { // Here you are checking if cookie is existing if not you are showing a splash screen and set a cookie
-            //     //$(".splash-screen").fadeIn();
-            //
-            // } else {
-            //     $(".splash-screen").css('display', 'none');
-            // }
-            // setTimeout(function () {
-            //     $("#splashscreen").trigger('click');
-            // },8000);
-
-            $("#splashscreen").click(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo base_url('setSplashScreen');?>",
-                    cache: false,
-                    beforeSend: function() {},
-                    complete: function() {},
-                    success: function(res) {
-                        console.log(res);
-                        if(res.status) {
-                            $(".splash-screen").fadeOut(2000);
-                        }
-                    }
-                });
-
-                //$.cookie("splashscreen", 1, { expires : 10 }); // cookie is valid for 10 days
-
-            });
-            //$('[data-toggle="tooltip"]').tooltip()
-        });
-
-    }(window.jQuery);
-</script>
-
-<!---------search form---------->
 
 <script type="text/javascript">
     function toggle1() {

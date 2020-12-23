@@ -2,7 +2,6 @@
     "use strict";
     var $frmSignIn = $("#frmSignIn"),validate = ($.fn.validate !== undefined);
     var $btn = $("#logInButton");
-    console.log($btn);
 		if ($frmSignIn.length > 0 && validate) {
             $frmSignIn.validate({
                 rules:{

@@ -59,20 +59,23 @@ class Payment extends AppController {
         // Cart Details
         $this->data['card'] = array();
         if(!empty($this->input->post('number'))) {
-            $this->data['card']['number'] = $this->input->post('number');
+            $this->data['card']['number'] = (int)preg_replace('/\s+/', '', trim($this->input->post('number')));
         } else {
-            $this->data['card']['number'] = preg_replace('/\s+/', '', $this->input->post('number'));
+            $this->data['card']['number'] = '';
         }
-        if(!empty($this->input->post('exp_month'))) {
-            $this->data['card']['exp_month'] = $this->input->post('exp_month');
+        if(!empty($this->input->post('exp'))) {
+            $explodeCardExp = explode('/',trim($this->input->post('exp')));
+        } else {
+            $explodeCardExp = array();
+        }
+        if(!empty($explodeCardExp)) {
+            $this->data['card']['exp_month'] = (isset($explodeCardExp[0])) ? (int)$explodeCardExp[0] : '';
+            $this->data['card']['exp_year']  = (isset($explodeCardExp[1])) ? (int)$explodeCardExp[1] : '';
         } else {
             $this->data['card']['exp_month'] = '';
-        }
-        if(!empty($this->input->post('exp_year'))) {
-            $this->data['card']['exp_year'] = $this->input->post('exp_year');
-        } else {
             $this->data['card']['exp_year'] = '';
         }
+       // dd($this->data['card']);
         if(!empty($this->input->post('cvc'))) {
             $this->data['card']['cvc'] = $this->input->post('cvc');
         } else {
@@ -240,7 +243,7 @@ class Payment extends AppController {
             Order_model::factory()->insert([
                 'uuid'                          => $this->uuid,
                 'invoice_prefix'                => 'INV-',
-                'customer_id'                   => $this->orderModelData['customer_id'],
+                'user_id'                       => $this->orderModelData['customer_id'],
                 'firstname'                     => $this->orderModelData['firstname'],
                 'lastname'                      => $this->orderModelData['lastname'],
                 'email'                         => $this->orderModelData['email'],
@@ -301,8 +304,8 @@ class Payment extends AppController {
                     'product_id'    => $value['product_id'],
                     'name'          => $value['name'],
                     'quantity'      => $value['quantity'],
-                    'price'         => $this->currency->format($value['price'], $this->options['currency']['code'], $this->getValue($this->options['currency']['code'])),
-                    'total'         => $this->currency->format($value['total'], $this->options['currency']['code'], $this->getValue($this->options['currency']['code'])),
+                    'price'         => $value['price'],
+                    'total'         => $value['total']
                 );
             }
         }
@@ -349,7 +352,7 @@ class Payment extends AppController {
             }
         }
         if(!empty($this->uuid)) {
-            seSession('order_id', $this->uuid);
+            setSession('order_id', $this->uuid);
         }
 
     }

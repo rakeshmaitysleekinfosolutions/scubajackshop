@@ -105,14 +105,24 @@ class Wishlist extends AppController {
                 $this->product = Shop_model::factory()->findOne($this->data['product_id']);
                 if($this->product) {
                     if($this->user->isLogged()) {
-                        Wishlist_model::factory()->delete([
-                            'user_id'       => $this->user->getId(),
-                            'shop_id'    => $this->product->id,
-                        ], true);
-                        Wishlist_model::factory()->insert([
+                        $getWishlist = Wishlist_model::factory()->findAll([
                             'user_id'       => $this->user->getId(),
                             'shop_id'    => $this->product->id,
                         ]);
+                        if(count($getWishlist) == 1) {
+                             Wishlist_model::factory()->delete([
+                                'user_id'       => $this->user->getId(),
+                                'shop_id'    => $this->product->id,
+                            ], true);
+                            $this->json['remove'] = true;
+                        } else {
+                             Wishlist_model::factory()->insert([
+                                'user_id'       => $this->user->getId(),
+                                'shop_id'    => $this->product->id,
+                            ]);
+                            $this->json['remove'] = false;
+                        }
+                       
                         $this->json['success'] = true;
                         $this->json['totalWishListed'] = sprintf('Wish List (%s)', Wishlist_model::factory()->getTotalWishlist());
                         setSession('totalWishListed', Wishlist_model::factory()->getTotalWishlist());

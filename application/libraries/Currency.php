@@ -30,7 +30,9 @@ class Currency {
 		if (!$value) {
 			$value = $this->currencies[$currency]['value'];
 		}
+
 		$amount = $value ? (float)$number * $value : (float)$number;
+
 		$amount = round($amount, (int)$decimal_place);
 		if (!$format) {
 			return $amount;
@@ -44,6 +46,7 @@ class Currency {
 			$string .= $symbol_right;
 		}
 		return $string;
+
 	}
 
 	public function convert($value, $from, $to) {

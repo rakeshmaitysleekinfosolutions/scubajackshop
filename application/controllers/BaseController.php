@@ -17,8 +17,18 @@ class BaseController extends MX_Controller {
             'name' => $this->security->get_csrf_token_name(),
             'hash' => $this->security->get_csrf_hash()
          );
+        $this->onLoad();
 
 	}
+    public function onLoad() {
+        $this->options['currency'] =  $this->currency->getCurrency('USD');
+        if($this->ecart->hasProducts()) {
+            setSession('total',sprintf('%s item(s) - %s', $this->ecart->countProducts() , $this->currency->format($this->ecart->totals()['total'], $this->options['currency']['code'])));
+        } else {
+            setSession('total', '0 item(s) - $0.00');
+        }
+
+    }
     public  function __token() {
         return (isset($this->csrfArray['name'])) ? $this->csrfArray['name'] : '';
     }

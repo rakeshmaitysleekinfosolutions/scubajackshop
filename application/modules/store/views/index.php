@@ -14,7 +14,7 @@
             <div class="book-details product-img"> 
               <a href="#"><img src="<?php echo $product['img']; ?>" alt="<?php echo $product['name'];?>"></a>
               <div class="heart_sec">
-                <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" class="btn  btn-primary add-to-wishlist"> <i class="fas fa-heart blur_icon"></i> <i class="fas fa-heart red_icon"></i></a>  
+                <a href="javascript:void(0);" data-product_id="<?php echo $product['id'];?>" class="btn  btn-primary add-to-wishlist"> <i class="fas fa-heart whishstate <?php echo ($product['wishlist']) ? 'red_icon' : 'blur_icon';?>"></i></a>  
               </div>
               <div class="quick-view-button">
                 <a href="<?php echo base_url(); ?>product/<?php echo $product['slug']; ?>" class="btn btn-info btn-sm">View Detail</a>

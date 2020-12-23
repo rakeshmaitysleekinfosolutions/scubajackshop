@@ -123,9 +123,11 @@
                                 <ul class="list-unstyled" style="display: none;">
                                     <li class="categoryplus"><a href="<?php echo url('shop/category');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Category</span></a></li>
                                     <li class="categoryplus"><a href="<?php echo url('shop/product');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Products</span></a></li>
+                                    <li class="categoryplus"><a href="<?php echo url('shop/order');?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Orders</span></a></li>
                                     <!--                                    <li class="categoryplus"><a href="--><?php //echo admin_url('country');?><!--"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>Manage Continents</span></a></li>-->
                                 </ul>
                             </li>
+
 							<!-- <li> 
 								<a href="<?php echo base_url('user');?>">Category</a>
 							</li> -->

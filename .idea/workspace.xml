@@ -20,37 +20,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b4ea774-449e-44a5-8707-ff604c3b068c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/libraries/Stripe.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/models/OrderHistory_model.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/models/OrderProduct_model.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/models/OrderStatus_model.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/models/OrderTotal_model.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/models/Order_model.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/modules/success/controllers/Success.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/modules/success/views/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scubajackshop.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scubajackshop.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/models/AccountOrder_model.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/modules/account/controllers/Order.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/modules/account/views/order/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/modules/shop/controllers/Order.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/modules/shop/views/order/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/modules/shop/views/order/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/shop/Order.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/js/login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sass/modal.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/autoload.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/config/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/stripe.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/stripe.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/libraries/Ecart.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/libraries/Ecart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modules/cart/views/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/cart/views/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modules/checkout/controllers/Checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/checkout/controllers/Checkout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modules/checkout/views/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/checkout/views/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modules/checkout/views/payment.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/AppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/AppController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/BaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/libraries/Currency.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/libraries/Currency.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/models/Order_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/Order_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/modules/account/controllers/Account.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/account/controllers/Account.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/modules/account/views/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/account/views/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/modules/payment/controllers/Payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/payment/controllers/Payment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modules/payment/views/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/payment/views/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modules/store/views/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/store/views/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modules/store/views/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/modules/store/views/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/layout/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/layout/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/layout/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/layout/app.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/views/layout/store.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/layout/store.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/login/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/mix-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,10 +113,15 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/application/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/js/shop" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\workspace\scubajackshop\application\modules\shop\controllers" />
+      <recent name="C:\xampp\htdocs\workspace\scubajackshop\application\modules\order\controllers" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\workspace\scubajackshop\assets\js\shop" />
       <recent name="C:\xampp\htdocs\workspace\scubajackshop\application\models" />
       <recent name="C:\xampp\htdocs\workspace\scubajackshop\application\libraries" />
     </key>
@@ -136,7 +138,10 @@
       <updated>1608180059080</updated>
       <workItem from="1608180060859" duration="1402000" />
       <workItem from="1608194442363" duration="15719000" />
-      <workItem from="1608266620975" duration="15380000" />
+      <workItem from="1608266620975" duration="16267000" />
+      <workItem from="1608535846243" duration="10312000" />
+      <workItem from="1608611691697" duration="29444000" />
+      <workItem from="1608698622136" duration="1639000" />
     </task>
     <servers />
   </component>
@@ -156,13 +161,13 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="548" y="161" key="FileChooserDialogImpl" timestamp="1608181754281">
+    <state x="548" y="161" key="FileChooserDialogImpl" timestamp="1608550579276">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="548" y="161" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1608181754281" />
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1608290102814">
+    <state x="548" y="161" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1608550579276" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1608616756753">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1608290102814" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1608616756753" />
   </component>
 </project>

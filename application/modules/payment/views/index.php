@@ -8,6 +8,7 @@
             <?php } ?>
         </div>
         <div class="row">
+        <div class='card-wrapper'></div>
             <div class="col-md-8">
                 <div class="payment-method">
                     <h4>Payment Method</h4>
@@ -16,24 +17,23 @@
                         <div class="gray-bg">
                             <div class="mb-3"><img src="<?php echo url('assets/images/card.png');?>" alt="" /></div>
                             <div class="form-group">
+                                <label>Full Name</label>
+                                <input name="name" id="cc-name" type="text" class="form-control" placeholder="Card Holder Name" autocomplete="off" required>
+                            </div>
+                            <div class="form-group">
                                 <label>Card Number</label>
-                                <input name="number" id="number" type="text" class="form-control" placeholder="xxxx-xxxx-xxxx-xxxx" autocomplete="off" required>
+                                <input name="number" id="cc-number" type="text" class="form-control" placeholder="xxxx-xxxx-xxxx-xxxx" autocomplete="off" required>
                             </div>
                             <div class="form-group">
                                 <label>Expiration Date</label>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input class="form-control" type="text" name="exp_month" id="exp_month" placeholder="MM" autocomplete="off" required>
+                                        <input class="form-control" type="text" name="exp" id="cc-exp" placeholder="MM/YYYY" autocomplete="off" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-control" type="text" name="exp_year" id="exp_year" placeholder="YYYY" autocomplete="off" required>
+                                        <input class="form-control" type="text" name="cvc" id="cc-cvc" placeholder="XXXX" autocomplete="off" required>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>CVC*</label>
-                                <input name="cvc" id="cvc" type="text" class="form-control col-md-6" autocomplete="off" autocomplete="off" required>
-                                <span class="question"><i class="far fa-question-circle"></i></span>
                             </div>
                         </div>
                         <button type="submit" id="payBtn" class="btn btn-info mt-4 w-100 payment-button">Pay Now</button>

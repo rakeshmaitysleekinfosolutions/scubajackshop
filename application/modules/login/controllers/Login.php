@@ -46,7 +46,7 @@ class Login extends AppController {
 
                 } else {
                     $this->json['error']['warning']            = $this->lang->line('error_login');
-                    $this->json['redirect'] = url('signin');
+                    $this->json['redirect'] = url('login');
                 }
             }
             return $this->output

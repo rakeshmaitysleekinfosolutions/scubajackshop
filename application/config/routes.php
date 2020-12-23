@@ -22,6 +22,8 @@ $route['checkout/payment']   	= 'payment/index';
 $route['checkout/success']   	= 'success/index';
 $route['checkout/save-payment-address']  = 'checkout/savePaymentAddress';
 
+// Account/Orders
+$route['account/order'] = 'account/Order/Index';
 //Pay Now
 
 // Get States
